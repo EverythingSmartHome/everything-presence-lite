@@ -9,135 +9,135 @@
     "doc": "Assembly",
     "title": "Assembly",
     "content": "Time to assemble the hardware ready for setup! . ",
-    "url": "/static/assembly.html",
+    "url": "/assembly.html",
     
-    "relUrl": "/static/assembly.html"
+    "relUrl": "/assembly.html"
   },"2": {
     "doc": "Assembly",
     "title": "Case - Part 1",
     "content": "First you are going to want to grab 4 components of the case - the back, ball joint, locking ring and stand. Insert the ball joint through the back of the case from the front side. Then, while holding the ball joint in place, use the locking ring to tighten in place. The locking ring has a slight groove on one side - make sure the groove faces the back of the case. The ball joint will be pretty tight but will still rotate with enough force - this is intentional to allow you to orientate in any position. ",
-    "url": "/static/assembly.html#case---part-1",
+    "url": "/assembly.html#case---part-1",
     
-    "relUrl": "/static/assembly.html#case---part-1"
+    "relUrl": "/assembly.html#case---part-1"
   },"3": {
     "doc": "Assembly",
     "title": "Board and Sensors",
     "content": "Grab the Lite board and the mmWave sensor. The the Lite board and press it into the back of the case - each corner should click into place. Next, take the mmWave sensor and insert it into the slot that is labeled LD2450 in the top right hand corner, make sure the pins are aligned correctly with the socket and not shifted one position left or right. Making sure to line up the 5v pin on the sensor with the 5v pin on the board. Please take extra care with the mmWave sensor when it’s inserted into the slot since the pins will bend easily and could cause damage. Remove the sensor whenever moving or working on it. ",
-    "url": "/static/assembly.html#board-and-sensors",
+    "url": "/assembly.html#board-and-sensors",
     
-    "relUrl": "/static/assembly.html#board-and-sensors"
+    "relUrl": "/assembly.html#board-and-sensors"
   },"4": {
     "doc": "Assembly",
     "title": "Case - Part 2",
     "content": "Next, clip the front of the case on and into position. And finally, use your thumb to press against the back of the ball joint for support and then push the stand onto the ball joint. The stand may be quite tight initially due to the 3D printing process, but should loosen up after a few rotations. The final hardware will look like this (cover removed for clarity): . We can now power on for the first time. ",
-    "url": "/static/assembly.html#case---part-2",
+    "url": "/assembly.html#case---part-2",
     
-    "relUrl": "/static/assembly.html#case---part-2"
+    "relUrl": "/assembly.html#case---part-2"
   },"5": {
     "doc": "Assembly",
     "title": "Powering On",
     "content": "You will want to grab the included right angle USB-C cable from the box, and a spare power brick - any charger should suffice, as power requirements are around 200 milliamps. The power brick will be used later when moving the Lite to it’s final position, but for now take the other end of the USB cable and plug it into a laptop or desktop. ",
-    "url": "/static/assembly.html#powering-on",
+    "url": "/assembly.html#powering-on",
     
-    "relUrl": "/static/assembly.html#powering-on"
+    "relUrl": "/assembly.html#powering-on"
   },"6": {
     "doc": "Assembly",
     "title": "Next Steps",
     "content": "Now we have assembled the hardware, we can update it and connect it to WiFi! . Updating and connecting to WiFi . ",
-    "url": "/static/assembly.html#next-steps",
+    "url": "/assembly.html#next-steps",
     
-    "relUrl": "/static/assembly.html#next-steps"
+    "relUrl": "/assembly.html#next-steps"
   },"7": {
     "doc": "Connecting Home Assistant",
     "title": "Connecting Home Assistant",
     "content": "The final step is to connect to Home Assistant! . ",
-    "url": "/static/Home%20Assistant/connecting-home-assistant.html",
+    "url": "/Home%20Assistant/connecting-home-assistant.html",
     
-    "relUrl": "/static/Home%20Assistant/connecting-home-assistant.html"
+    "relUrl": "/Home%20Assistant/connecting-home-assistant.html"
   },"8": {
     "doc": "Connecting Home Assistant",
     "title": "Connecting to Home Assistant (Automatic method)",
     "content": "For most people, Home Assistant will automatically discover and add the EPL immediately, thanks to ESPHome’s mDNS discovery. To add it to Home Assistant, simply head to Settings &gt; Devices and Services and you should see the Everything Presence Lite has been automatically discovered and is displayed - simply hit the configure button to add it to Home Assistant and that’s it! . ",
-    "url": "/static/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-automatic-method",
+    "url": "/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-automatic-method",
     
-    "relUrl": "/static/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-automatic-method"
+    "relUrl": "/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-automatic-method"
   },"9": {
     "doc": "Connecting Home Assistant",
     "title": "Connecting to Home Assistant (Manual method)",
     "content": "If for some reason the Everything Presence Lite is not automatically discovered, or your network is not setup for mDNS you can add the Lite manually to Home Assistant. You will need to first figure out what the IP address of your Lite is by checking your routers web page: . You can also use a program like fing to discover network devices. Once you have the IP address, head over to Home Assistant and go to Settings &gt; Devices and Services and click the add Integration button in the bottom right. Search for ESPHome to add an ESPHome device, and then enter the IP address into the box: . W Hit next and finish, and the Lite is now connected to Home Assistant. ",
-    "url": "/static/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-manual-method",
+    "url": "/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-manual-method",
     
-    "relUrl": "/static/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-manual-method"
+    "relUrl": "/Home%20Assistant/connecting-home-assistant.html#connecting-to-home-assistant-manual-method"
   },"10": {
     "doc": "Connecting Home Assistant",
     "title": "Next Steps",
     "content": "Setup is now finished and you can go ahead and get automating the Everything Presence Lite! 🥳 . If you would like a bit more information about what each entity does inside of Home Assistant, check out the Entities Explained page. Entities Explained . ",
-    "url": "/static/Home%20Assistant/connecting-home-assistant.html#next-steps",
+    "url": "/Home%20Assistant/connecting-home-assistant.html#next-steps",
     
-    "relUrl": "/static/Home%20Assistant/connecting-home-assistant.html#next-steps"
+    "relUrl": "/Home%20Assistant/connecting-home-assistant.html#next-steps"
   },"11": {
     "doc": "Editing ESPHome Code",
     "title": "Editing ESPHome Code",
     "content": " ",
-    "url": "/static/Advanced%20Features/editing-esphome-code.html",
+    "url": "/Advanced%20Features/editing-esphome-code.html",
     
-    "relUrl": "/static/Advanced%20Features/editing-esphome-code.html"
+    "relUrl": "/Advanced%20Features/editing-esphome-code.html"
   },"12": {
     "doc": "Editing ESPHome Code",
     "title": "Importing the ESPHome code to your dashboard",
     "content": "If you want to make some more advanced changes to the EP1, you first need to add the ESPHome code to your dashboard. First make sure that the EP1 has been added to Home Assistant, see Connecting Home Assistant if you have not already done that. Then, make sure that the ESPHome Add-on is installed . ",
-    "url": "/static/Advanced%20Features/editing-esphome-code.html#importing-the-esphome-code-to-your-dashboard",
+    "url": "/Advanced%20Features/editing-esphome-code.html#importing-the-esphome-code-to-your-dashboard",
     
-    "relUrl": "/static/Advanced%20Features/editing-esphome-code.html#importing-the-esphome-code-to-your-dashboard"
+    "relUrl": "/Advanced%20Features/editing-esphome-code.html#importing-the-esphome-code-to-your-dashboard"
   },"13": {
     "doc": "Hardware Overview",
     "title": "Hardware Overview",
     "content": "Let’s take a look at an overview of the hardware and parts required for setup. There are several components that make up the Everything Presence Lite. You may have received some or all of these components depending which version you purchased - if you purchased the board only then you will need to provide your own compatible mmWave Sensor. Each component is listed below - please familiarise yourself with each component for this guide. Here is an overview of everything in the box: . ",
-    "url": "/static/hardware-overview.html",
+    "url": "/hardware-overview.html",
     
-    "relUrl": "/static/hardware-overview.html"
+    "relUrl": "/hardware-overview.html"
   },"14": {
     "doc": "Hardware Overview",
     "title": "Everything Presence Lite Board",
     "content": ". The Lite board is the main PCB for the device. It’s where the ESP32 is located that provides Wi-Fi connectivity and is the brains of all of the sensors. Each of the main components is labelled directly on the board itself to help with assembly. Directly on the Lite board we have the following components: . | ESP32-WROOM-32E - 4MB flash version | BH1750 Light Illuminance sensor | Header Slot for DFRobot SEN0395 mmWave Sensor | Header Slot for HiLink LD2450 mmWave Sensor | Header Slot for HiLink LD2410C mmWave Sensor | Header Slot for various Seeed mmWave Sensors | USB-C for power and programming | 5v Header input for optional power | 4 Additional GPIO pins for expansion | . ",
-    "url": "/static/hardware-overview.html#everything-presence-lite-board",
+    "url": "/hardware-overview.html#everything-presence-lite-board",
     
-    "relUrl": "/static/hardware-overview.html#everything-presence-lite-board"
+    "relUrl": "/hardware-overview.html#everything-presence-lite-board"
   },"15": {
     "doc": "Hardware Overview",
     "title": "Official Case",
     "content": ". The case for the EPL is currently shipped in the box. If you prefer to print your own, in a different colour the STL is located on Printables (link pending!) . The case has 5 components - Front, Back, Stand, Ball Joint and Locking Ring. ",
-    "url": "/static/hardware-overview.html#official-case",
+    "url": "/hardware-overview.html#official-case",
     
-    "relUrl": "/static/hardware-overview.html#official-case"
+    "relUrl": "/hardware-overview.html#official-case"
   },"16": {
     "doc": "Hardware Overview",
     "title": "mmWave Sensor",
     "content": ". The Lite is compatible with various different mmWave sensors on the market, making it the perfect board to develop and test mmWave applications with, however to get you started, we include the LD2450 sensor in the box and is what we will use for this guide. The LD2450 is a mmWave sensor from HiLink that supports up to 3 targets to track in 2D space. The Lite is compatible with quite a few different mmWave Sensors - check the list for details. ",
-    "url": "/static/hardware-overview.html#mmwave-sensor",
+    "url": "/hardware-overview.html#mmwave-sensor",
     
-    "relUrl": "/static/hardware-overview.html#mmwave-sensor"
+    "relUrl": "/hardware-overview.html#mmwave-sensor"
   },"17": {
     "doc": "Hardware Overview",
     "title": "Next Steps",
     "content": "Now we have familiarised ourselves with the hardware, let’s get the hardware assembled and ready to setup! . Assembly . ",
-    "url": "/static/hardware-overview.html#next-steps",
+    "url": "/hardware-overview.html#next-steps",
     
-    "relUrl": "/static/hardware-overview.html#next-steps"
+    "relUrl": "/hardware-overview.html#next-steps"
   },"18": {
     "doc": "Home Assistant Entities",
     "title": "Home Assistant Entities Explained",
     "content": "What are all of these entities!? . ",
-    "url": "/static/Home%20Assistant/home-assistant-entities.html#home-assistant-entities-explained",
+    "url": "/Home%20Assistant/home-assistant-entities.html#home-assistant-entities-explained",
     
-    "relUrl": "/static/Home%20Assistant/home-assistant-entities.html#home-assistant-entities-explained"
+    "relUrl": "/Home%20Assistant/home-assistant-entities.html#home-assistant-entities-explained"
   },"19": {
     "doc": "Home Assistant Entities",
     "title": "Home Assistant Entities",
     "content": "This page is not up to date yet and still contains screenshots from the Everything Presence One, rather than the Lite - working on updating it very soon! . After adding the Lite to Home Assistant, you may wonder which sensors you can use and what they do. To view all of the sensors and entities, click on the device from the ESPHome menu: . This will show you a dashboard of all of the sensors and controls inside of Home Assistant that you can use in your Automations: . Illuminance . Illuminance is measured from the on-board light sensor in lux. There are slots at the top of the Lite case that allow for light to pass-through and be measured, so make sure not to obstruct these for the best readings. Illuminance supports a configurable offset using the UI which allows you to offset the reported value on the fly to calibrate each of these sensors for your environment. You can do that with these highlighted controls under the configuration section: . mmWave . You will find a sensor called mmWave - this is the output from the mmWave sensor directly and indicates if movement is detected. The mmWave sensor has a configurable offset for the “Blind time” which we will cover below. The default blind time is 15 seconds, which is basically how long the sensor takes to go to an “Off” or “clear” state after motion has stopped being detected: . Offsets for mmWave . The mmWave sensor has an adjustable timeout period inside of Home Assistant using the mmWave Off Latency control. The value is measured in seconds and the default is for 15 seconds. I generally wouldn’t recommend setting this below 10s to help with false clearing. Distance . The mmWave sensor has a configurable distance control inside of Home Assistant. Distance allows you to adjust the max range of the sensor, up to a maximum of 6m. Please note that 6m is the max range, but doesn’t nessecarily mean the sensor is capable of detecting the tiniest of movements at 6m - placement is still important for the best results - see the tuning guide for more information: . If you would like to enable zones 2, 3 and 4, simply click on the entities not shown message: . To reveal entities that are disabled by default: . Click the entity you want to enable, then click the settings icon in the right hand corner of the popup. Then enable the entity: . Wait 30 seconds, refresh the page and the entity is now enabled. Repeat this for each entity you want to enable (start and end zone for example). To setup distance zones, set a start and an end distance for each zone you want to monitor. If you do not want to use one of the zones, leave both the start and the end point set to zero. This is important! . This is very much in beta, so some rules to keep in mind: . | Zones cannot overlap each other | The distance of a zone must be a greater distance than the previous zone. I.e, Zone 2 must not have a lower start and end distance than Zone 1. | If you don’t want to use one or multiple zones, leave the start and end distance set to 0 and it will not be included. | If you want to replicate the previous functionality, i.e you want the sensor to measure everything from 0cm to 510cm, set zone 1 start to 0cm and the end to 510cm. Then set zone 2, zone 3 and zone 4 start and end point to 0. | . You MUST then hit the “set distance” button in the UI for these zones to take effect. Previously, the updated value for distance would be set to the sensor immediately as soon as you changed the slider. This is no longer the case and the set distance button must be used before new values will be sent to the sensor. This is because updating the sliders immediately could cause the sensor to get confused if the user hasn’t quite finished setting up the zones yet. If you make a mistake configuring the zones, the sensor won’t accept the value and nothing will change, but the UI sliders will indicate it has, making it difficult to know. This is a beta/advanced feature so I do want to improve the feedback from the sensor for this to make it more obvious if something didn’t work, but there is a text sensor that will update to show you if the zones were sent correctly or not: . The numbers in the error message are “segments” of the distance set above. The first number is zone 1 start, second number is zone 1 end, third number is zone 2 start, fourth is zone 2 end and so on. These numbers can be multiplied by 15 to get the value in cm, corresponding to what you set in the sliders. Confusing/complicated I know, working on it. Turning off LEDs . The Lite has an LED on the PCB that can be controlled: . ",
-    "url": "/static/Home%20Assistant/home-assistant-entities.html",
+    "url": "/Home%20Assistant/home-assistant-entities.html",
     
-    "relUrl": "/static/Home%20Assistant/home-assistant-entities.html"
+    "relUrl": "/Home%20Assistant/home-assistant-entities.html"
   },"20": {
     "doc": "Home Assistant",
     "title": "Home Assistant",
@@ -149,85 +149,85 @@
     "doc": "Home",
     "title": "Home",
     "content": ". Welcome to the documentation for the Everything Presence Lite! . This documentation will guide you through the hardware, setup and installation of the Everything Presence Lite for use with Home Assistant. Each section will be broken out into their own pages, and at the bottom of each page you will find a link to the next step. Let’s get started with the hardware unboxing and preperation first! . Hardware Overview . ",
-    "url": "/static/",
+    "url": "/",
     
-    "relUrl": "/static/"
+    "relUrl": "/"
   },"22": {
     "doc": "Troubleshooting",
     "title": "FAQ",
     "content": "Please make sure you have updated your EP1 to the latest avaliable firmware by going to Updating . Lets cover off some of the commonly asked questions. ",
-    "url": "/static/troubleshooting.html#faq",
+    "url": "/troubleshooting.html#faq",
     
-    "relUrl": "/static/troubleshooting.html#faq"
+    "relUrl": "/troubleshooting.html#faq"
   },"23": {
     "doc": "Troubleshooting",
     "title": "Everything Presence One",
     "content": "Will the EP1 detect moving animals or objects? Yes the EP1 will detect any moving thing; a pet, fan or even even moving objects such as blinds. Help, my sensor is giving false detections! The vast majority of the time, the sensor is detecting movement accurately, but users aren’t aware of how tiny a movement it is able to detect. Make sure to check out the tuning guide for tweaking the settings to get the best results! . Can the sensor detect the direction of motion or zones? No, it will only show a detected or not detected status. I prefer to 3D print my own case No worries you can find the files you need here https://www.printables.com/model/302846-everything-presence-one-official-case . ",
-    "url": "/static/troubleshooting.html#everything-presence-one",
+    "url": "/troubleshooting.html#everything-presence-one",
     
-    "relUrl": "/static/troubleshooting.html#everything-presence-one"
+    "relUrl": "/troubleshooting.html#everything-presence-one"
   },"24": {
     "doc": "Troubleshooting",
     "title": "Troubleshooting",
     "content": " ",
-    "url": "/static/troubleshooting.html",
+    "url": "/troubleshooting.html",
     
-    "relUrl": "/static/troubleshooting.html"
+    "relUrl": "/troubleshooting.html"
   },"25": {
     "doc": "Tuning",
     "title": "FAQ",
     "content": "mmWave is incredibly sensitive in comparison to a regular PIR, and needs the settings tweaking to suit it’s environment. This will also help you get the most out of the EP1’s occupancy. ",
-    "url": "/static/tuning.html#faq",
+    "url": "/tuning.html#faq",
     
-    "relUrl": "/static/tuning.html#faq"
+    "relUrl": "/tuning.html#faq"
   },"26": {
     "doc": "Tuning",
     "title": "Placement",
     "content": "One of the first things to start with is to think about the placement in a room. Ideally you’ll want the sensor wall mounted or on a sturdy object like a shelf or cabinet - because the mmWave is extremely good at picking up really fine movement, the object it’s mounted needs to be solid, otherwise this could introduce false detections (because there is genuine movement). Don’t place the EP1 on top of something that moves with vibrations such as an air-conditioning unit, as these small vibrations will be treated as detections. You also don’t want to place it infront of or near things that move frequently too, as again, these will be picked up as detections. I’ve seen a number of users confused thinking that the sensor is being triggered “falsely”. The vast majority of these are actually real detections - users just weren’t aware that something was moving, or how tiny a movement mmWave sensors can detect! I don’t blame you either, since the only real benchmark you have to go on is a regular PIR, which by comparison, take quite a lot of movement to trigger. Common things that users don’t realise can be triggers are: . | AC units | Plants moving in the wind | Curtains moving in the wind | Water droplets in a bathroom | Ceiling fans | Fans inside of a laptop/TV | . There are ways to try and combat these movements, which we will discuss below - but if you can, try and avoid placement really close to things that move. The mmWave sensor can also “see through” objects, which includes really thin walls - this means that movement could be detected through a wall (but generally this is only really thin walls.) . ",
-    "url": "/static/tuning.html#placement",
+    "url": "/tuning.html#placement",
     
-    "relUrl": "/static/tuning.html#placement"
+    "relUrl": "/tuning.html#placement"
   },"27": {
     "doc": "Tuning",
     "title": "Distance",
     "content": "Once you have the placement set, next you should adjust the distance to the room. Distance is really important to set correctly and should be set according to the distance of the room you have the EP1 in. If you have the distance set too short, you might miss events that are outside of the range. If it’s set too long for the room, it might catch things that are outside of the room, or it can cause the signal to “bounce”. Don’t set the distance too long for the room it is place in - this can cause undesirable results. You don’t need to be very accurate with the distance, just a rough ball park within roughly 0.5m. ",
-    "url": "/static/tuning.html#distance",
+    "url": "/tuning.html#distance",
     
-    "relUrl": "/static/tuning.html#distance"
+    "relUrl": "/tuning.html#distance"
   },"28": {
     "doc": "Tuning",
     "title": "Sensitivity and Latency",
     "content": "Finally you can adjust the sensitivity and On Latency - both of these paremeters will take the most tuning to suit your environment and do require some on the fly tweaking. Sensitivity is how much motion is required to trigger the sensor. On Latency sets for how long the object must be moving for, before it is considered as moving and thus triggering the sensor. Adding a very small on latency to the sensor will make the mmWave sensor slightly slower to respond, but can drastically reduce detections from unwanted objects, such as a plant moving. Making the mmWave slower to respond should have zero impact, since I would recommend using the EP1’s PIR for things that you want to trigger on. I would recommend starting with 0s of on latency first, which will give you the fastest response time as a nice to have. Then start at a medium sensitivity at a 4-5. Observe the results over a good period of time and check to see if firstly that it is detecting presence accurately when you are in the room, and secondly that is changing to clear (no detection) when you aren’t in the room. If the sensor occasionally changes to not detected for a few seconds when you are in the room, you probably need more sensitivity. However, increasing sensitivity can sometimes cause detections from unwanted objects when you are not in the room, so to combat this, use the on latency and add 0.5s. 0.5s of on latency is generally enough to clear up all detections from undesireable objects, but you can increase more if needed. Start low and increment one step at a time. The process I use is: . | Start at 0s with 4 sensitivity | Observe results | Increase one sensitivity level to get accurate detections when I am in the room | Observe results and repeat until desireable results achieved | Once sensitvity is correct, observe any detections when room is un-occupied | If detections are being triggered when room is un-occupied, add 0.5s to on latency | Observe results, if needed add another 0.5s to on latency | Optional - Adding on latency may allow you to increase sensitivity if needed. | . Ultimately, the best settings for you will come down to your specific room and will depend on your environment. ",
-    "url": "/static/tuning.html#sensitivity-and-latency",
+    "url": "/tuning.html#sensitivity-and-latency",
     
-    "relUrl": "/static/tuning.html#sensitivity-and-latency"
+    "relUrl": "/tuning.html#sensitivity-and-latency"
   },"29": {
     "doc": "Tuning",
     "title": "Tuning",
     "content": " ",
-    "url": "/static/tuning.html",
+    "url": "/tuning.html",
     
-    "relUrl": "/static/tuning.html"
+    "relUrl": "/tuning.html"
   },"30": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Updating and Connecting To WiFi",
     "content": "This page will help you to flash and update your Everything Presence Lite to the latest version and get it connected to WiFi! . ",
-    "url": "/static/updating.html#updating-and-connecting-to-wifi",
+    "url": "/updating.html#updating-and-connecting-to-wifi",
     
-    "relUrl": "/static/updating.html#updating-and-connecting-to-wifi"
+    "relUrl": "/updating.html#updating-and-connecting-to-wifi"
   },"31": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Everything Presence Lite ESPHome Firmware Install",
     "content": "Here you can install the latest ESPHome firmware on the Everything Presence Lite board for direct integration with Home Assistant . First, make sure you have the Lite connected to a USB port on your computer and select the platform you would like to install below. Hit the connect button, select the USB port from the list and then hit the install button to begin installing the latest software on your Everything Presence Lite. Once the install has completed, you can then connect the Lite to your WiFi easily and securely. If you do not see a “Connect” button below, use a supported web browser like Google Chrome. After clicking the “Connect” button, if you do not see a “USB Serial” port listed, or you get the error “Failed to open serial port.”, you may need to install the CH340 driver. The installer should give you links to the latest driver. Home Assistant . Installs the correct software on your Everything Presence Lite for Home Assistant. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server. ## Next Steps With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant. [Connecting to Home Assistant](./Home Assistant/connecting-home-assistant.html){: .btn .btn-blue } ",
-    "url": "/static/updating.html#everything-presence-lite-esphome-firmware-install",
+    "url": "/updating.html#everything-presence-lite-esphome-firmware-install",
     
-    "relUrl": "/static/updating.html#everything-presence-lite-esphome-firmware-install"
+    "relUrl": "/updating.html#everything-presence-lite-esphome-firmware-install"
   },"32": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Updating and Connecting to WiFi",
     "content": " ",
-    "url": "/static/updating.html",
+    "url": "/updating.html",
     
-    "relUrl": "/static/updating.html"
+    "relUrl": "/updating.html"
   }
 }
