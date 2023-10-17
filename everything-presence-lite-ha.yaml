@@ -29,6 +29,10 @@ ota:
 wifi:
   ap: {}
 
+dashboard_import:
+  package_import_url: github://EverythingSmartHome/everything-presence-lite/everything-presence-lite-ha.yaml
+  import_full_config: false # or true
+
 improv_serial:
 
 esp32_ble_tracker:
