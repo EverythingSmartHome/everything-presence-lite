@@ -1,8 +1,8 @@
 title: Everything Presence Lite
 description: Documentation for the Everything Presence Lite!
-url: https://everythingsmarthome.github.io/everything-presence-lite
-remote_theme: just-the-docs/just-the-docs
-#baseurl: ""
+url: https://everythingsmarthome.github.io
+theme: just-the-docs
+baseurl: "/everything-presence-lite"
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
