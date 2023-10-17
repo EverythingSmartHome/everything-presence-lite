@@ -1,4 +1,4 @@
-# Everything Presence One
+# Everything Presence Lite
 
 The Everything Presence Lite is a presence sensor for the smart home featuring mmWave for presence, light level illuminance sensor, and integrates directly with [Home Assistant](https://www.home-assistant.io/) through [ESPHome](https://esphome.io/).
 
