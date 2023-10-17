@@ -53,13 +53,13 @@ jobs:
         #run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
+      - name: "List directory"
+        run: "ls -lah static/"
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v2
         with:
-          path: /static
-      - name: "List directory"
-        run: "ls -lah static/"
+          path: ./static/_site
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
