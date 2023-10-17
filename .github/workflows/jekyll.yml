@@ -65,4 +65,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./static/_site/
           enable_jekyll: true
-          keep_files: true
+          keep_files: false
