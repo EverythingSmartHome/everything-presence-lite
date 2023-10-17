@@ -1,8 +1,6 @@
-title: Everything Presence Lite Documentation
+title: Everything Presence Lite
 description: Documentation for the Everything Presence Lite!
-#remote_theme: just-the-docs/just-the-docs
 theme: just-the-docs
-baseurl: ""
 url: https://everythingsmarthome.github.io
 
 aux_links:
@@ -42,7 +40,7 @@ heading_anchors: true
 # Aux links for the upper right navigation
 aux_links:
   "View on GitHub":
-    - "https://github.com/EverythingSmartHome/everything-presence-one"
+    - "https://github.com/EverythingSmartHome/everything-presence-lite"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
