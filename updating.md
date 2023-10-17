@@ -47,12 +47,12 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
     </p>
 </div>
 
-<div class="hidden info everything-presence-lite-ha-beta">
+<!-- <div class="hidden info everything-presence-lite-ha-beta">
   <h3>Home Assistant (Beta)</h3>
     <p>
       Beta firmware for using the Lite with Home Assistant. Do not use unless you are comfortable with troubleshooting and reporting bugs.
     </p>
-</div>
+</div> -->
 
 ## Next Steps
 
