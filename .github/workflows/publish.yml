@@ -1,0 +1,36 @@
+name: Build and Publish ESPHome firmware and website
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-everything-presence-one:
+    name: Publish Everything Presence Lite
+    uses: esphome/workflows/.github/workflows/publish.yml@main
+    with:
+      files: everything-presence-lite.yaml
+      name: Everything Presence Lite
+      manifest_filename: everything-presence-lite-manifest.json
+      clean: false
+      esphome_version: latest
+#  publish-everything-presence-one-smartthings:
+#    name: Publish Everything Presence One Smartthings
+#    uses: esphome/workflows/.github/workflows/publish.yml@main
+#    with:
+#      files: everything-presence-one-st.yaml
+#      name: Everything Presence One SmartThings
+#      manifest_filename: everything-presence-one-st-manifest.json
+#      clean: false
+#      esphome_version: latest
+#  publish-everything-presence-one-ha-beta:
+#    name: Publish Everything Presence One Home Assistant Beta
+#    uses: esphome/workflows/.github/workflows/publish.yml@main
+#    with:
+#      files: everything-presence-one-beta.yaml
+#      name: Everything Presence One HA Beta
+#      manifest_filename: everything-presence-one-ha-beta-manifest.json
+#      clean: false
+#      esphome_version: latest
