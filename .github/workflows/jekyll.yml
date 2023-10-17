@@ -49,20 +49,21 @@ jobs:
         run: "cd static"
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
-        run: cd static && bundle exec jekyll build
+#        run: cd static && bundle exec jekyll build
+        run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v2
         with:
-          path: static/_site/
+          path: _site/static/
       - name: "List directory"
         run: "ls -lah static/"
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./static/_site/
+          publish_dir: ./_site/static
           enable_jekyll: true
           keep_files: true
