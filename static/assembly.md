@@ -68,7 +68,7 @@ The stand may be quite tight initially due to the 3D printing process, but shoul
 
 The final hardware will look like this (cover removed for clarity):
 
-![Completed EP1](images/assembly-everything-presence-lite-complete.jpg)
+![Completed EPL](images/assembly-everything-presence-lite-complete.jpg)
 
 We can now power on for the first time.
 {: .fs-6 .fw-300 }

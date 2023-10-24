@@ -10,7 +10,7 @@ nav_order: 10
 
 
 {: .warning-title }
-Please make sure you have updated your EP1 to the latest avaliable firmware by going to [Updating](https://everythingsmarthome.github.io/everything-presence-one/updating.html){: .btn .btn-blue }
+Please make sure you have updated your EPL to the latest avaliable firmware by going to [Updating](https://everythingsmarthome.github.io/everything-presence-one/updating.html){: .btn .btn-blue }
 
 
 Lets cover off some of the commonly asked questions.
@@ -18,7 +18,7 @@ Lets cover off some of the commonly asked questions.
 
 ## Everything Presence One
 
-**Will the EP1 detect moving animals or objects?** Yes the EP1 will detect any moving thing; a pet, fan or even even moving objects such as blinds.
+**Will the EPL detect moving animals or objects?** Yes the EPL will detect any moving thing; a pet, fan or even even moving objects such as blinds.
 
 **Help, my sensor is giving false detections!** The vast majority of the time, the sensor is detecting movement accurately, but users aren't aware of how tiny a movement it is able to detect. Make sure to check out the [tuning guide](https://everythingsmarthome.github.io/everything-presence-one/tuning.html) for tweaking the settings to get the best results!
 
