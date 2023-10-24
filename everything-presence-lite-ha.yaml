@@ -131,6 +131,7 @@ number:
     optimistic: True
     restore_value: True
     unit_of_measurement: "s"
+    initial_value: 15
   - platform: template
     name: "Max Distance"
     id: distance
@@ -140,6 +141,7 @@ number:
     step: 1
     optimistic: True
     restore_value: True
+    initial_value: 600
 
   - platform: template
     name: "Zone 1 Begin X"
@@ -150,6 +152,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    initial_value: -4000
   - platform: template
     name: "Zone 1 End X"
     id: zone1_end_x
@@ -159,6 +162,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    initial_value: 4000
   - platform: template
     name: "Zone 1 Begin Y"
     id: zone1_begin_y
@@ -168,6 +172,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    initial_value: 0
   - platform: template
     name: "Zone 1 End Y"
     id: zone1_end_y
@@ -177,6 +182,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    initial_value: 6000
 
   - platform: template
     name: "Zone 2 Begin X"
