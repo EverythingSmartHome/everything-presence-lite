@@ -30,7 +30,7 @@ wifi:
   ap: {}
 
 dashboard_import:
-  package_import_url: github://EverythingSmartHome/everything-presence-lite/everything-presence-lite-ha.yaml@main
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
   import_full_config: false # or true
 
 improv_serial:
@@ -130,6 +130,7 @@ number:
     step: 1
     optimistic: True
     restore_value: True
+    unit_of_measurement: "s"
   - platform: template
     name: "Max Distance"
     id: distance
