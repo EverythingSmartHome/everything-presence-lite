@@ -58,7 +58,8 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
 
 With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant.
 
-[Connecting to Home Assistant](./Home Assistant/connecting-home-assistant.html){: .btn .btn-blue }
+[Connecting to Home Assistant](./Home%20Assistant/connecting-home-assistant.html){: .btn .btn-blue } 
+
 
 <script
   type="module"
