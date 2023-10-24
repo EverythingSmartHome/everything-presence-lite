@@ -8,6 +8,6 @@ permalink: /home-assistant
 
 # Home Assistant
 
-If you selected the Home Assistant firmware in the [Updating and Connecting to WiFi].(/updating.html), then this is the section for you! It will help you to connect your Lite to Home Assistant, and show you the entities available.
+If you selected the Home Assistant firmware in the [Updating and Connecting to WiFi](./updating.html), then this is the section for you! It will help you to connect your Lite to Home Assistant, and show you the entities available.
 
 {: .fs-6 .fw-300 }

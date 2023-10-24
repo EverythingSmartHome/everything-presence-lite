@@ -8,7 +8,7 @@ nav_order: 9
 
 {: .no_toc }
 
-mmWave is incredibly sensitive in comparison to a regular PIR, and needs the settings tweaking to suit it's environment. This will also help you get the most out of the EP1's occupancy.
+mmWave is incredibly sensitive in comparison to a regular PIR, and needs the settings tweaking to suit it's environment. This will also help you get the most out of the EPL's occupancy.
 {: .fs-6 .fw-300 }
 
 ## Placement
@@ -18,7 +18,7 @@ One of the first things to start with is to think about the placement in a room.
 Ideally you'll want the sensor wall mounted or on a sturdy object like a shelf or cabinet - because the mmWave is extremely good at picking up really fine movement, the object it's mounted needs to be solid, otherwise this could introduce false detections (because there is genuine movement).
 
 {: .important }
-Don't place the EP1 on top of something that moves with vibrations such as an air-conditioning unit, as these small vibrations will be treated as detections.
+Don't place the EPL on top of something that moves with vibrations such as an air-conditioning unit, as these small vibrations will be treated as detections.
 
 You also don't want to place it infront of or near things that move frequently too, as again, these will be picked up as detections.
 
@@ -40,7 +40,7 @@ The mmWave sensor can also "see through" objects, which includes really thin wal
 
 Once you have the placement set, next you should adjust the distance to the room.
 
-Distance is really important to set correctly and should be set according to the distance of the room you have the EP1 in. If you have the distance set too short, you might miss events that are outside of the range. If it's set too long for the room, it might catch things that are outside of the room, or it can cause the signal to "bounce".
+Distance is really important to set correctly and should be set according to the distance of the room you have the EPL in. If you have the distance set too short, you might miss events that are outside of the range. If it's set too long for the room, it might catch things that are outside of the room, or it can cause the signal to "bounce".
 
 {: .important }
 Don't set the distance too long for the room it is place in - this can cause undesirable results.
@@ -56,7 +56,7 @@ Sensitivity is how much motion is required to trigger the sensor.
 On Latency sets for how long the object must be moving for, before it is considered as moving and thus triggering the sensor. Adding a very small on latency to the sensor will make the mmWave sensor slightly slower to respond, but **can** drastically reduce detections from unwanted objects, such as a plant moving.
 
 {: .important }
-Making the mmWave slower to respond should have zero impact, since I would recommend using the EP1's PIR for things that you want to trigger on.
+Making the mmWave slower to respond should have zero impact, since I would recommend using the EPL's PIR for things that you want to trigger on.
 
 I would recommend starting with 0s of on latency first, which will give you the fastest response time as a nice to have. Then start at a medium sensitivity at a 4-5.
 
