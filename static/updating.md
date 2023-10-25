@@ -33,8 +33,8 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
   <!-- <label class="beta">
           <input type="radio" name="type" value="everything-presence-lite-ha-beta" />
           <img src="images/everything-presence-one-ha.png" alt="Everything Presence Lite Home Assistant Beta" width="200" height="250"/>
-        </label>
-</div> -->
+        </label> -->
+</div>
 
 <p class="button-row" align="left">
   <esp-web-install-button></esp-web-install-button>
