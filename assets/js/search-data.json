@@ -218,11 +218,18 @@
   },"31": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Everything Presence Lite ESPHome Firmware Install",
-    "content": "Here you can install the latest ESPHome firmware on the Everything Presence Lite board for direct integration with Home Assistant . First, make sure you have the Lite connected to a USB port on your computer and select the platform you would like to install below. Hit the connect button, select the USB port from the list and then hit the install button to begin installing the latest software on your Everything Presence Lite. Once the install has completed, you can then connect the Lite to your WiFi easily and securely. If you do not see a “Connect” button below, use a supported web browser like Google Chrome. After clicking the “Connect” button, if you do not see a “USB Serial” port listed, or you get the error “Failed to open serial port.”, you may need to install the CH340 driver. The installer should give you links to the latest driver. Home Assistant . Installs the correct software on your Everything Presence Lite for Home Assistant. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server. ## Next Steps With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant. [Connecting to Home Assistant](./Home%20Assistant/connecting-home-assistant.html){: .btn .btn-blue } ",
+    "content": "Here you can install the latest ESPHome firmware on the Everything Presence Lite board for direct integration with Home Assistant . First, make sure you have the Lite connected to a USB port on your computer and select the platform you would like to install below. Hit the connect button, select the USB port from the list and then hit the install button to begin installing the latest software on your Everything Presence Lite. Once the install has completed, you can then connect the Lite to your WiFi easily and securely. If you do not see a “Connect” button below, use a supported web browser like Google Chrome. After clicking the “Connect” button, if you do not see a “USB Serial” port listed, or you get the error “Failed to open serial port.”, you may need to install the CH340 driver. The installer should give you links to the latest driver. Home Assistant . Installs the correct software on your Everything Presence Lite for Home Assistant. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server. ",
     "url": "/everything-presence-lite/updating.html#everything-presence-lite-esphome-firmware-install",
     
     "relUrl": "/updating.html#everything-presence-lite-esphome-firmware-install"
   },"32": {
+    "doc": "Updating and Connecting to WiFi",
+    "title": "Next Steps",
+    "content": "With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant. Connecting to Home Assistant . ",
+    "url": "/everything-presence-lite/updating.html#next-steps",
+    
+    "relUrl": "/updating.html#next-steps"
+  },"33": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Updating and Connecting to WiFi",
     "content": " ",
