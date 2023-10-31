@@ -405,21 +405,18 @@ sensor:
     accuracy_decimals: 0
     unit_of_measurement: '°'
     state_class: measurement
-    device_class: distance
   - platform: template
     name: "Target 2 Angle"
     id: target2_angle
     accuracy_decimals: 0
     unit_of_measurement: '°'
     state_class: measurement
-    device_class: distance
   - platform: template
     name: "Target 3 Angle"
     id: target3_angle
     accuracy_decimals: 0
     unit_of_measurement: '°'
     state_class: measurement
-    device_class: distance
   - platform: template
     name: "Target 1 Distance"
     id: target1_distance
