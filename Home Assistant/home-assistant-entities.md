@@ -53,7 +53,7 @@ The mmWave sensor has an adjustable timeout period inside of Home Assistant usin
 
 The mmWave sensor has a configurable distance control inside of Home Assistant.
 
-Distance allows you to adjust the max range of the sensor, up to a maximum of 6m. Please note that 6m is the max range, but doesn't nessecarily mean the sensor is capable of detecting the tiniest of movements at 6m - placement is still important for the best results - see the [tuning guide](./tuning.html) for more information:
+Distance allows you to adjust the max range of the sensor, up to a maximum of 6m. Please note that 6m is the max range, but doesn't nessecarily mean the sensor is capable of detecting the tiniest of movements at 6m - placement is still important for the best results - see the [tuning guide](../tuning.html) for more information:
 
 ![Home Assistant mmWave distance Entity](../images/home-assistant-entities-mmwave-distance.jpg)
 
