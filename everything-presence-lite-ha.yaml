@@ -613,6 +613,70 @@ uart:
           }
 
 
+          bool zone_one_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone1_begin_x).state && id(target1_x).state <= id(zone1_end_x).state) &&
+            (id(target1_y).state >= id(zone1_begin_y).state && id(target1_y).state <= id(zone1_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone1_begin_x).state && id(target2_x).state <= id(zone1_end_x).state) &&
+            (id(target2_y).state >= id(zone1_begin_y).state && id(target2_y).state <= id(zone1_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone1_begin_x).state && id(target3_x).state <= id(zone1_end_x).state) &&
+            (id(target3_y).state >= id(zone1_begin_y).state && id(target3_y).state <= id(zone1_end_y).state)
+            )
+          );
+          id(zone1_occupancy).publish_state(zone_one_active);
+
+          bool zone_two_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone2_begin_x).state && id(target1_x).state <= id(zone2_end_x).state) &&
+            (id(target1_y).state >= id(zone2_begin_y).state && id(target1_y).state <= id(zone2_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone2_begin_x).state && id(target2_x).state <= id(zone2_end_x).state) &&
+            (id(target2_y).state >= id(zone2_begin_y).state && id(target2_y).state <= id(zone2_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone2_begin_x).state && id(target3_x).state <= id(zone2_end_x).state) &&
+            (id(target3_y).state >= id(zone2_begin_y).state && id(target3_y).state <= id(zone2_end_y).state)
+            )
+          );
+          id(zone2_occupancy).publish_state(zone_two_active);
+
+          bool zone_three_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone3_begin_x).state && id(target1_x).state <= id(zone3_end_x).state) &&
+            (id(target1_y).state >= id(zone3_begin_y).state && id(target1_y).state <= id(zone3_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone3_begin_x).state && id(target2_x).state <= id(zone3_end_x).state) &&
+            (id(target2_y).state >= id(zone3_begin_y).state && id(target2_y).state <= id(zone3_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone3_begin_x).state && id(target3_x).state <= id(zone3_end_x).state) &&
+            (id(target3_y).state >= id(zone3_begin_y).state && id(target3_y).state <= id(zone3_end_y).state)
+            )
+          );
+          id(zone3_occupancy).publish_state(zone_three_active);
+
+          bool zone_four_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone4_begin_x).state && id(target1_x).state <= id(zone4_end_x).state) &&
+            (id(target1_y).state >= id(zone4_begin_y).state && id(target1_y).state <= id(zone4_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone4_begin_x).state && id(target2_x).state <= id(zone4_end_x).state) &&
+            (id(target2_y).state >= id(zone4_begin_y).state && id(target2_y).state <= id(zone4_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone4_begin_x).state && id(target3_x).state <= id(zone4_end_x).state) &&
+            (id(target3_y).state >= id(zone4_begin_y).state && id(target3_y).state <= id(zone4_end_y).state)
+            )
+          );
+          id(zone4_occupancy).publish_state(zone_four_active);
+
 
 
 
