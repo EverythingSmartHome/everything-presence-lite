@@ -10,8 +10,8 @@ esphome:
   friendly_name: ${friendly_name}
   name_add_mac_suffix: True
   project: 
-    name: EverythingSmartTechnology.Everything Presence Lite
-    version: "1.0.1"
+    name: EverythingSmartTechnology.Everything Presence Lite Fast
+    version: "1.1.0"
 
 esp32:
   board: esp32dev
@@ -613,116 +613,70 @@ uart:
             id(target3_angle).publish_state(0);
           }
 
-          int zone1_count = 0;      
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone1_begin_x).state && id(target1_x).state <= id(zone1_end_x).state) &&
-                  (id(target1_y).state >= id(zone1_begin_y).state && id(target1_y).state <= id(zone1_end_y).state)) {
-                  zone1_count++;
-              }
-          }
+          bool zone_one_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone1_begin_x).state && id(target1_x).state <= id(zone1_end_x).state) &&
+            (id(target1_y).state >= id(zone1_begin_y).state && id(target1_y).state <= id(zone1_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone1_begin_x).state && id(target2_x).state <= id(zone1_end_x).state) &&
+            (id(target2_y).state >= id(zone1_begin_y).state && id(target2_y).state <= id(zone1_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone1_begin_x).state && id(target3_x).state <= id(zone1_end_x).state) &&
+            (id(target3_y).state >= id(zone1_begin_y).state && id(target3_y).state <= id(zone1_end_y).state)
+            )
+          );
+          id(zone1_occupancy).publish_state(zone_one_active);
 
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone1_begin_x).state && id(target2_x).state <= id(zone1_end_x).state) &&
-                  (id(target2_y).state >= id(zone1_begin_y).state && id(target2_y).state <= id(zone1_end_y).state)) {
-                  zone1_count++;
-              }
-          }
+          bool zone_two_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone2_begin_x).state && id(target1_x).state <= id(zone2_end_x).state) &&
+            (id(target1_y).state >= id(zone2_begin_y).state && id(target1_y).state <= id(zone2_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone2_begin_x).state && id(target2_x).state <= id(zone2_end_x).state) &&
+            (id(target2_y).state >= id(zone2_begin_y).state && id(target2_y).state <= id(zone2_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone2_begin_x).state && id(target3_x).state <= id(zone2_end_x).state) &&
+            (id(target3_y).state >= id(zone2_begin_y).state && id(target3_y).state <= id(zone2_end_y).state)
+            )
+          );
+          id(zone2_occupancy).publish_state(zone_two_active);
 
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone1_begin_x).state && id(target3_x).state <= id(zone1_end_x).state) &&
-                  (id(target3_y).state >= id(zone1_begin_y).state && id(target3_y).state <= id(zone1_end_y).state)) {
-                  zone1_count++;
-              }
-          }
+          bool zone_three_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone3_begin_x).state && id(target1_x).state <= id(zone3_end_x).state) &&
+            (id(target1_y).state >= id(zone3_begin_y).state && id(target1_y).state <= id(zone3_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone3_begin_x).state && id(target2_x).state <= id(zone3_end_x).state) &&
+            (id(target2_y).state >= id(zone3_begin_y).state && id(target2_y).state <= id(zone3_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone3_begin_x).state && id(target3_x).state <= id(zone3_end_x).state) &&
+            (id(target3_y).state >= id(zone3_begin_y).state && id(target3_y).state <= id(zone3_end_y).state)
+            )
+          );
+          id(zone3_occupancy).publish_state(zone_three_active);
 
-          if (zone1_count > 0) {
-              id(zone1_occupancy).publish_state(true);
-              id(zone1_target_count).publish_state(zone1_count);
-          } else {
-              id(zone1_occupancy).publish_state(false);
-              id(zone1_target_count).publish_state(0);
-          }
+          bool zone_four_active = (
+            (id(target1_active).state == true &&
+            (id(target1_x).state >= id(zone4_begin_x).state && id(target1_x).state <= id(zone4_end_x).state) &&
+            (id(target1_y).state >= id(zone4_begin_y).state && id(target1_y).state <= id(zone4_end_y).state)
+               ) ||
+            (id(target2_active).state == true  &&
+            (id(target2_x).state >= id(zone4_begin_x).state && id(target2_x).state <= id(zone4_end_x).state) &&
+            (id(target2_y).state >= id(zone4_begin_y).state && id(target2_y).state <= id(zone4_end_y).state)
+            )||
+            (id(target3_active).state == true  &&
+            (id(target3_x).state >= id(zone4_begin_x).state && id(target3_x).state <= id(zone4_end_x).state) &&
+            (id(target3_y).state >= id(zone4_begin_y).state && id(target3_y).state <= id(zone4_end_y).state)
+            )
+          );
+          id(zone4_occupancy).publish_state(zone_four_active);
 
-          int zone2_count = 0;
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone2_begin_x).state && id(target1_x).state <= id(zone2_end_x).state) &&
-                  (id(target1_y).state >= id(zone2_begin_y).state && id(target1_y).state <= id(zone2_end_y).state)) {
-                  zone2_count++;
-              }
-          }
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone2_begin_x).state && id(target2_x).state <= id(zone2_end_x).state) &&
-                  (id(target2_y).state >= id(zone2_begin_y).state && id(target2_y).state <= id(zone2_end_y).state)) {
-                  zone2_count++;
-              }
-          }
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone2_begin_x).state && id(target3_x).state <= id(zone2_end_x).state) &&
-                  (id(target3_y).state >= id(zone2_begin_y).state && id(target3_y).state <= id(zone2_end_y).state)) {
-                  zone2_count++;
-              }
-          }
-          if (zone2_count > 0) {
-              id(zone2_occupancy).publish_state(true);
-              id(zone2_target_count).publish_state(zone2_count);
-          } else {
-              id(zone2_occupancy).publish_state(false);
-              id(zone2_target_count).publish_state(0);
-          }
-
-          int zone3_count = 0;
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone3_begin_x).state && id(target1_x).state <= id(zone3_end_x).state) &&
-                  (id(target1_y).state >= id(zone3_begin_y).state && id(target1_y).state <= id(zone3_end_y).state)) {
-                  zone3_count++;
-              }
-          }
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone3_begin_x).state && id(target2_x).state <= id(zone3_end_x).state) &&
-                  (id(target2_y).state >= id(zone3_begin_y).state && id(target2_y).state <= id(zone3_end_y).state)) {
-                  zone3_count++;
-              }
-          }
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone3_begin_x).state && id(target3_x).state <= id(zone3_end_x).state) &&
-                  (id(target3_y).state >= id(zone3_begin_y).state && id(target3_y).state <= id(zone3_end_y).state)) {
-                  zone3_count++;
-              }
-          }
-          if (zone3_count > 0) {
-              id(zone3_occupancy).publish_state(true);
-              id(zone3_target_count).publish_state(zone3_count);
-          } else {
-              id(zone3_occupancy).publish_state(false);
-              id(zone3_target_count).publish_state(0);
-          }
-
-          int zone4_count = 0;
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone4_begin_x).state && id(target1_x).state <= id(zone4_end_x).state) &&
-                  (id(target1_y).state >= id(zone4_begin_y).state && id(target1_y).state <= id(zone4_end_y).state)) {
-                  zone4_count++;
-              }
-          }
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone4_begin_x).state && id(target2_x).state <= id(zone4_end_x).state) &&
-                  (id(target2_y).state >= id(zone4_begin_y).state && id(target2_y).state <= id(zone4_end_y).state)) {
-                  zone4_count++;
-              }
-          }
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone4_begin_x).state && id(target3_x).state <= id(zone4_end_x).state) &&
-                  (id(target3_y).state >= id(zone4_begin_y).state && id(target3_y).state <= id(zone4_end_y).state)) {
-                  zone4_count++;
-              }
-          }
-          if (zone4_count > 0) {
-              id(zone4_occupancy).publish_state(true);
-              id(zone4_target_count).publish_state(zone4_count);
-          } else {
-              id(zone4_occupancy).publish_state(false);
-              id(zone4_target_count).publish_state(0);
-          }
           
 
 button:
