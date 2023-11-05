@@ -480,7 +480,88 @@ uart:
     after:
      delimiter: [0X55, 0XCC]
     sequence:
-      - lambda: UARTDebug::log_hex(direction, bytes, ' ');
+      - lambda: |-
+          if ((millis() - id(mmwave_update_time)) <= 1000) {
+            return;
+          };
+          id(mmwave_update_time) = millis();
+
+          int16_t p1_x = (uint16_t((bytes[5] << 8) | bytes[4] ));
+          if ((bytes[5] & 0x80) >> 7){
+            p1_x -= pow(2, 15);
+          }else{
+            p1_x = 0 - p1_x; // was 0 - p1_x;
+          }
+          p1_x = -p1_x;
+
+          int16_t p1_y = (uint16_t((bytes[7] << 8) | bytes[6] ));
+          if ((bytes[7] & 0x80) >> 7){
+            p1_y -= pow(2, 15);
+          }else{
+            p1_y = 0 - p1_y;
+          }
+
+          float p1_speed = (bytes[9] << 8 | bytes[8] );
+          if ((bytes[9] & 0x80) >> 7){
+            p1_speed -= pow(2, 15);
+          }else{
+            p1_speed = 0 - p1_speed;
+          }
+          int16_t p1_distance_resolution = (uint16_t((bytes[11] << 8) | bytes[10] ));
+
+          int16_t p2_x = (uint16_t((bytes[13] << 8) | bytes[12] ));
+          if ((bytes[13] & 0x80) >> 7){
+            p2_x -=  pow(2, 15);
+          }else{
+            p2_x = 0 - p2_x;
+          }
+
+          int16_t p2_y = (uint16_t((bytes[15] << 8) | bytes[14] ));
+          if ((bytes[15] & 0x80) >> 7){
+            p2_y -= pow(2, 15);
+          }else{
+            p2_y = 0 - p2_y;
+          }
+
+          float p2_speed = (bytes[17] << 8 | bytes[16] );
+          if ((bytes[17] & 0x80) >> 7){
+            p2_speed -= pow(2, 15);
+          }else{
+            p2_speed = 0 - p2_speed;
+          }
+          int16_t p2_distance_resolution = (uint16_t((bytes[19] << 8) | bytes[18] ));
+
+          int16_t p3_x = (uint16_t((bytes[21] << 8) | bytes[20] ));
+          if ((bytes[21] & 0x80) >> 7){
+            p3_x -=  pow(2, 15);
+          }else{
+            p3_x = 0 - p3_x;
+          }
+
+          int16_t p3_y = (uint16_t((bytes[23] << 8) | bytes[22] ));
+          if ((bytes[23] & 0x80) >> 7){
+            p3_y -= pow(2, 15);
+          }else{
+            p3_y = 0 - p3_y;
+          }
+
+          float p3_speed = (bytes[25] << 8 | bytes[24] );
+          if ((bytes[25] & 0x80) >> 7){
+            p3_speed -= pow(2, 15);
+          }else{
+            p3_speed = 0 - p3_speed;
+          }
+          int16_t p3_distance_resolution = (uint16_t((bytes[27] << 8) | bytes[26] ));
+
+          const float RADIANS_TO_DEGREES = 180.0 / 3.14159265358979323846;
+          float p1_angle = atan2(p1_y, p1_x) * RADIANS_TO_DEGREES;
+          float p2_angle = atan2(p2_y, p2_x) * RADIANS_TO_DEGREES;
+          float p3_angle = atan2(p3_y, p3_x) * RADIANS_TO_DEGREES;
+
+          float p1_distance = sqrt(p1_x * p1_x + p1_y * p1_y);
+          float p2_distance = sqrt(p2_x * p2_x + p2_y * p2_y);
+          float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
+          
 
 
 
