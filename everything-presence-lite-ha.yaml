@@ -37,10 +37,10 @@ improv_serial:
 
 esp32_ble_tracker:
   scan_parameters:
-    active: true
+    active: false
 
 bluetooth_proxy:
-  active: true
+  active: false
 
 globals:
   - id: mmwave_update_time
