@@ -563,6 +563,57 @@ uart:
           float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
           
 
+          float max_distance = float(id(distance).state) * 10;
+          if (p1_distance < max_distance) {
+            id(target1_x).publish_state(p1_x * -1);
+            id(target1_y).publish_state(p1_y);
+            id(target1_speed).publish_state(p1_speed / 100);
+            id(target1_resolution).publish_state(p1_distance_resolution);
+            id(target1_distance).publish_state(p1_distance);
+            id(target1_angle).publish_state(p1_angle - 90);
+          } else {
+            id(target1_x).publish_state(0);
+            id(target1_y).publish_state(0);
+            id(target1_speed).publish_state(0);
+            id(target1_resolution).publish_state(0);
+            id(target1_distance).publish_state(0);
+            id(target1_angle).publish_state(0);
+          }
+
+          if (p2_distance < max_distance) {
+            id(target2_x).publish_state(p2_x);
+            id(target2_y).publish_state(p2_y);
+            id(target2_speed).publish_state(p2_speed / 100);
+            id(target2_resolution).publish_state(p2_distance_resolution);
+            id(target2_distance).publish_state(p2_distance);
+            id(target2_angle).publish_state(p2_angle);
+          } else {
+            id(target2_x).publish_state(0);
+            id(target2_y).publish_state(0);
+            id(target2_speed).publish_state(0);
+            id(target2_resolution).publish_state(0);
+            id(target2_distance).publish_state(0);
+            id(target2_angle).publish_state(0);
+          }
+
+          if (p3_distance < max_distance) {
+            id(target3_x).publish_state(p3_x);
+            id(target3_y).publish_state(p3_y);
+            id(target3_speed).publish_state(p3_speed / 100);
+            id(target3_resolution).publish_state(p3_distance_resolution);
+            id(target3_distance).publish_state(p3_distance);
+            id(target3_angle).publish_state(p3_angle);
+          } else {
+            id(target3_x).publish_state(0);
+            id(target3_y).publish_state(0);
+            id(target3_speed).publish_state(0);
+            id(target3_resolution).publish_state(0);
+            id(target3_distance).publish_state(0);
+            id(target3_angle).publish_state(0);
+          }
+
+
+
 
 
 
