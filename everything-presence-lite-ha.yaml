@@ -77,17 +77,25 @@ binary_sensor:
   - platform: template
     name: "Zone 1 Occupancy"
     id: zone1_occupancy
+    filters:
+      - delayed_off: !lambda return (id(zone_1_off_delay).state *1000);
   - platform: template
     name: "Zone 2 Occupancy"
     id: zone2_occupancy
+    filters:
+      - delayed_off: !lambda return (id(zone_2_off_delay).state *1000);
     disabled_by_default: true
   - platform: template
     name: "Zone 3 Occupancy"
     id: zone3_occupancy
+    filters:
+      - delayed_off: !lambda return (id(zone_3_off_delay).state *1000);
     disabled_by_default: true
   - platform: template
     name: "Zone 4 Occupancy"
     id: zone4_occupancy
+    filters:
+      - delayed_off: !lambda return (id(zone_4_off_delay).state *1000);
     disabled_by_default: true
   - platform: template
     name: "Target 1 Active"
@@ -183,6 +191,16 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 6000
+  - platform: template
+    name: "Zone 1 Occupancy Off Delay"
+    id: zone_1_off_delay
+    max_value: 600
+    min_value: 0
+    step: 1
+    optimistic: True
+    restore_value: True
+    unit_of_measurement: "s"
+    initial_value: 15
 
   - platform: template
     name: "Zone 2 Begin X"
@@ -223,6 +241,17 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    disabled_by_default: true
+  - platform: template
+    name: "Zone 2 Occupancy Off Delay"
+    id: zone_2_off_delay
+    max_value: 600
+    min_value: 0
+    step: 1
+    optimistic: True
+    restore_value: True
+    unit_of_measurement: "s"
+    initial_value: 15
     disabled_by_default: true
 
   - platform: template
@@ -265,6 +294,17 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+  - platform: template
+    name: "Zone 3 Occupancy Off Delay"
+    id: zone_3_off_delay
+    max_value: 600
+    min_value: 0
+    step: 1
+    optimistic: True
+    restore_value: True
+    unit_of_measurement: "s"
+    initial_value: 15
+    disabled_by_default: true
 
   - platform: template
     name: "Zone 4 Begin X"
@@ -305,6 +345,17 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    disabled_by_default: true
+  - platform: template
+    name: "Zone 4 Occupancy Off Delay"
+    id: zone_4_off_delay
+    max_value: 600
+    min_value: 0
+    step: 1
+    optimistic: True
+    restore_value: True
+    unit_of_measurement: "s"
+    initial_value: 15
     disabled_by_default: true
 
 sensor:
