@@ -9,7 +9,7 @@ on:
       - '**.yaml'
 
 jobs:
-  publish-everything-presence-one:
+  publish-everything-presence-lite:
     name: Publish Everything Presence Lite
     uses: esphome/workflows/.github/workflows/publish.yml@main
     with:
@@ -18,15 +18,15 @@ jobs:
       manifest_filename: everything-presence-lite-ha-manifest.json
       clean: false
       esphome_version: latest
-#  publish-everything-presence-one-smartthings:
-#    name: Publish Everything Presence One Smartthings
-#    uses: esphome/workflows/.github/workflows/publish.yml@main
-#    with:
-#      files: everything-presence-one-st.yaml
-#      name: Everything Presence One SmartThings
-#      manifest_filename: everything-presence-one-st-manifest.json
-#      clean: false
-#      esphome_version: latest
+  publish-everything-presence-lite-no-ble:
+    name: Publish Everything Presence Lite No BLE
+    uses: esphome/workflows/.github/workflows/publish.yml@main
+    with:
+      files: everything-presence-lite-ha-no-ble.yaml
+      name: Everything Presence Lite No BLE
+      manifest_filename: everything-presence-lite-no-ble-manifest.json
+      clean: false
+      esphome_version: latest
 #  publish-everything-presence-one-ha-beta:
 #    name: Publish Everything Presence One Home Assistant Beta
 #    uses: esphome/workflows/.github/workflows/publish.yml@main
