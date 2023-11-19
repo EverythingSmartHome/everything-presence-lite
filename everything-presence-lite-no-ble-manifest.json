@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "everything-presence-lite-no-ble-esp32/everything-presence-lite--no-ble-esp32.bin",
+          "path": "everything-presence-lite-esp32/everything-presence-lite-esp32.bin",
           "offset": 0
         }
       ]
