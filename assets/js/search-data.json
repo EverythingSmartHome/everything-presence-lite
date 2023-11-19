@@ -196,40 +196,33 @@
     "relUrl": "/tuning.html#distance"
   },"28": {
     "doc": "Tuning",
-    "title": "Sensitivity and Latency",
-    "content": "Finally you can adjust the sensitivity and On Latency - both of these paremeters will take the most tuning to suit your environment and do require some on the fly tweaking. Sensitivity is how much motion is required to trigger the sensor. On Latency sets for how long the object must be moving for, before it is considered as moving and thus triggering the sensor. Adding a very small on latency to the sensor will make the mmWave sensor slightly slower to respond, but can drastically reduce detections from unwanted objects, such as a plant moving. Making the mmWave slower to respond should have zero impact, since I would recommend using the EPL’s PIR for things that you want to trigger on. I would recommend starting with 0s of on latency first, which will give you the fastest response time as a nice to have. Then start at a medium sensitivity at a 4-5. Observe the results over a good period of time and check to see if firstly that it is detecting presence accurately when you are in the room, and secondly that is changing to clear (no detection) when you aren’t in the room. If the sensor occasionally changes to not detected for a few seconds when you are in the room, you probably need more sensitivity. However, increasing sensitivity can sometimes cause detections from unwanted objects when you are not in the room, so to combat this, use the on latency and add 0.5s. 0.5s of on latency is generally enough to clear up all detections from undesireable objects, but you can increase more if needed. Start low and increment one step at a time. The process I use is: . | Start at 0s with 4 sensitivity | Observe results | Increase one sensitivity level to get accurate detections when I am in the room | Observe results and repeat until desireable results achieved | Once sensitvity is correct, observe any detections when room is un-occupied | If detections are being triggered when room is un-occupied, add 0.5s to on latency | Observe results, if needed add another 0.5s to on latency | Optional - Adding on latency may allow you to increase sensitivity if needed. | . Ultimately, the best settings for you will come down to your specific room and will depend on your environment. ",
-    "url": "/everything-presence-lite/tuning.html#sensitivity-and-latency",
-    
-    "relUrl": "/tuning.html#sensitivity-and-latency"
-  },"29": {
-    "doc": "Tuning",
     "title": "Tuning",
     "content": " ",
     "url": "/everything-presence-lite/tuning.html",
     
     "relUrl": "/tuning.html"
-  },"30": {
+  },"29": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Updating and Connecting To WiFi",
     "content": "This page will help you to flash and update your Everything Presence Lite to the latest version and get it connected to WiFi! . ",
     "url": "/everything-presence-lite/updating.html#updating-and-connecting-to-wifi",
     
     "relUrl": "/updating.html#updating-and-connecting-to-wifi"
-  },"31": {
+  },"30": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Everything Presence Lite ESPHome Firmware Install",
     "content": "Here you can install the latest ESPHome firmware on the Everything Presence Lite board for direct integration with Home Assistant . First, make sure you have the Lite connected to a USB port on your computer and select the platform you would like to install below. Hit the connect button, select the USB port from the list and then hit the install button to begin installing the latest software on your Everything Presence Lite. Once the install has completed, you can then connect the Lite to your WiFi easily and securely. If you do not see a “Connect” button below, use a supported web browser like Google Chrome. After clicking the “Connect” button, if you do not see a “USB Serial” port listed, or you get the error “Failed to open serial port.”, you may need to install the CH340 driver. The installer should give you links to the latest driver. Home Assistant . Installs the standard firmware on your Everything Presence Lite for Home Assistant, with Bluetooth Proxy enabled. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server. Home Assistant (No Bluetooth Proxy) . Installs the standard firmware on your Everything Presence Lite for Home Assistant but with Bluetooh Proxy disabled which can help with performance or intermittent connectivity issues. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server. ",
     "url": "/everything-presence-lite/updating.html#everything-presence-lite-esphome-firmware-install",
     
     "relUrl": "/updating.html#everything-presence-lite-esphome-firmware-install"
-  },"32": {
+  },"31": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Next Steps",
     "content": "With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant. Connecting to Home Assistant . ",
     "url": "/everything-presence-lite/updating.html#next-steps",
     
     "relUrl": "/updating.html#next-steps"
-  },"33": {
+  },"32": {
     "doc": "Updating and Connecting to WiFi",
     "title": "Updating and Connecting to WiFi",
     "content": " ",
