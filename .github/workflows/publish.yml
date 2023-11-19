@@ -9,13 +9,22 @@ on:
       - '**.yaml'
 
 jobs:
-  publish-everything-presence-one:
+  publish-everything-presence-lite-ha:
     name: Publish Everything Presence Lite
     uses: esphome/workflows/.github/workflows/publish.yml@main
     with:
       files: everything-presence-lite-ha.yaml
       name: Everything Presence Lite HA
       manifest_filename: everything-presence-lite-ha-manifest.json
+      clean: false
+      esphome_version: latest
+  publish-everything-presence-lite-no-ble:
+    name: Publish Everything Presence Lite without BLE
+    uses: esphome/workflows/.github/workflows/publish.yml@main
+    with:
+      files: everything-presence-lite-ha-no-ble.yaml
+      name: Everything Presence Lite HA No BLE
+      manifest_filename: everything-presence-lite-ha-no-ble-manifest.json
       clean: false
       esphome_version: latest
 #  publish-everything-presence-one-smartthings:
