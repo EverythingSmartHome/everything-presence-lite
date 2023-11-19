@@ -28,12 +28,12 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
 <div class="radios">
   <label>
     <input type="radio" name="type" value="everything-presence-lite-ha" checked/>
-    <img src="images/everything-presence-one-ha.png" alt="Everything Presence Lite Home Assistant" width="200" height="250"/>
+    <img src="images/everything-presence-one-ha-ble.png" alt="Everything Presence Lite Home Assistant" width="200" height="250"/>
   </label>
-  <!-- <label class="beta">
-          <input type="radio" name="type" value="everything-presence-lite-ha-beta" />
-          <img src="images/everything-presence-one-ha.png" alt="Everything Presence Lite Home Assistant Beta" width="200" height="250"/>
-        </label> -->
+  <label class="beta">
+    <input type="radio" name="type" value="everything-presence-lite-ha-no-ble" />
+    <img src="images/everything-presence-one-ha.png" alt="Everything Presence Lite Home Assistant No BLE" width="200" height="250"/>
+  </label>
 </div>
 
 <p class="button-row" align="left">
@@ -43,16 +43,16 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
 <div class="hidden info everything-presence-lite-ha">
   <h3>Home Assistant</h3>
     <p>
-      Installs the correct software on your Everything Presence Lite for <a href="https://home-assistant.io">Home Assistant</a>. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server.
+      Installs the standard firmware on your Everything Presence Lite for <a href="https://home-assistant.io">Home Assistant</a>, with Bluetooth Proxy enabled. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server.
     </p>
 </div>
 
-<!-- <div class="hidden info everything-presence-lite-ha-beta">
-  <h3>Home Assistant (Beta)</h3>
+<div class="hidden info everything-presence-lite-ha-no-ble">
+  <h3>Home Assistant (No Bluetooth Proxy)</h3>
     <p>
-      Beta firmware for using the Lite with Home Assistant. Do not use unless you are comfortable with troubleshooting and reporting bugs.
+      Installs the standard firmware on your Everything Presence Lite for <a href="https://home-assistant.io">Home Assistant</a> but with Bluetooh Proxy disabled which can help with performance or intermittent connectivity issues. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server.
     </p>
-</div> -->
+</div>
 
 ## Next Steps
 
