@@ -37,7 +37,7 @@ dashboard_import:
 improv_serial:
 
 esp32_improv:
-  authorizer: NONE
+  authorizer: none
 
 globals:
   - id: mmwave_update_time
