@@ -36,7 +36,7 @@ dashboard_import:
 
 improv_serial:
 
-improv_esp32:
+esp32_improv:
   authorizer: NONE
 
 globals:
