@@ -46,35 +46,3 @@ Distance is really important to set correctly and should be set according to the
 Don't set the distance too long for the room it is place in - this can cause undesirable results.
 
 You don't need to be very accurate with the distance, just a rough ball park within roughly 0.5m.
-
-## Sensitivity and Latency
-
-Finally you can adjust the sensitivity and On Latency - both of these paremeters will take the most tuning to suit your environment and do require some on the fly tweaking.
-
-Sensitivity is how much motion is required to trigger the sensor.
-
-On Latency sets for how long the object must be moving for, before it is considered as moving and thus triggering the sensor. Adding a very small on latency to the sensor will make the mmWave sensor slightly slower to respond, but **can** drastically reduce detections from unwanted objects, such as a plant moving.
-
-{: .important }
-Making the mmWave slower to respond should have zero impact, since I would recommend using the EPL's PIR for things that you want to trigger on.
-
-I would recommend starting with 0s of on latency first, which will give you the fastest response time as a nice to have. Then start at a medium sensitivity at a 4-5.
-
-Observe the results over a good period of time and check to see if firstly that it is detecting presence accurately when you are in the room, and secondly that is changing to clear (no detection) when you aren't in the room.
-
-If the sensor occasionally changes to not detected for a few seconds when you are in the room, you probably need more sensitivity. However, increasing sensitivity can sometimes cause detections from unwanted objects when you are not in the room, so to combat this, use the on latency and add 0.5s.
-
-0.5s of on latency is generally enough to clear up all detections from undesireable objects, but you can increase more if needed. Start low and increment one step at a time.
-
-The process I use is:
-
-1. Start at 0s with 4 sensitivity
-2. Observe results
-3. Increase one sensitivity level to get accurate detections when I am in the room
-4. Observe results and repeat until desireable results achieved
-5. Once sensitvity is correct, observe any detections when room is un-occupied
-6. If detections are being triggered when room is un-occupied, add 0.5s to on latency
-7. Observe results, if needed add another 0.5s to on latency
-8. Optional - Adding on latency may allow you to increase sensitivity if needed.
-
-Ultimately, the best settings for you will come down to your specific room and will depend on your environment.
