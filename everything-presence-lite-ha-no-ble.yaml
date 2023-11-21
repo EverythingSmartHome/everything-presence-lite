@@ -36,9 +36,6 @@ dashboard_import:
 
 improv_serial:
 
-esp32_improv:
-  authorizer: none
-
 globals:
   - id: mmwave_update_time
     type: unsigned long
