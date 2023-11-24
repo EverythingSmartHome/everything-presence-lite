@@ -1,5 +1,5 @@
 substitutions:
-  name: "everything-presence-lite-2"
+  name: "everything-presence"
   friendly_name: "Everything Presence Lite"
   illuminance_update_interval: "2s"
   hidden_ssid: "false"
