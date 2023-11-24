@@ -18,13 +18,13 @@ jobs:
       manifest_filename: everything-presence-lite-ha-manifest.json
       clean: false
       esphome_version: latest
-  publish-everything-presence-lite-no-ble:
+  publish-everything-presence-lite-ha-no-ble:
     name: Publish Everything Presence Lite No BLE
     uses: esphome/workflows/.github/workflows/publish.yml@main
     with:
       files: everything-presence-lite-ha-no-ble.yaml
       name: Everything Presence Lite No BLE
-      manifest_filename: everything-presence-lite-no-ble-manifest.json
+      manifest_filename: everything-presence-lite-ha-no-ble-manifest.json
       clean: false
       esphome_version: latest
 #  publish-everything-presence-one-ha-beta:
