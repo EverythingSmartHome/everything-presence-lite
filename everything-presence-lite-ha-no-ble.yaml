@@ -61,13 +61,9 @@ binary_sensor:
     filters:
       - delayed_off: !lambda return (id(off_delay).state *1000);
     lambda: |-
-      if(id(target1_x).state != 0) {
-        return true;
-      } else if(id(target1_y).state != 0) {
-        return true;
-      } else {
-        return false;
-      }
+      return (id(target1_distance).state != 0
+        || id(target2_distance).state != 0
+        || id(target3_distance).state != 0);
   - platform: template
     name: "Zone 1 Occupancy"
     id: zone1_occupancy
