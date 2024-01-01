@@ -31,7 +31,7 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
         <label>
             <input type="radio" name="platform" value="HomeAssistant" />
             <div class="name">Home Assistant</div>
-            <div class="description">Choose this for Home Assistant integration, with additional options for Bluetooth.</div>
+            <div class="description">Choose this for Home Assistant integration, with additional options for Bluetooth Proxy</div>
         </label>
     </div>
 
