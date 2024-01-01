@@ -5,4 +5,4 @@ gem "jekyll", "~> 4.3.2" # installed by `gem jekyll`
 gem "jekyll-remote-theme"
 
 #gem "just-the-docs", "0.4.0.rc3" # currently the latest pre-release
-gem "just-the-docs"
+#gem "just-the-docs"
