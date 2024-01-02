@@ -29,9 +29,9 @@ jobs:
           cp *.json _site/
           cp -r everything-presence-lite-esp32/ _site/  # Copy esp32-presence directory to _site directory
 
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          keep_files: true
+        id: deployment
+        uses: actions/deploy-pages@v4  
