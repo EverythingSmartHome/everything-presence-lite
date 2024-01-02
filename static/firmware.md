@@ -46,7 +46,7 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
             <label>
                 <input type="radio" name="haOption" value="NoBluetooth" />
                 <div class="name">No Bluetooth</div>
-                <div class="description">Choose this option to disable Bluetooth Proxy and Improv, which can improve stability of the WiFi connection.</div>
+                <div class="description">Choose this option to disable Bluetooth Proxy and Improv, which can improve stability of the WiFi connection and/or you don't need Bluetooth Proxy.</div>
             </label>
         </div>
     </div>
