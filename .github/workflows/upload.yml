@@ -1,0 +1,34 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - gh-pages  # Set this to the branch containing your site source
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages  # Set this to the branch containing your site source
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'  # Specify your Ruby version here
+          bundler-cache: true
+
+      - name: Copy files
+        run: |
+          cp -r everything-presence-esp32/ _site/everything-presence-esp32/  # Copy manifest.json to _site directory
+          cp *.json _site/
+          cp -r everything-presence-lite-esp32 _site/esp32-presence/  # Copy esp32-presence directory to _site directory
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
