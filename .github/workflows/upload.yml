@@ -30,7 +30,7 @@ jobs:
 
       - name: Copy files
         run: |
-          cp -r * _site/
+          cp -r ./* _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
