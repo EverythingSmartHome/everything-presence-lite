@@ -25,9 +25,9 @@ jobs:
 
       - name: Copy files
         run: |
-          cp -r everything-presence-esp32 _site/  # Copy manifest.json to _site directory
+          cp -r everything-presence-esp32/ _site/  # Copy manifest.json to _site directory
           cp *.json _site/
-          cp -r everything-presence-lite-esp32 _site/  # Copy esp32-presence directory to _site directory
+          cp -r everything-presence-lite-esp32/ _site/  # Copy esp32-presence directory to _site directory
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
