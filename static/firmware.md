@@ -79,7 +79,7 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
                         if (this.value === "Bluetooth") {
                             installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-manifest.json");
                         } else if (this.value === "NoBluetooth") {
-                            installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-ble-manifest.json");
+                            installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-no-ble-manifest.json");
                         }
                     })
                 );
