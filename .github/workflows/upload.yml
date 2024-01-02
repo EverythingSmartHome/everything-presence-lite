@@ -28,11 +28,13 @@ jobs:
           ruby-version: '3.2'  # Specify your Ruby version here
           bundler-cache: true
 
-      - name: Copy files
-        run: |
-          mkdir _site && cp -r ./* _site/
+      # - name: Copy files
+      #   run: |
+      #     mkdir _site && cp -r ./* _site/
 
       - name: Upload Pages artifact
+        with:
+          path: "./"
         uses: actions/upload-pages-artifact@v2
 
   # Deployment job
