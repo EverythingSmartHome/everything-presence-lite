@@ -1,0 +1,51 @@
+.hidden {
+    display: none;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1, .question-prompt {
+    text-align: center;
+}
+.types label {
+    display: block;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+.types label:hover {
+    background: #f0f0f0;
+}
+.types input {
+    margin-right: 10px;
+}
+.description {
+    font-size: 0.9em;
+    color: #666;
+}
+.hidden {
+    display: none;
+}
+
+/* Remove that for solution 2: same container, smaller text size */
+@media (min-width: 50rem) {
+    .site-header {
+        min-height: 100px;
+    }
+}
+
+@media (min-width: 50rem) {
+    .site-nav {
+        padding-top: 1rem;
+    }
+}
