@@ -1,0 +1,93 @@
+name: Build and Publish ESPHome firmware
+
+on:
+  workflow_call:
+    inputs:
+      files:
+        description: Comma-separated list of files to build.
+        required: true
+        type: string
+      name:
+        description: Name of the firmware to publish.
+        required: false
+        type: string
+        default: ESPHome
+      clean:
+        description: Remove deleted files from the build
+        required: false
+        type: boolean
+        default: true
+      manifest_filename:
+        description: Filename of the manifest to write.
+        required: false
+        type: string
+        default: manifest.json
+      esphome_version:
+        description: Version of ESPHome to build for.
+        required: false
+        type: string
+        default: latest
+      directory_name:
+        description: Name of the output folder
+        required: true
+        type: string
+        default: esp32
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.files-array.outputs.files }}
+    steps:
+      - id: files-array
+        run: |
+          files=$(echo "${{ inputs.files }}" | jq -Rcn 'inputs | . / ","')
+          echo ::set-output name=files::$files
+
+  build:
+    name: Build ESPHome binary for ${{ matrix.file }}
+    needs: [prepare]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJson(needs.prepare.outputs.files) }}
+    outputs:
+      esphome-version: ${{ steps.esphome-build.outputs.esphome-version }}
+    steps:
+      - uses: actions/checkout@v3.5.3
+      - uses: esphome/build-action@v1.5.2
+        id: esphome-build
+        with:
+          yaml_file: ${{ matrix.file }}
+          version: ${{ inputs.esphome_version }}
+      - run: |
+          mkdir output
+          mv "${{ inputs.directory_name }}" output/
+      - uses: actions/upload-artifact@v3.1.2
+        with:
+          name: ${{ inputs.name }}
+          path: output
+
+  publish:
+    name: Publish new firmware and website to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3.5.3
+      - uses: actions/download-artifact@v3.0.2
+        with:
+          path: output
+          name: ${{ inputs.name }}
+
+      - name: Create single manifest.json
+        run: |
+          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.esphome-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
+
+      - run: cp -R static/* output
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          branch: gh-pages
+          folder: output
+          clean: ${{ inputs.clean }}
