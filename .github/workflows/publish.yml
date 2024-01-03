@@ -11,7 +11,7 @@ on:
 jobs:
   publish-everything-presence-lite:
     name: Publish Everything Presence Lite
-    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/publish.yml@main
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
     with:
       files: everything-presence-lite-ha.yaml
       name: Everything Presence Lite HA
@@ -21,7 +21,7 @@ jobs:
       directory_name: everything-presence-lite-ha
   publish-everything-presence-lite-ha-no-ble:
     name: Publish Everything Presence Lite No BLE
-    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/publish.yml@main
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
     with:
       files: everything-presence-lite-ha-no-ble.yaml
       name: Everything Presence Lite No BLE
