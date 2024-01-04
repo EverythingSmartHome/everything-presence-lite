@@ -25,45 +25,44 @@ If you do not see a "Connect" button below, use a supported web browser like Goo
 {: .warning-title }
 After clicking the "Connect" button, if you do not see a "USB Serial" port listed, or you get the error "Failed to open serial port.", you may need to install the CH340 driver. The installer should give you links to the latest driver.
 
-<div class="radios">
-  <label>
-    <input type="radio" name="type" value="everything-presence-lite-ha" checked/>
-    <img src="images/everything-presence-one-ha-ble.png" alt="Everything Presence Lite Home Assistant" width="200" height="250"/>
-  </label>
-  <label class="beta">
-    <input type="radio" name="type" value="everything-presence-lite-ha-no-ble" />
-    <img src="images/everything-presence-one-ha.png" alt="Everything Presence Lite Home Assistant No BLE" width="200" height="250"/>
-  </label>
-</div>
+<div class="container">
+    <div class="question-prompt">Select Smart Home Platform:</div>
+    <div class="types">
+        <label>
+            <input type="radio" name="platform" value="HomeAssistant" />
+            <div class="name">Home Assistant</div>
+            <div class="description">Choose this for Home Assistant integration, with additional options for Bluetooth Proxy</div>
+        </label>
+    </div>
 
-<p class="button-row" align="left">
-  <esp-web-install-button></esp-web-install-button>
-</p>
+    <div id="homeAssistantOptions" class="hidden">
+        <div class="question-prompt">Select Option:</div>
+        <div class="types">
+            <label>
+                <input type="radio" name="haOption" value="Bluetooth" />
+                <div class="name">Bluetooth Proxy</div>
+                <div class="description">Choose this option to enable Bluetooth Proxy and Improv. Can cause connectivity issues with WiFi.</div>
+            </label>
+            <label>
+                <input type="radio" name="haOption" value="NoBluetooth" />
+                <div class="name">No Bluetooth</div>
+                <div class="description">Choose this option to disable Bluetooth Proxy and Improv, which can improve stability of the WiFi connection and/or you don't need Bluetooth Proxy.</div>
+            </label>
+        </div>
+    </div>
 
-<div class="hidden info everything-presence-lite-ha">
-  <h3>Home Assistant</h3>
-    <p>
-      Installs the standard firmware on your Everything Presence Lite for <a href="https://home-assistant.io">Home Assistant</a>, with Bluetooth Proxy enabled. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server.
-    </p>
-</div>
-
-<div class="hidden info everything-presence-lite-ha-no-ble">
-  <h3>Home Assistant (No Bluetooth Proxy)</h3>
-    <p>
-      Installs the standard firmware on your Everything Presence Lite for <a href="https://home-assistant.io">Home Assistant</a> but with Bluetooh Proxy disabled which can help with performance or intermittent connectivity issues. Once installed and connected to WiFi, follow the Home Assistant section to connect the Lite to your Home Assistant server.
-    </p>
+    <esp-web-install-button class="hidden"></esp-web-install-button>
 </div>
 
 ## Next Steps
 
 With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant.
 
-[Connecting to Home Assistant](./Home%20Assistant/connecting-home-assistant.html){: .btn .btn-blue } 
-
+[Connecting to Home Assistant](./Home%20Assistant/connecting-home-assistant.html){: .btn .btn-blue }
 
 <script
-  type="module"
-  src="https://unpkg.com/esp-web-tools@9.0.3/dist/web/install-button.js?module"
+    type="module"
+    src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"
 ></script>
 
 <script>
@@ -81,23 +80,30 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 </script>
 
 <script>
-  document.querySelectorAll('input[name="type"]').forEach((radio) =>
-    radio.addEventListener("change", () => {
-      const button = document.querySelector("esp-web-install-button");
-      button.manifest = `./${radio.value}-manifest.json`;
+    document.querySelectorAll('input[name="platform"]').forEach(radio =>
+        radio.addEventListener("change", function(event) {
+            var selectedPlatform = event.target.value;
+            var homeAssistantOptions = document.getElementById("homeAssistantOptions");
+            var installButton = document.querySelector("esp-web-install-button");
 
-      document.querySelectorAll(".info").forEach((info) => {
-        info.classList.add("hidden");
-      });
-      document
-        .querySelector(`.info.${radio.value}`)
-        .classList.remove("hidden");
-    })
-  );
-  document
-    .querySelector('input[name="type"]:checked')
-    .dispatchEvent(new Event("change"));
-  if (new URLSearchParams(document.location.search).has("beta")) {
-    document.body.classList.add("show-beta");
-  }
+            homeAssistantOptions.classList.add("hidden");
+            installButton.classList.add("hidden");
+
+            if (selectedPlatform === "HomeAssistant") {
+                homeAssistantOptions.classList.remove("hidden");
+
+                document.querySelectorAll('input[name="haOption"]').forEach(optionRadio =>
+                    optionRadio.addEventListener("change", function() {
+                        installButton.classList.remove("hidden");
+
+                        if (this.value === "Bluetooth") {
+                            installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-manifest.json");
+                        } else if (this.value === "NoBluetooth") {
+                            installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-no-ble-manifest.json");
+                        }
+                    })
+                );
+            }
+        })
+    );
 </script>
