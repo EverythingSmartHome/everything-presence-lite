@@ -62,7 +62,7 @@ jobs:
           version: ${{ inputs.esphome_version }}
       - run: |
           mkdir output
-          mv "${{ steps.esphome-build.outputs.name}} ${{ inputs.directory_name }}"
+          mv "${{ steps.esphome-build.outputs.name}}" "${{ inputs.directory_name }}"
           mv "${{ inputs.directory_name }}" output/
       - uses: actions/upload-artifact@v3.1.2
         with:
