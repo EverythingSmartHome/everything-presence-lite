@@ -53,6 +53,7 @@ jobs:
         file: ${{ fromJson(needs.prepare.outputs.files) }}
     outputs:
       esphome-version: ${{ steps.esphome-build.outputs.esphome-version }}
+      esphome-build-name: ${{ steps.esphome-build.outputs.name}}
     steps:
       - uses: actions/checkout@v3.5.3
       - uses: esphome/build-action@v1.5.2
@@ -83,7 +84,7 @@ jobs:
       - name: Create single manifest.json
         run: |
           jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.esphome-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
-          sed -i 's/"${{ steps.esphome-build.outputs.name}}"/"${{ inputs.directory_name }}"/g' ${{ inputs.manifest_filename }}
+          sed -i 's/"${{ needs.build.outputs.esphome-esphome-build-name }}"/"${{ inputs.directory_name }}"/g' ${{ inputs.manifest_filename }}
 
 
       - run: cp -R static/* output
