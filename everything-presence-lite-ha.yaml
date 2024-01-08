@@ -61,6 +61,8 @@ light:
     restore_mode: ALWAYS_OFF
 
 binary_sensor:
+  - platform: status 
+    name: "${name}_state" 
   - platform: template
     name: "Occupancy"
     device_class: occupancy
@@ -355,6 +357,13 @@ number:
     disabled_by_default: true
 
 sensor:
+  - platform: wifi_signal
+    name: "${name}_status" 
+    update_interval: 60s 
+    filters: 
+      - lambda: return x * (-1); 
+  - platform: uptime
+    name: "${name}_uptime"
   - platform: bh1750
     name: Illuminance
     id: illuminance_sensor
