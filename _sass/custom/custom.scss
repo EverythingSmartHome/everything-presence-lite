@@ -31,10 +31,49 @@ h1, .question-prompt {
 }
 .description {
     font-size: 0.9em;
-    color: #666;
 }
-.hidden {
+
+.option-content {
+    display: flex;
+    align-items: center;
+}
+
+.option-image {
+    width: 125px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.title {
+    font-size: 1.2em; /* Larger font size */
+    font-weight: bold; /* Bolder font weight */
+    margin-bottom: 5px;
+}
+
+.types label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.types input[type="radio"] {
     display: none;
+}
+
+.types label:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.selected-option {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Example of highlight with shadow */
+    opacity: 1; /* Override the hover effect opacity */
+}
+
+.types label {
+    /* existing styles */
+    transition: box-shadow 0.3s ease, opacity 0.3s ease; /* Smooth transition for the shadow and opacity */
 }
 
 /* Remove that for solution 2: same container, smaller text size */
