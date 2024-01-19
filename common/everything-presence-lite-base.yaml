@@ -1,0 +1,70 @@
+esphome:
+  name: ${name}
+  comment: Everything Presence Lite
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: True
+  project: 
+    name: EverythingSmartTechnology.Everything Presence Lite
+    version: "1.0.1"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+  level: ${log_level}
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+wifi:
+
+improv_serial:
+
+i2c:
+ sda: 21
+ scl: 22
+ scan: true
+
+light:
+  - platform: status_led
+    name: ESP32 LED
+    pin: GPIO14
+    internal: False
+    restore_mode: ALWAYS_OFF
+
+number:
+  - platform: template
+    name: "Illuminance Offset"
+    id: illuminance_offset_ui
+    unit_of_measurement: "lx"
+    min_value: -100
+    max_value: 100
+    step: 5
+    mode: slider
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:brightness-5"
+    entity_category: config
+    on_value:
+      - lambda: 'id(illuminance_sensor).update();'
+
+sensor:
+  - platform: bh1750
+    name: Illuminance
+    id: illuminance_sensor
+    address: 0x23
+    update_interval: ${illuminance_update_interval}
+    filters:
+      - lambda: "return x + id(illuminance_offset_ui).state;"
+
+button:
+  - platform: restart
+    icon: mdi:power-cycle
+    name: "ESP Reboot"
