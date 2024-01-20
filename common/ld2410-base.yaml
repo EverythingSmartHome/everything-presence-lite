@@ -1,0 +1,189 @@
+esphome:
+  on_boot:
+    then:
+      - switch.turn_on: engineering_mode
+
+uart:
+  id: uart_bus
+  baud_rate:  256000
+  rx_pin: 16
+  tx_pin: 17
+  parity: NONE
+  stop_bits: 1
+
+ld2410:
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: Occupancy
+    has_moving_target:
+      name: Moving Target
+    has_still_target:
+      name: Still Target
+  - platform: gpio
+    pin: 18
+    name: Occupancy
+    device_class: Occupancy
+
+sensor:
+  - platform: ld2410
+    light:
+      name: mmWave Light
+      disabled_by_default: true
+    moving_distance:
+      name: Moving Target Distance
+    still_distance:
+      name: Still Target Distance
+    moving_energy:
+      name: Moveing Target Energy
+    still_energy:
+      name: Still Target Energy
+    detection_distance:
+      name: Detection Distance
+    g0:
+      move_energy:
+        name: Gate 0 Movement Energy
+      still_energy:
+        name: Gate 0 Still Energy
+    g1:
+      move_energy:
+        name: Gate 1 Movement Energy
+      still_energy:
+        name: Gate 1 Still Energy
+    g2:
+      move_energy:
+        name: Gate 2 Movement Energy
+      still_energy:
+        name: Gate 2 Still Energy
+    g3:
+      move_energy:
+        name: Gate 3 Movement Energy
+      still_energy:
+        name: Gate 3 Still Energy
+    g4:
+      move_energy:
+        name: Gate 4 Movement Energy
+      still_energy:
+        name: Gate 4 Still Energy
+    g5:
+      move_energy:
+        name: Gate 5 Movement Energy
+      still_energy:
+        name: Gate 5 Still Energy
+    g6:
+      move_energy:
+        name: Gate 6 Movement Energy
+      still_energy:
+        name: Gate 6 Still Energy
+    g7:
+      move_energy:
+        name: Gate 7 Movement Energy
+      still_energy:
+        name: Gate 7 Still Energy
+    g8:
+      move_energy:
+        name: Gate 8 Movement Energy
+      still_energy:
+        name: Gate 8 Still Energy
+
+switch:
+  - platform: ld2410
+    engineering_mode:
+      name: "Engineering Mode"
+      id: "engineering_mode"
+    bluetooth:
+      name: "mmWave Bluetooth"
+      disabled_by_default: true
+
+number:
+  - platform: ld2410
+    timeout:
+      name: Occupancy Off Delay
+    light_threshold:
+      name: mmWave Light Threshold
+      disabled_by_default: True
+    max_move_distance_gate:
+      name: Max Movement Distance Gate
+    max_still_distance_gate:
+      name: Max Still Distance Gate
+    g0:
+      move_threshold:
+        name: Gate 0 Movement Sensitivity
+      still_threshold:
+        name: Gate 0 Still Sensitivity
+    g1:
+      move_threshold:
+        name: Gate 1 Movement Sensitivity
+      still_threshold:
+        name: Gate 1 Still Sensitivity
+    g2:
+      move_threshold:
+        name: Gate 2 Movement Sensitivity
+      still_threshold:
+        name: Gate 2 Still Sensitivity
+    g3:
+      move_threshold:
+        name: Gate 3 Movement Sensitivity
+      still_threshold:
+        name: Gate 3 Still Sensitivity
+    g4:
+      move_threshold:
+        name: Gate 4 Movement Sensitivity
+      still_threshold:
+        name: Gate 4 Still Sensitivity
+    g5:
+      move_threshold:
+        name: Gate 5 Movement Sensitivity
+      still_threshold:
+        name: Gate 5 Still Sensitivity
+    g6:
+      move_threshold:
+        name: Gate 6 Movement Sensitivity
+      still_threshold:
+        name: Gate 6 Still Sensitivity
+    g7:
+      move_threshold:
+        name: Gate 7 Movement Sensitivity
+      still_threshold:
+        name: Gate 7 Still Sensitivity
+    g8:
+      move_threshold:
+        name: Gate 8 Movement Sensitivity
+      still_threshold:
+        name: Gate 8 Still Sensitivity
+
+button:
+  - platform: ld2410
+    factory_reset:
+      name: "Factory Reset mmWave"
+      disabled_by_default: true
+    restart:
+      name: "Restart mmWave"
+      disabled_by_default: true
+    query_params:
+      name: Get Values
+      disabled_by_default: true
+
+text_sensor:
+  - platform: ld2410
+    version:
+      name: "mmWave Firmware Version"
+    mac_address:
+      name: "mmWave MAC Address"
+      disabled_by_default: true
+
+select:
+  - platform: ld2410
+    distance_resolution:
+      name: "Distance Gate Resolution"
+      disabled_by_default: true
+    baud_rate:
+      name: "mmWave Sensor Baud Rate"
+      disabled_by_default: true
+    light_function:
+      name: mmWave Light Function
+      disabled_by_default: true
+    out_pin_level:
+      name: GPIO Pin Level
+      disabled_by_default: true
