@@ -78,6 +78,17 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
                         </div>
                     </div>
                 </label>
+                <label>
+                    <input type="radio" name="sensor" value="Seeed 24Ghz Lite" />
+                    <div class="option-content">
+                        <img src="images/seeed-mmwave-lite.jpg" alt="Seeed 24Ghz Lite" class="option-image">
+                        <div>
+                            <div class="title">Seeed 24Ghz Lite</div>
+                            <div class="description">The Seeed 24Ghz Lite has a 5m range, supports configurable distance, sensitivity and a single target tracking for a very affordable price.</div>
+                            <a href="https://www.seeedstudio.com/24GHz-mmWave-Sensor-Human-Static-Presence-Module-Lite-p-5524.html?sensecap_affiliate=TcBAarc&referring_service=link" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
+                        </div>
+                    </div>
+                </label>
         </div>
     </div>
 
@@ -203,6 +214,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-sen0395-manifest.json");
             } else if (selectedSensor === "DFRobot SEN0395" && selectedOption === "No-Bluetooth") {
                 installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-sen0395-no-ble-manifest.json");
+            } else if (selectedSensor === "Seeed 24Ghz Lite" && selectedOption === "Bluetooth") {
+                installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-manifest.json");
+            } else if (selectedSensor === "Seeed 24Ghz Lite" && selectedOption === "No-Bluetooth") {
+                installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-no-ble-manifest.json");
             }
         });
     });
