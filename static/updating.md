@@ -81,7 +81,7 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
                 <label>
                     <input type="radio" name="sensor" value="Seeed 24Ghz Lite" />
                     <div class="option-content">
-                        <img src="images/seeed-mmwave-lite.jpg" alt="Seeed 24Ghz Lite" class="option-image">
+                        <img src="images/seeed-mmwave-lite.png" alt="Seeed 24Ghz Lite" class="option-image">
                         <div>
                             <div class="title">Seeed 24Ghz Lite</div>
                             <div class="description">The Seeed 24Ghz Lite has a 5m range, supports configurable distance, sensitivity and a single target tracking for a very affordable price.</div>
