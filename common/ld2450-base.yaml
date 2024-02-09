@@ -551,7 +551,6 @@ uart:
 
           float max_distance = float(id(distance).state) * 10;
           if (p1_distance < max_distance) {
-            p1_x *= -1;
             if (id(target1_x).state != p1_x)
               id(target1_x).publish_state(p1_x);
             if (id(target1_y).state != p1_y)
@@ -563,7 +562,7 @@ uart:
               id(target1_resolution).publish_state(p1_distance_resolution);
             if (id(target1_distance).state != p1_distance)
               id(target1_distance).publish_state(p1_distance);
-            // p1_angle -= 90;
+            p1_angle -= 90;
             if (id(target1_angle).state != p1_angle)
               id(target1_angle).publish_state(p1_angle);
           } else {
@@ -593,6 +592,7 @@ uart:
               id(target2_resolution).publish_state(p2_distance_resolution);
             if (id(target2_distance).state != p2_distance)
               id(target2_distance).publish_state(p2_distance);
+            p2_angle -= 90;
             if (id(target2_angle).state != p2_angle)
               id(target2_angle).publish_state(p2_angle);
           } else {
@@ -622,6 +622,7 @@ uart:
               id(target3_resolution).publish_state(p3_distance_resolution);
             if (id(target3_distance).state != p3_distance)
               id(target3_distance).publish_state(p3_distance);
+            p3_angle -= 90;
             if (id(target3_angle).state != p3_angle)
               id(target3_angle).publish_state(p3_angle);
           } else {
