@@ -467,7 +467,7 @@ uart:
     sequence:
       # - lambda: UARTDebug::log_hex(direction, bytes, ' ');
       - lambda: |-
-          if ((millis() - id(mmwave_update_time)) <= 1000) { 
+          if ((millis() - id(mmwave_update_time)) <= 250) { 
             return;
           };
           id(mmwave_update_time) = millis();
