@@ -131,7 +131,6 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
     </div>
     <esp-web-install-button class="hidden"></esp-web-install-button>
 </div>
-</div>
 
 ## Next Steps
 
