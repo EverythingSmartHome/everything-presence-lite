@@ -89,6 +89,18 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
                         </div>
                     </div>
                 </label>
+                <label>
+                    <input type="radio" name="sensor" value="SEN0609" />
+                    <div class="option-content">
+                        <img src="images/sen0609.png" alt="SEN0609" class="option-image">
+                        <div>
+                            <div class="title">SEN0609</div>
+                            <div class="description">The new DFRobot SEN0609 has a 25m range, 2 configurable sensitvity levels and is extremely reliable at static presence. Select this option if you are using the DFRobot SEN0609 sensor (5 Pin).</div>
+                            <a href="https://www.dfrobot.com/product-2793.html?tracking=NKIPMR1X7YgIqIre4Lzs1ENvaBRhjQN1dac0FK9LO21raHxHPg5XMXWQ4pdTxdlH" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
+                        </div>
+                    </div>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -140,7 +152,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
     jtd.setTheme('light');
     toggleDarkMode.textContent = 'Preview dark color scheme';
   } else {
-    jtd.setTheme('dark');
+    jtd.setTheme('light');
     toggleDarkMode.textContent = 'Return to the light side';
   }
 });
@@ -197,10 +209,10 @@ document.addEventListener("DOMContentLoaded", function() {
             var selectedOption = this.value;
             var selectedPlatform = document.querySelector('input[name="platform"]:checked').value;
 
-        document.getElementById("summaryPlatform").textContent = "Platform: " + selectedPlatform;
-        document.getElementById("summarySensor").textContent = "Sensor: " + selectedSensor;
-        document.getElementById("summaryOption").textContent = "Firmware: " + selectedOption;
-        document.getElementById("summary").classList.remove("hidden");
+            document.getElementById("summaryPlatform").textContent = "Platform: " + selectedPlatform;
+            document.getElementById("summarySensor").textContent = "Sensor: " + selectedSensor;
+            document.getElementById("summaryOption").textContent = "Firmware: " + selectedOption;
+            document.getElementById("summary").classList.remove("hidden");
 
             if (selectedSensor === "LD2450" && selectedOption === "Bluetooth") {
                 installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-manifest.json");
@@ -218,6 +230,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-manifest.json");
             } else if (selectedSensor === "Seeed 24Ghz Lite" && selectedOption === "No-Bluetooth") {
                 installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-no-ble-manifest.json");
+            } else if (selectedSensor === "SEN0609" && selectedOption === "Bluetooth") {
+                installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-sen0609-manifest.json");
+            } else if (selectedSensor === "SEN0609" && selectedOption === "No-Bluetooth") {
+                installButton.setAttribute("manifest", "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-sen0609-no-ble-manifest.json");
             }
         });
     });
