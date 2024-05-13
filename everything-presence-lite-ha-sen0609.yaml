@@ -1,0 +1,15 @@
+substitutions:
+  name: "everything-presence-lite"
+  friendly_name: "Everything Presence Lite"
+  illuminance_update_interval: "2s"
+  hidden_ssid: "false"
+  log_level: ERROR
+
+dashboard_import:
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-sen0609.yaml@main
+  import_full_config: false # or true
+
+packages:
+  device_base: !include common/everything-presence-lite-base.yaml
+  ld2450_base: !include common/sen0609-base.yaml
+  bluetooth_base: !include common/bluetooth-base.yaml
