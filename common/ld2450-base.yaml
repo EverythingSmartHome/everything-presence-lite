@@ -478,7 +478,6 @@ uart:
           }else{
             p1_x = 0 - p1_x; // was 0 - p1_x;
           }
-          p1_x = -p1_x;
 
           int16_t p1_y = (uint16_t((bytes[7] << 8) | bytes[6] ));
           if ((bytes[7] & 0x80) >> 7){
