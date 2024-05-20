@@ -68,6 +68,17 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
                     </div>
                 </label>
                 <label>
+                    <input type="radio" name="sensor" value="SEN0609" />
+                    <div class="option-content">
+                        <img src="images/sen0609.png" alt="SEN0609" class="option-image">
+                        <div>
+                            <div class="title">SEN0609</div>
+                            <div class="description">The new DFRobot SEN0609 has a 25m range, 2 configurable sensitvity levels and is extremely reliable at static presence. Select this option if you are using the DFRobot SEN0609 sensor (5 Pin).</div>
+                            <a href="https://www.dfrobot.com/product-2793.html?tracking=NKIPMR1X7YgIqIre4Lzs1ENvaBRhjQN1dac0FK9LO21raHxHPg5XMXWQ4pdTxdlH" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
+                        </div>
+                    </div>
+                </label>
+                <label>
                     <input type="radio" name="sensor" value="LD2410C" />
                     <div class="option-content">
                         <img src="images/ld2410c.png" alt="LD2410C" class="option-image">
@@ -86,17 +97,6 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
                             <div class="title">Seeed 24Ghz Lite</div>
                             <div class="description">The Seeed 24Ghz Lite has a 5m range, supports configurable distance, sensitivity and a single target tracking for a very affordable price.</div>
                             <a href="https://www.seeedstudio.com/24GHz-mmWave-Sensor-Human-Static-Presence-Module-Lite-p-5524.html?sensecap_affiliate=TcBAarc&referring_service=link" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
-                        </div>
-                    </div>
-                </label>
-                <label>
-                    <input type="radio" name="sensor" value="SEN0609" />
-                    <div class="option-content">
-                        <img src="images/sen0609.png" alt="SEN0609" class="option-image">
-                        <div>
-                            <div class="title">SEN0609</div>
-                            <div class="description">The new DFRobot SEN0609 has a 25m range, 2 configurable sensitvity levels and is extremely reliable at static presence. Select this option if you are using the DFRobot SEN0609 sensor (5 Pin).</div>
-                            <a href="https://www.dfrobot.com/product-2793.html?tracking=NKIPMR1X7YgIqIre4Lzs1ENvaBRhjQN1dac0FK9LO21raHxHPg5XMXWQ4pdTxdlH" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
                         </div>
                     </div>
                 </label>
@@ -130,7 +130,6 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
         <p id="summaryOption"></p>
     </div>
     <esp-web-install-button class="hidden"></esp-web-install-button>
-</div>
 </div>
 
 ## Next Steps
