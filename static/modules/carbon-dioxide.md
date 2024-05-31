@@ -23,7 +23,7 @@ First take your Lite (with it powered off!) and identify the GPIO pins in the bo
 
 Grab your CO2 module and push it onto the pins, making sure to line up the 3.3v and Ground pins:
 
-![Everything Presence Lite CO2 placement](https://everythingsmarthome.github.io/everything-presence-Lite/images/everything-presence-co2-scd40-lite.jpg)
+![Everything Presence Lite CO2 placement](https://everythingsmarthome.github.io/everything-presence-lite/images/everything-presence-co2-scd40-lite.jpg)
 
 ## Software
 
