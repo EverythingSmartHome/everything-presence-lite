@@ -6,9 +6,13 @@
   "builds": [
     {
       "chipFamily": "ESP32",
+      "ota": {
+        "path": "everything-presence-lite-ha-ld2410-no-ble/everything-presence-lite-esp32.ota.bin",
+        "md5": "67bc7aa6c92bb94a3042067f879e7e65"
+      },
       "parts": [
         {
-          "path": "everything-presence-lite-ha-ld2410-no-ble/everything-presence-lite-esp32.bin",
+          "path": "everything-presence-lite-ha-ld2410-no-ble/everything-presence-lite-esp32.factory.bin",
           "offset": 0
         }
       ]
