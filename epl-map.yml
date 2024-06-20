@@ -1,0 +1,247 @@
+#Card based on athua's code (https://github.com/athua/ha-utils) and https://docs.screek.io/2a/add-a-map-card with some custom modifications  It requires Plotly Graph Card from HACS.
+#This assumes you havent change entity names.  Line 45 needs to change to match your sensor_id. Line 44 shows what part it needs.  Line 245 lets you change the card title.
+
+type: custom:plotly-graph
+refresh_interval: 1
+hours_to_show: current_day
+config:
+  modeBarButtonsToRemove:
+    - select2d
+    - lasso2d
+    - toImage
+  displaylogo: false
+layout:
+  height: 240
+  margin:
+    l: 40
+    r: 20
+    t: 20
+    b: 55
+  showlegend: false
+  xaxis:
+    showticklabels: false
+    dtick: 1000
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    type: number
+    fixedrange: true
+    range:
+      - 4000
+      - -4000
+  yaxis:
+    showticklabels: false
+    dtick: 1000
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    scaleanchor: x
+    scaleratio: 1
+    fixedrange: true
+    range:
+      - 7500
+      - 0
+entities:
+  - entity: ''
+	# The line below needs to read have the id taken from "everything_presence_lite_4f6260"
+    fn_var1: $ex vars.sensor_id = "4f6260";
+    fn_var2: >-
+      $ex vars.sensor_name_prefix = "sensor.everything_presence_lite_" +
+      vars.sensor_id + "_";
+    fn_var3: >-
+      $ex vars.number_name_prefix = "number.everything_presence_lite_" +
+      vars.sensor_id + "_";
+    fn_var4: >-
+      $ex vars.is_inch_unit = hass.states[vars.sensor_name_prefix +
+      "target_1_x"].attributes.unit_of_measurement == "in";
+  - entity: ''
+    name: Target1
+    marker:
+      size: 10
+      symbol: star-diamond
+    line:
+      shape: spline
+      width: 5
+    x:
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_1_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_1_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { x = x * 25.4
+        }; return x; }
+    'y':
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_1_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_1_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { y = y * 25.4
+        }; return y; }
+  - entity: ''
+    name: Target2
+    marker:
+      size: 10
+      symbol: star-diamond
+    line:
+      shape: spline
+      width: 5
+    x:
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_2_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_2_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { x = x * 25.4
+        }; return x; }
+    'y':
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_2_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_2_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { y = y * 25.4
+        }; return y; }
+  - entity: ''
+    name: Target3
+    marker:
+      size: 10
+      symbol: star-diamond
+    line:
+      shape: spline
+      width: 5
+    x:
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_3_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_3_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { x = x * 25.4
+        }; return x; }
+    'y':
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_3_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_3_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { y = y * 25.4
+        }; return y; }
+  - entity: ''
+    name: Zone1
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(20,200,0,0.06)
+    line:
+      color: RGBA(20,200,0,0.2)
+      shape: line
+      width: 2
+    x:
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_x"].state
+    'y':
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_y"].state
+  - entity: ''
+    name: Zone2
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(200,0,255,0.06)
+    line:
+      color: RGBA(200,0,255,0.2)
+      shape: line
+      width: 2
+    x:
+      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_x"].state
+    'y':
+      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_y"].state
+  - entity: ''
+    name: Zone3
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(200,120,55,0.06)
+    line:
+      color: RGBA(200,120,55,0.2)
+      shape: line
+      width: 2
+    x:
+      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_x"].state
+    'y':
+      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_y"].state
+  - entity: ''
+    name: Zone4
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(255,0,0,0.15)
+    line:
+      shape: line
+      width: 1
+      color: RGBA(255,0,0,0.2)
+    x:
+      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_x"].state
+    'y':
+      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_y"].state
+  - entity: ''
+    name: Coverage
+    mode: lines
+    fill: tonexty
+    fillcolor: rgba(168, 216, 234, 0.15)
+    line:
+      shape: line
+      width: 1
+      dash: dot
+    x:
+      - 0
+      - $ex 7500 * Math.sin((2 * Math.PI)/360 * 60)
+      - 5500
+      - 4500
+      - 4000
+      - 3000
+      - 2000
+      - 1000
+      - 0
+      - -1000
+      - -2000
+      - -3000
+      - -4000
+      - -4500
+      - -5500
+      - $ex -7500 * Math.sin((2 * Math.PI)/360 * 60)
+      - 0
+    'y':
+      - 0
+      - $ex 7500 * Math.cos((2 * Math.PI)/360 * 60)
+      - $ex Math.sqrt( 7500**2 - 5500**2 )
+      - $ex Math.sqrt( 7500**2 - 4500**2 )
+      - $ex Math.sqrt( 7500**2 - 4000**2 )
+      - $ex Math.sqrt( 7500**2 - 3000**2 )
+      - $ex Math.sqrt( 7500**2 - 2000**2 )
+      - $ex Math.sqrt( 7500**2 - 1000**2 )
+      - 7500
+      - $ex Math.sqrt( 7500**2 - 1000**2 )
+      - $ex Math.sqrt( 7500**2 - 2000**2 )
+      - $ex Math.sqrt( 7500**2 - 3000**2 )
+      - $ex Math.sqrt( 7500**2 - 4000**2 )
+      - $ex Math.sqrt( 7500**2 - 4500**2 )
+      - $ex Math.sqrt( 7500**2 - 5500**2 )
+      - $ex 7500 * Math.cos((2 * Math.PI)/360 * 60)
+      - 0
+raw_plotly_config: true
+title: $ex "Living Room Map " + vars.sensor_id + " Map"
+
+
