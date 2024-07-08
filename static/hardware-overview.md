@@ -11,6 +11,9 @@ nav_order: 2
 Let's take a look at an overview of the hardware and parts required for setup.
 {: .fs-6 .fw-300 }
 
+{: .important }
+If you have the fully assembled Everything Presence Lite with the injection moulded case, you can skip ahead to the [connecting to WiFi section](./updating.html)
+
 There are several components that make up the Everything Presence Lite. You may have received some or all of these components depending which version you purchased - if you purchased the board only then you will need to provide your own compatible mmWave Sensor.
 
 Each component is listed below - please familiarise yourself with each component for this guide.
