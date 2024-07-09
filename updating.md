@@ -11,7 +11,32 @@ nav_order: 4
 This page will help you to flash and update your Everything Presence Lite to the latest version and get it connected to WiFi!
 {: .fs-6 .fw-300 }
 
-## Everything Presence Lite ESPHome Firmware Install
+## Automatic Setup
+
+If you have the new Everything Presence Lite that comes fully assembled with the injection moulded case, your device comes pre-installed from the factory ready to go. You can benefit from automatic setup in Home Assistant, if your Home Assistant server has [bluetooth enabled](https://www.home-assistant.io/integrations/bluetooth/).
+
+If you have Bluetooth enabled, as soon as you power the Everything Presence Lite, Home Assistant should automagically discover it on the Device page:
+
+![Home Assistant BLE Improv setup](images/home-assistant-ble-improv-setup.png)
+
+Follow the prompts, entering your WiFi details to get the Lite connected to your home network.
+
+![Home Assistant BLE Improv setup](images/home-assistant-ble-improv-setup-wifi.png)
+
+## Next Steps
+
+Once connected to WiFi, you are ready to connenct to Home Assistant.
+
+[Connecting to Home Assistant](./Home%20Assistant/connecting-home-assistant.html){: .btn .btn-blue }
+
+## Manual Setup and Factory Resetting
+
+The steps below are for the following users:
+* You have the Everything Presence Lite Kit with the 3D printed case
+* You don't have Bluetooth enabled in Home Assistant and can't do the automatic setup above
+* You want to factory reset the firmware and start again
+
+This process below will guide you through installing the latest firmware on your device, and get you connected to WiFi.
 
 Here you can install the latest [ESPHome](https://esphome.io) firmware on the Everything Presence Lite board for direct integration with [Home Assistant](https://home-assistant.io)
 
