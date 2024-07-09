@@ -25,6 +25,8 @@ ota:
   - platform: http_request
     id: ota_http_request
 
+http_request:
+
 wifi:
 
 improv_serial:
