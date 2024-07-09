@@ -5,6 +5,12 @@ substitutions:
   hidden_ssid: "false"
   log_level: ERROR
 
+update:
+  - platform: http_request
+    id: update_http_request
+    name: Firmware
+    source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-manifest.json
+
 dashboard_import:
   package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-mr24hpc1.yaml@main
   import_full_config: false # or true
