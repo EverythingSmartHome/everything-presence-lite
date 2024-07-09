@@ -98,3 +98,4 @@ jobs:
           branch: gh-pages
           folder: output
           clean: ${{ inputs.clean }}
+          force: false
