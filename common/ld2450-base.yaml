@@ -101,7 +101,7 @@ switch:
           data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xFE, 0x00, 0x04, 0x03, 0x02, 0x01]
 
   - platform: template
-    name: "Bluetooth"
+    name: "mmWave Bluetooth"
     id: bluetooth_switch
     optimistic: true
     disabled_by_default: True
