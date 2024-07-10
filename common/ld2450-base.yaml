@@ -84,7 +84,7 @@ button:
 
 switch:
   - platform: template
-    name: "Configuration Mode"
+    name: "mmWave Configuration Mode"
     id: mmwave_configuration
     disabled_by_default: True
     internal: True
