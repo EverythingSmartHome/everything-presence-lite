@@ -2,6 +2,7 @@ esphome:
   on_boot: 
     priority: -100
     then:
+      - button.press: get_mmwave_firmware
       - binary_sensor.template.publish:
           id: zone1_occupancy
           state: false 
@@ -20,6 +21,112 @@ globals:
     type: unsigned long
     restore_value: no
     initial_value: '0'
+
+text_sensor:
+  - platform: template
+    disabled_by_default: True
+    name: "mmWave Firmware"
+    id: "firmware_version"
+
+button:
+  - platform: template
+    id: get_mmwave_firmware
+    internal: True
+    entity_category: config
+    disabled_by_default: True
+    on_press: 
+      then:
+      - switch.turn_on: mmwave_configuration
+      - delay: 1s
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA0, 0x00, 0x04, 0x03, 0x02, 0x01]
+      - lambda: |-
+          uint8_t response[20];
+          if (id(uart_bus).read_array(response, 20)) {
+            int firmware_major = response[13];
+            int firmware_minor = response[12];
+            char firmware_version_str[32];
+            sprintf(firmware_version_str, "V%d.%02d", firmware_major, firmware_minor);
+            id(firmware_version).publish_state(std::string(firmware_version_str));
+          } else {
+            id(firmware_version).publish_state("Unknown");
+          }
+      - switch.turn_off: mmwave_configuration
+      - delay: 1s
+  - platform: template
+    name: "Reboot mmWave Sensor"
+    id: reboot_mmwave_sensor
+    disabled_by_default: True
+    entity_category: config
+    on_press:
+      then:
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA3, 0x00, 0x04, 0x03, 0x02, 0x01]
+  - platform: template
+    name: "Factory Reset mmWave Sensor"
+    id: factory_reset_mmwave_sensor
+    disabled_by_default: True
+    entity_category: config
+    on_press:
+      then:
+      - logger.log: "Performing Factory Reset"
+      - switch.turn_on: mmwave_configuration
+      - delay: 2s
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA2, 0x00, 0x04, 0x03, 0x02, 0x01]
+      - delay: 2s
+      - switch.turn_off: mmwave_configuration
+      - delay: 2s
+      - button.press: reboot_mmwave_sensor
+
+switch:
+  - platform: template
+    name: "Configuration Mode"
+    id: mmwave_configuration
+    disabled_by_default: True
+    internal: True
+    entity_category: config
+    optimistic: true
+    restore_mode: DISABLED
+    turn_on_action:
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x04, 0x00, 0xFF, 0x00, 0x01, 0x00, 0x04, 0x03, 0x02, 0x01]
+    turn_off_action:
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xFE, 0x00, 0x04, 0x03, 0x02, 0x01]
+
+  - platform: template
+    name: "Bluetooth"
+    id: bluetooth_switch
+    optimistic: true
+    disabled_by_default: True
+    entity_category: config
+    turn_on_action:
+      - switch.turn_on: mmwave_configuration
+      - delay: 2s
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x04, 0x00, 0xA4, 0x00, 0x01, 0x00, 0x04, 0x03, 0x02, 0x01]  # Turn on Bluetooth
+      - delay: 2s
+      - button.press: reboot_mmwave_sensor  # Reboot after enabling Bluetooth
+      - delay: 2s
+      - switch.turn_off: mmwave_configuration
+
+    turn_off_action:
+      - switch.turn_on: mmwave_configuration
+      - delay: 2s
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x04, 0x00, 0xA4, 0x00, 0x00, 0x00, 0x04, 0x03, 0x02, 0x01]  # Turn off Bluetooth
+      - delay: 2s
+      - button.press: reboot_mmwave_sensor  # Reboot after enabling Bluetooth
+      - delay: 2s
+      - switch.turn_off: mmwave_configuration
 
 binary_sensor:
   - platform: template
