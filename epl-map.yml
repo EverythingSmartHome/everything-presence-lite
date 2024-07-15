@@ -42,7 +42,7 @@ layout:
       - 0
 entities:
   - entity: ''
-    sensor_suffix: $ex vars.sensor_id = "office";
+    sensor_suffix: $ex vars.sensor_id = "2fbc58";
     sensor_prefix: >-
       $ex vars.sensor_name_prefix = "sensor.everything_presence_lite_" +
       vars.sensor_id + "_";
