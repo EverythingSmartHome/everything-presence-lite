@@ -1,7 +1,8 @@
 #Card based on athua's code (https://github.com/athua/ha-utils) and https://docs.screek.io/2a/add-a-map-card with some custom modifications  It requires Plotly Graph Card from HACS.
-#This assumes you havent change entity names.  Line 45 needs to change to match your sensor_id. Line 44 shows what part it needs.  Line 245 lets you change the card title.
+#This assumes you havent change entity names.  Line 45, 47 and 50 needs to change to match your sensor_id.
 
 type: custom:plotly-graph
+title: $ex "Living Room Map"
 refresh_interval: 1
 hours_to_show: current_day
 config:
@@ -26,8 +27,8 @@ layout:
     type: number
     fixedrange: true
     range:
-      - 4000
       - -4000
+      - 4000
   yaxis:
     showticklabels: false
     dtick: 1000
@@ -41,17 +42,16 @@ layout:
       - 0
 entities:
   - entity: ''
-	# The line below needs to read have the id taken from "everything_presence_lite_4f6260"
-    fn_var1: $ex vars.sensor_id = "4f6260";
-    fn_var2: >-
+    sensor_suffix: $ex vars.sensor_id = "office";
+    sensor_prefix: >-
       $ex vars.sensor_name_prefix = "sensor.everything_presence_lite_" +
       vars.sensor_id + "_";
-    fn_var3: >-
+    number_prefix: >-
       $ex vars.number_name_prefix = "number.everything_presence_lite_" +
       vars.sensor_id + "_";
-    fn_var4: >-
+    units: >-
       $ex vars.is_inch_unit = hass.states[vars.sensor_name_prefix +
-      "target_1_x"].attributes.unit_of_measurement == "in";
+      "target_1_x"].attributes.unit_of_measurement == "cm";
   - entity: ''
     name: Target1
     marker:
@@ -242,6 +242,3 @@ entities:
       - $ex 7500 * Math.cos((2 * Math.PI)/360 * 60)
       - 0
 raw_plotly_config: true
-title: $ex "Living Room Map " + vars.sensor_id + " Map"
-
-
