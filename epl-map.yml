@@ -51,7 +51,7 @@ entities:
       vars.sensor_id + "_";
     units: >-
       $ex vars.is_inch_unit = hass.states[vars.sensor_name_prefix +
-      "target_1_x"].attributes.unit_of_measurement == "cm";
+      "target_1_x"].attributes.unit_of_measurement == false;
   - entity: ''
     name: Target1
     marker:
@@ -143,17 +143,37 @@ entities:
       shape: line
       width: 2
     x:
-      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_end_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_end_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_x"].state
+      - >-
+        $ex { var zone2_begin_x = hass.states[vars.number_name_prefix + "zone_2_begin_x"];
+        return zone2_begin_x ? zone2_begin_x.state : -9999; }
+      - >-
+        $ex { var zone2_begin_x = hass.states[vars.number_name_prefix + "zone_2_begin_x"];
+        return zone2_begin_x ? zone2_begin_x.state : -9999; }
+      - >-
+        $ex { var zone2_end_x = hass.states[vars.number_name_prefix + "zone_2_end_x"];
+        return zone2_end_x ? zone2_end_x.state : -9999; }
+      - >-
+        $ex { var zone2_end_x = hass.states[vars.number_name_prefix + "zone_2_end_x"];
+        return zone2_end_x ? zone2_end_x.state : -9999; }
+      - >-
+        $ex { var zone2_begin_x = hass.states[vars.number_name_prefix + "zone_2_begin_x"];
+        return zone2_begin_x ? zone2_begin_x.state : -9999; }
     'y':
-      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_end_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_end_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_2_begin_y"].state
+      - >-
+        $ex { var zone2_begin_y = hass.states[vars.number_name_prefix + "zone_2_begin_y"];
+        return zone2_begin_y ? zone2_begin_y.state : -9999; }
+      - >-
+        $ex { var zone2_end_y = hass.states[vars.number_name_prefix + "zone_2_end_y"];
+        return zone2_end_y ? zone2_end_y.state : -9999; }
+      - >-
+        $ex { var zone2_end_y = hass.states[vars.number_name_prefix + "zone_2_end_y"];
+        return zone2_end_y ? zone2_end_y.state : -9999; }
+      - >-
+        $ex { var zone2_begin_y = hass.states[vars.number_name_prefix + "zone_2_begin_y"];
+        return zone2_begin_y ? zone2_begin_y.state : -9999; }
+      - >-
+        $ex { var zone2_begin_y = hass.states[vars.number_name_prefix + "zone_2_begin_y"];
+        return zone2_begin_y ? zone2_begin_y.state : -9999; }
   - entity: ''
     name: Zone3
     mode: lines
@@ -164,17 +184,37 @@ entities:
       shape: line
       width: 2
     x:
-      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_end_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_end_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_x"].state
+      - >-
+        $ex { var zone3_begin_x = hass.states[vars.number_name_prefix + "zone_3_begin_x"];
+        return zone3_begin_x ? zone3_begin_x.state : -9999; }
+      - >-
+        $ex { var zone3_begin_x = hass.states[vars.number_name_prefix + "zone_3_begin_x"];
+        return zone3_begin_x ? zone3_begin_x.state : -9999; }
+      - >-
+        $ex { var zone3_end_x = hass.states[vars.number_name_prefix + "zone_3_end_x"];
+        return zone3_end_x ? zone3_end_x.state : -9999; }
+      - >-
+        $ex { var zone3_end_x = hass.states[vars.number_name_prefix + "zone_3_end_x"];
+        return zone3_end_x ? zone3_end_x.state : -9999; }
+      - >-
+        $ex { var zone3_begin_x = hass.states[vars.number_name_prefix + "zone_3_begin_x"];
+        return zone3_begin_x ? zone3_begin_x.state : -9999; }
     'y':
-      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_end_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_end_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_3_begin_y"].state
+      - >-
+        $ex { var zone3_begin_y = hass.states[vars.number_name_prefix + "zone_3_begin_y"];
+        return zone3_begin_y ? zone3_begin_y.state : -9999; }
+      - >-
+        $ex { var zone3_end_y = hass.states[vars.number_name_prefix + "zone_3_end_y"];
+        return zone3_end_y ? zone3_end_y.state : -9999; }
+      - >-
+        $ex { var zone3_end_y = hass.states[vars.number_name_prefix + "zone_3_end_y"];
+        return zone3_end_y ? zone3_end_y.state : -9999; }
+      - >-
+        $ex { var zone3_begin_y = hass.states[vars.number_name_prefix + "zone_3_begin_y"];
+        return zone3_begin_y ? zone3_begin_y.state : -9999; }
+      - >-
+        $ex { var zone3_begin_y = hass.states[vars.number_name_prefix + "zone_3_begin_y"];
+        return zone3_begin_y ? zone3_begin_y.state : -9999; }
   - entity: ''
     name: Zone4
     mode: lines
@@ -185,17 +225,37 @@ entities:
       width: 1
       color: RGBA(255,0,0,0.2)
     x:
-      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_end_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_end_x"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_x"].state
+      - >-
+        $ex { var zone4_begin_x = hass.states[vars.number_name_prefix + "zone_4_begin_x"];
+        return zone4_begin_x ? zone4_begin_x.state : -9999; }
+      - >-
+        $ex { var zone4_begin_x = hass.states[vars.number_name_prefix + "zone_4_begin_x"];
+        return zone4_begin_x ? zone4_begin_x.state : -9999; }
+      - >-
+        $ex { var zone4_end_x = hass.states[vars.number_name_prefix + "zone_4_end_x"];
+        return zone4_end_x ? zone4_end_x.state : -9999; }
+      - >-
+        $ex { var zone4_end_x = hass.states[vars.number_name_prefix + "zone_4_end_x"];
+        return zone4_end_x ? zone4_end_x.state : -9999; }
+      - >-
+        $ex { var zone4_begin_x = hass.states[vars.number_name_prefix + "zone_4_begin_x"];
+        return zone4_begin_x ? zone4_begin_x.state : -9999; }
     'y':
-      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_end_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_end_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_y"].state
-      - $ex hass.states[vars.number_name_prefix + "zone_4_begin_y"].state
+      - >-
+        $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
+        return zone4_begin_y ? zone4_begin_y.state : -9999; }
+      - >-
+        $ex { var zone4_end_y = hass.states[vars.number_name_prefix + "zone_4_end_y"];
+        return zone4_end_y ? zone4_end_y.state : -9999; }
+      - >-
+        $ex { var zone4_end_y = hass.states[vars.number_name_prefix + "zone_4_end_y"];
+        return zone4_end_y ? zone4_end_y.state : -9999; }
+      - >-
+        $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
+        return zone4_begin_y ? zone4_begin_y.state : -9999; }
+      - >-
+        $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
+        return zone4_begin_y ? zone4_begin_y.state : -9999; }
   - entity: ''
     name: Coverage
     mode: lines
