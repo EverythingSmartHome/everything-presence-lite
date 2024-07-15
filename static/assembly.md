@@ -11,6 +11,9 @@ nav_order: 3
 Time to assemble the hardware ready for setup!
 {: .fs-6 .fw-300 }
 
+{: .important }
+If you have the fully assembled Everything Presence Lite with the injection moulded case, you can skip ahead to the [connecting to WiFi section](./updating.html)
+
 ## Case - Part 1
 
 First you are going to want to grab 4 components of the case - the back, ball joint, locking ring and stand.

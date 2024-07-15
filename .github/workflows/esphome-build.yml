@@ -54,16 +54,18 @@ jobs:
     outputs:
       esphome-version: ${{ steps.esphome-build.outputs.esphome-version }}
       esphome-build-name: ${{ steps.esphome-build.outputs.name}}
+      project-version: ${{ steps.esphome-build.outputs.project-version }}
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: esphome/build-action@v1.5.2
+      - uses: esphome/build-action@v3.2.0
         id: esphome-build
         with:
           yaml_file: ${{ matrix.file }}
           version: ${{ inputs.esphome_version }}
       - run: |
           mkdir output
-          mv "${{ steps.esphome-build.outputs.name}}" "${{ inputs.directory_name }}"
+          mv "${{ steps.esphome-build.outputs.name}}" temp
+          mv temp "${{ inputs.directory_name }}"
           mv "${{ inputs.directory_name }}" output/
       - uses: actions/upload-artifact@v3.1.2
         with:
@@ -71,6 +73,7 @@ jobs:
           path: output
 
   publish:
+    if: (github.event_name == 'workflow_dispatch' || github.event_name == 'push') && github.ref == 'refs/heads/main'
     name: Publish new firmware and website to GitHub Pages
     runs-on: ubuntu-latest
     needs: [build]
@@ -83,15 +86,16 @@ jobs:
 
       - name: Create single manifest.json
         run: |
-          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.esphome-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
+          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.project-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
           sed -i 's/${{ needs.build.outputs.esphome-build-name }}\//${{ inputs.directory_name }}\//g' output/${{ inputs.manifest_filename }}
 
 
       - run: cp -R static/* output
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.6.3
         with:
           branch: gh-pages
           folder: output
           clean: ${{ inputs.clean }}
+          force: false
