@@ -5,7 +5,7 @@ esphome:
   name_add_mac_suffix: True
   project: 
     name: EverythingSmartTechnology.Everything Presence Lite
-    version: "1.0.5"
+    version: "1.0.6"
 
 esp32:
   board: esp32dev
@@ -68,7 +68,25 @@ sensor:
     address: 0x23
     update_interval: ${illuminance_update_interval}
     filters:
+      - calibrate_linear:
+          method: exact
+          datapoints:
+            - 0.6 -> 1.7
+            - 9 -> 25
+            - 10 -> 29
+            - 14 -> 367
+            - 19 -> 26
+            - 21 -> 885
+            - 21 -> 88
+            - 29 -> 52
+            - 85 -> 166 
+            - 283 -> 394
+            - 807 -> 993
+            - 917 -> 1124
+            - 1132 -> 1170
       - lambda: "return x + id(illuminance_offset_ui).state;"
+      - clamp:
+          min_value: 0
 
 button:
   - platform: restart
