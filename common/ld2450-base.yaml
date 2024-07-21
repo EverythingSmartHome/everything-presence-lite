@@ -140,23 +140,27 @@ binary_sensor:
         || id(target3_distance).state != 0);
   - platform: template
     name: "Zone 1 Occupancy"
+    device_class: occupancy
     id: zone1_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_1_off_delay).state * 1000);
   - platform: template
     name: "Zone 2 Occupancy"
+    device_class: occupancy
     id: zone2_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_2_off_delay).state * 1000);
     disabled_by_default: true
   - platform: template
     name: "Zone 3 Occupancy"
+    device_class: occupancy
     id: zone3_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_3_off_delay).state * 1000);
     disabled_by_default: true
   - platform: template
     name: "Zone 4 Occupancy"
+    device_class: occupancy
     id: zone4_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_4_off_delay).state * 1000);
