@@ -5,7 +5,7 @@ esphome:
   name_add_mac_suffix: True
   project: 
     name: EverythingSmartTechnology.Everything Presence Lite
-    version: "1.0.6"
+    version: "1.0.7"
 
 esp32:
   board: esp32dev
@@ -26,6 +26,7 @@ ota:
     id: ota_http_request
 
 http_request:
+  timeout: 4s
 
 wifi:
 
