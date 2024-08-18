@@ -26,7 +26,6 @@ ota:
     id: ota_http_request
 
 http_request:
-  timeout: 4s
 
 wifi:
 

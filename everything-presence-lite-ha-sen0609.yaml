@@ -8,8 +8,9 @@ substitutions:
 update:
   - platform: http_request
     id: update_http_request
-    name: Firmware
+    name: Everything Presence Lite Firmware
     source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-sen0609-manifest.json
+    disabled_by_default: true
 
 dashboard_import:
   package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-sen0609.yaml@main
