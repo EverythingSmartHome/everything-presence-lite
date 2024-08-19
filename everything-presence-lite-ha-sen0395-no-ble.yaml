@@ -5,6 +5,10 @@ substitutions:
   hidden_ssid: "false"
   log_level: ERROR
 
+wifi:
+  on_connect:
+    - switch.turn_on: mmwave_sensor
+
 update:
   - platform: http_request
     id: update_http_request
