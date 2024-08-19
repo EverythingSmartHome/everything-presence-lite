@@ -1,6 +1,6 @@
 {
   "name": "Everything Presence Lite HA No BLE",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "home_assistant_domain": "esphome",
   "new_install_skip_erase": false,
   "builds": [
@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "ota": {
         "path": "everything-presence-lite-ha-no-ble/everything-presence-lite-esp32.ota.bin",
-        "md5": "91076206d9d40fb15e8a1a971fce2583"
+        "md5": "ddf619f8fc59bc46aeeef956568711c7"
       },
       "parts": [
         {
