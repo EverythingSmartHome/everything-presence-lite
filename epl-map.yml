@@ -51,7 +51,7 @@ entities:
       vars.sensor_id + "_";
     units: >-
       $ex vars.is_inch_unit = hass.states[vars.sensor_name_prefix +
-      "target_1_x"].attributes.unit_of_measurement == false;
+      "target_1_x"].attributes.unit_of_measurement == 'in';
   - entity: ''
     name: Target1
     marker:
