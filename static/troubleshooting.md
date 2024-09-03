@@ -26,3 +26,6 @@ Lets cover off some of the commonly asked questions.
 No, it will only show a detected or not detected status. 
 
 **I prefer to 3D print my own case** No worries you can find the files you need here [https://www.printables.com/model/624830-everything-presence-lite-official-case](https://www.printables.com/model/624830-everything-presence-lite-official-case "https://www.printables.com/model/624830-everything-presence-lite-official-case")
+
+**My EPL stops updating occupancy after some time, light levels are still reported fine.**
+There was a problem with an earlier firmware of the radar sensor used by the EPL which can cause a loss of communication until powercycling the whole device. Try updating the radar sensor over bluetooth via the manufacturers app [Android](https://play.google.com/store/apps/details?id=com.hlk.hlkradartool)/[iOS](https://apps.apple.com/us/app/hlkradartool/id1638651152) to at least version 2.05. Be aware that the update app seems to be very unstable and you might need multiple tries or an Android device as it seems a bit more stable there. 
