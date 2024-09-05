@@ -538,21 +538,26 @@ sensor:
     name: "Zone 1 Target Count"
     id: zone1_target_count
     accuracy_decimals: 0
+    unit_of_measurement: " "
   - platform: template
     name: "Zone 2 Target Count"
     id: zone2_target_count
     accuracy_decimals: 0
     disabled_by_default: true
+    unit_of_measurement: " "
   - platform: template
     name: "Zone 3 Target Count"
     id: zone3_target_count
     accuracy_decimals: 0
     disabled_by_default: true
+    unit_of_measurement: " "
   - platform: template
     name: "Zone 4 Target Count"
     id: zone4_target_count
     accuracy_decimals: 0
     disabled_by_default: true
+    unit_of_measurement: " "
+
 
 uart:
   id: uart_bus
