@@ -38,7 +38,7 @@ The steps below are for the following users:
 
 This process below will guide you through installing the latest firmware on your device, and get you connected to WiFi.
 
-Here you can install the latest [ESPHome](https://esphome.io) firmware on the Everything Presence Lite board for direct integration with [Home Assistant](https://home-assistant.io)
+Here you can install the latest firmware on the Everything Presence Lite board for direct integration with [Home Assistant](https://home-assistant.io)
 
 First, make sure you have the Lite connected to a USB port on your computer and select the platform you would like to install below. Hit the connect button, select the USB port from the list and then hit the install button to begin installing the latest software on your Everything Presence Lite.
 
