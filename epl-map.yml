@@ -237,7 +237,7 @@ entities:
       width: 1
       dash: dot
     x: >-
-      $ex { vars.installation_angle = Number(hass.states[vars.number_name_prefix + "installation_angle"].state);
+      $ex { vars.installation_angle = Number(hass.states[vars.number_name_prefix + "installation_angle"]?.state ?? 0);
       vars.installation_angle_cos = Math.cos(Math.PI/180 * vars.installation_angle);
       vars.installation_angle_sin = Math.sin(Math.PI/180 * vars.installation_angle);
       vars.max_distance = 10 * hass.states[vars.number_name_prefix + "max_distance"].state;
