@@ -195,12 +195,25 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 600
+  - platform: template
+    name: "Installation Angle"
+    id: installation_angle_ui
+    unit_of_measurement: "º"
+    min_value: -45
+    max_value: 45
+    step: 1
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:angle-acute"
+    entity_category: config
 
   - platform: template
     name: "Zone 1 Begin X"
     id: zone1_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -209,8 +222,8 @@ number:
   - platform: template
     name: "Zone 1 End X"
     id: zone1_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -220,7 +233,7 @@ number:
     name: "Zone 1 Begin Y"
     id: zone1_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560 # if epl is rotated 45deg, a target could be detected at negative values: -6000*sin(60deg-45deg) = ~-1552
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -230,7 +243,7 @@ number:
     name: "Zone 1 End Y"
     id: zone1_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -250,8 +263,8 @@ number:
   - platform: template
     name: "Zone 2 Begin X"
     id: zone2_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -260,8 +273,8 @@ number:
   - platform: template
     name: "Zone 2 End X"
     id: zone2_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -271,7 +284,7 @@ number:
     name: "Zone 2 Begin Y"
     id: zone2_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -281,7 +294,7 @@ number:
     name: "Zone 2 End Y"
     id: zone2_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -302,8 +315,8 @@ number:
   - platform: template
     name: "Zone 3 Begin X"
     id: zone3_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -312,8 +325,8 @@ number:
   - platform: template
     name: "Zone 3 End X"
     id: zone3_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -323,7 +336,7 @@ number:
     name: "Zone 3 Begin Y"
     id: zone3_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -333,7 +346,7 @@ number:
     name: "Zone 3 End Y"
     id: zone3_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -354,8 +367,8 @@ number:
   - platform: template
     name: "Zone 4 Begin X"
     id: zone4_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -364,8 +377,8 @@ number:
   - platform: template
     name: "Zone 4 End X"
     id: zone4_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -375,7 +388,7 @@ number:
     name: "Zone 4 Begin Y"
     id: zone4_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -385,7 +398,7 @@ number:
     name: "Zone 4 End Y"
     id: zone4_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -695,6 +708,10 @@ uart:
           int zone4_end_y_value = id(zone4_end_y).state;
 
           if (p1_distance < max_distance) {
+            if(id(installation_angle_ui).state != 0){
+              p1_x = p1_distance * cos((p1_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+              p1_y = p1_distance * sin((p1_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+            }
             if ((p1_x >= zone1_begin_x_value && p1_x <= zone1_end_x_value) &&
                 (p1_y >= zone1_begin_y_value && p1_y <= zone1_end_y_value)) {
               zone1_count++;
@@ -760,6 +777,11 @@ uart:
           }
 
           if (p2_distance < max_distance) {
+            if(id(installation_angle_ui).state != 0){
+              p2_x = p2_distance * cos((p2_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+              p2_y = p2_distance * sin((p2_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+            }
+            if (id(target2_x).state != p2_x)
             if ((p2_x >= zone1_begin_x_value && p2_x <= zone1_end_x_value) &&
                 (p2_y >= zone1_begin_y_value && p2_y <= zone1_end_y_value)) {
               zone1_count++;
@@ -825,6 +847,10 @@ uart:
           }
 
           if (p3_distance < max_distance) {
+            if(id(installation_angle_ui).state != 0){
+              p3_x = p3_distance * cos((p3_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+              p3_y = p3_distance * sin((p3_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+            }
             if ((p3_x >= zone1_begin_x_value && p3_x <= zone1_end_x_value) &&
                 (p3_y >= zone1_begin_y_value && p3_y <= zone1_end_y_value)) {
               zone1_count++;

@@ -56,6 +56,12 @@ Distance allows you to adjust the max range of the sensor, up to a maximum of 6m
 
 ![Home Assistant mmWave distance Entity](../images/home-assistant-entities-mmwave-distance.jpg)
 
+### Installation Angle
+
+If you find that the best placement for the Everything Presence Lite is not parallel to a wall, you can set the installation angle. This will allow the placement in corners, keeping the zones aligned with the walls of the division.
+
+![Home Assistant mmWave distance Entity](../images/home-assistant-entities-angle-controls.png)
+
 ### Zones
 
 The Everything Presence Lite also supports zones, which allow you to define a space in a room that when a target (person) walks into, the sensor can detect that and let you run automations based on which zone a person is in. The Everything Presence Lite supports up to 4 individual zones.
