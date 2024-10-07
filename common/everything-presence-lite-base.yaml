@@ -32,10 +32,10 @@ wifi:
 improv_serial:
 
 i2c:
- sda: 21
- scl: 22
- scan: true
- id: bus_a
+-  id: bus_a
+   sda: 21
+   scl: 22
+   scan: true
 
 light:
   - platform: status_led
