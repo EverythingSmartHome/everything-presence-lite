@@ -1,5 +1,5 @@
 #Card based on athua's code (https://github.com/athua/ha-utils) and https://docs.screek.io/2a/add-a-map-card with some custom modifications  It requires Plotly Graph Card from HACS.
-#This assumes you havent change entity names.  Line 45, 47 and 50 needs to change to match your sensor_id.
+#This assumes you havent change entity names.  Line 16, 18 and 21 needs to change to match your sensor_id.
 
 type: custom:plotly-graph
 title: $ex "Living Room Map"
@@ -11,35 +11,6 @@ config:
     - lasso2d
     - toImage
   displaylogo: false
-layout:
-  height: 240
-  margin:
-    l: 40
-    r: 20
-    t: 20
-    b: 55
-  showlegend: false
-  xaxis:
-    showticklabels: false
-    dtick: 1000
-    gridcolor: RGBA(200,200,200,0.15)
-    zerolinecolor: RGBA(200,200,200,0.15)
-    type: number
-    fixedrange: true
-    range:
-      - -4000
-      - 4000
-  yaxis:
-    showticklabels: false
-    dtick: 1000
-    gridcolor: RGBA(200,200,200,0.15)
-    zerolinecolor: RGBA(200,200,200,0.15)
-    scaleanchor: x
-    scaleratio: 1
-    fixedrange: true
-    range:
-      - 7500
-      - 0
 entities:
   - entity: ''
     sensor_suffix: $ex vars.sensor_id = "2fbc58";
@@ -265,40 +236,63 @@ entities:
       shape: line
       width: 1
       dash: dot
-    x:
-      - 0
-      - $ex 7500 * Math.sin((2 * Math.PI)/360 * 60)
-      - 5500
-      - 4500
-      - 4000
-      - 3000
-      - 2000
-      - 1000
-      - 0
-      - -1000
-      - -2000
-      - -3000
-      - -4000
-      - -4500
-      - -5500
-      - $ex -7500 * Math.sin((2 * Math.PI)/360 * 60)
-      - 0
-    'y':
-      - 0
-      - $ex 7500 * Math.cos((2 * Math.PI)/360 * 60)
-      - $ex Math.sqrt( 7500**2 - 5500**2 )
-      - $ex Math.sqrt( 7500**2 - 4500**2 )
-      - $ex Math.sqrt( 7500**2 - 4000**2 )
-      - $ex Math.sqrt( 7500**2 - 3000**2 )
-      - $ex Math.sqrt( 7500**2 - 2000**2 )
-      - $ex Math.sqrt( 7500**2 - 1000**2 )
-      - 7500
-      - $ex Math.sqrt( 7500**2 - 1000**2 )
-      - $ex Math.sqrt( 7500**2 - 2000**2 )
-      - $ex Math.sqrt( 7500**2 - 3000**2 )
-      - $ex Math.sqrt( 7500**2 - 4000**2 )
-      - $ex Math.sqrt( 7500**2 - 4500**2 )
-      - $ex Math.sqrt( 7500**2 - 5500**2 )
-      - $ex 7500 * Math.cos((2 * Math.PI)/360 * 60)
-      - 0
+    x: >-
+      $ex { vars.installation_angle = Number(hass.states[vars.number_name_prefix + "installation_angle"]?.state ?? 0);
+      vars.installation_angle_cos = Math.cos(Math.PI/180 * vars.installation_angle);
+      vars.installation_angle_sin = Math.sin(Math.PI/180 * vars.installation_angle);
+      vars.max_distance = 10 * hass.states[vars.number_name_prefix + "max_distance"].state;
+      var distance_ratio = vars.max_distance/7500;
+      var coverage_steps = [5500,4500,4000,3000,2000,1000,0,-1000,-2000,-3000,-4000,-4500,-5500];
+
+      vars.coverage_x = [0, vars.max_distance * Math.sin(Math.PI/180 * 60)];
+      coverage_steps.forEach((step) => vars.coverage_x.push(step * distance_ratio));
+      vars.coverage_x.push(-vars.max_distance * Math.sin(Math.PI/180 * 60), 0);
+
+      vars.coverage_y = [0, vars.max_distance * Math.cos(Math.PI/180 * 60)];
+      coverage_steps.forEach((step) => { 
+        return vars.coverage_y.push(Math.sqrt(vars.max_distance**2 - (step * distance_ratio)**2));
+      });
+      vars.coverage_y.push(vars.max_distance * Math.cos(Math.PI/180 * 60), 0);
+      return vars.coverage_x.map((x, i)=> {
+        return x * vars.installation_angle_cos +
+        vars.coverage_y[i] * vars.installation_angle_sin;
+        });
+      }
+    'y': >-
+      $ex vars.coverage_y.map((y,i)=> {
+        return -vars.coverage_x[i] * vars.installation_angle_sin
+         + y * vars.installation_angle_cos
+        })
+layout:
+  height: 240
+  margin:
+    l: 40
+    r: 20
+    t: 20
+    b: 55
+  showlegend: false
+  xaxis:
+    showticklabels: false
+    dtick: 1000
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    type: number
+    fixedrange: true
+    range:
+      - $ex -vars.max_distance
+      - $ex vars.max_distance
+  yaxis:
+    showticklabels: false
+    dtick: 1000
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    scaleanchor: x
+    scaleratio: 1
+    fixedrange: true
+    range:
+      - $ex vars.max_distance
+      - >-
+        $ex {if(Math.abs(vars.installation_angle) <= 30) return 0;
+        return -vars.max_distance * Math.sin(Math.PI/180 *
+        (Math.abs(vars.installation_angle)-30));}
 raw_plotly_config: true
