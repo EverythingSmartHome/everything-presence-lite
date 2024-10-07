@@ -784,7 +784,6 @@ uart:
               p2_x = p2_distance * cos((p2_angle - installation_angle)/RADIANS_TO_DEGREES);
               p2_y = p2_distance * sin((p2_angle - installation_angle)/RADIANS_TO_DEGREES);
             }
-            if (id(target2_x).state != p2_x)
             if ((p2_x >= zone1_begin_x_value && p2_x <= zone1_end_x_value) &&
                 (p2_y >= zone1_begin_y_value && p2_y <= zone1_end_y_value)) {
               zone1_count++;
