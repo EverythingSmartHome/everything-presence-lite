@@ -671,8 +671,11 @@ uart:
           float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
 
           float max_distance = float(id(distance).state) * 10;
+          int installation_angle = int(id(installation_angle_ui).state);
 
-          if (p1_distance > 0 || p2_distance > 0 || p3_distance > 0) {
+          if ((p1_distance > 0 && p1_distance <= max_distance) ||
+            (p2_distance > 0 && p2_distance <= max_distance) ||
+            (p3_distance > 0 && p3_distance <= max_distance)) {
             if (id(occupancy).state != true) {
               id(occupancy).publish_state(true);
             }
@@ -708,9 +711,9 @@ uart:
           int zone4_end_y_value = id(zone4_end_y).state;
 
           if (p1_distance < max_distance) {
-            if(id(installation_angle_ui).state != 0){
-              p1_x = p1_distance * cos((p1_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
-              p1_y = p1_distance * sin((p1_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+            if(installation_angle != 0){
+              p1_x = p1_distance * cos((p1_angle - installation_angle)/RADIANS_TO_DEGREES);
+              p1_y = p1_distance * sin((p1_angle - installation_angle)/RADIANS_TO_DEGREES);
             }
             if ((p1_x >= zone1_begin_x_value && p1_x <= zone1_end_x_value) &&
                 (p1_y >= zone1_begin_y_value && p1_y <= zone1_end_y_value)) {
@@ -777,9 +780,9 @@ uart:
           }
 
           if (p2_distance < max_distance) {
-            if(id(installation_angle_ui).state != 0){
-              p2_x = p2_distance * cos((p2_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
-              p2_y = p2_distance * sin((p2_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+            if(installation_angle != 0){
+              p2_x = p2_distance * cos((p2_angle - installation_angle)/RADIANS_TO_DEGREES);
+              p2_y = p2_distance * sin((p2_angle - installation_angle)/RADIANS_TO_DEGREES);
             }
             if (id(target2_x).state != p2_x)
             if ((p2_x >= zone1_begin_x_value && p2_x <= zone1_end_x_value) &&
@@ -847,9 +850,9 @@ uart:
           }
 
           if (p3_distance < max_distance) {
-            if(id(installation_angle_ui).state != 0){
-              p3_x = p3_distance * cos((p3_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
-              p3_y = p3_distance * sin((p3_angle - id(installation_angle_ui).state)/RADIANS_TO_DEGREES);
+            if(installation_angle != 0){
+              p3_x = p3_distance * cos((p3_angle - installation_angle)/RADIANS_TO_DEGREES);
+              p3_y = p3_distance * sin((p3_angle - installation_angle)/RADIANS_TO_DEGREES);
             }
             if ((p3_x >= zone1_begin_x_value && p3_x <= zone1_end_x_value) &&
                 (p3_y >= zone1_begin_y_value && p3_y <= zone1_end_y_value)) {
