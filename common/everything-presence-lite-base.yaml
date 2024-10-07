@@ -65,6 +65,7 @@ sensor:
   - platform: bh1750
     name: Illuminance
     id: illuminance_sensor
+    i2c_id: bus_a
     address: 0x23
     update_interval: ${illuminance_update_interval}
     filters:

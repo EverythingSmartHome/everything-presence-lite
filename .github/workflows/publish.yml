@@ -110,3 +110,113 @@ jobs:
       clean: false
       esphome_version: latest
       directory_name: everything-presence-lite-ha-mr24hpc1-no-ble
+
+  publish-everything-presence-lite-ha-co2:
+    name: Publish Everything Presence Lite HA CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-co2.yaml
+      name: Everything Presence Lite HA CO₂
+      manifest_filename: everything-presence-lite-ha-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-co2
+
+  publish-everything-presence-lite-ha-no-ble-co2:
+    name: Publish Everything Presence Lite HA No BLE CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-no-ble-co2.yaml
+      name: Everything Presence Lite HA No BLE CO₂
+      manifest_filename: everything-presence-lite-ha-no-ble-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-no-ble-co2
+
+  publish-everything-presence-lite-ha-ld2410-co2:
+    name: Publish Everything Presence Lite HA LD2410 CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-ld2410-co2.yaml
+      name: Everything Presence Lite HA LD2410 CO₂
+      manifest_filename: everything-presence-lite-ha-ld2410-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-ld2410-co2
+
+  publish-everything-presence-lite-ha-ld2410-no-ble-co2:
+    name: Publish Everything Presence Lite HA LD2410 No BLE CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-ld2410-no-ble-co2.yaml
+      name: Everything Presence Lite HA LD2410 No BLE CO₂
+      manifest_filename: everything-presence-lite-ha-ld2410-no-ble-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-ld2410-no-ble-co2
+
+  publish-everything-presence-lite-ha-sen0395-co2:
+    name: Publish Everything Presence Lite HA SEN0395 CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-sen0395-co2.yaml
+      name: Everything Presence Lite HA SEN0395 CO₂
+      manifest_filename: everything-presence-lite-ha-sen0395-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-sen0395-co2
+
+  publish-everything-presence-lite-ha-sen0395-no-ble-co2:
+    name: Publish Everything Presence Lite HA SEN0395 No BLE CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-sen0395-no-ble-co2.yaml
+      name: Everything Presence Lite HA SEN0395 No BLE CO₂
+      manifest_filename: everything-presence-lite-ha-sen0395-no-ble-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-sen0395-no-ble-co2
+
+  publish-everything-presence-lite-ha-sen0609-co2:
+    name: Publish Everything Presence Lite HA SEN0609 CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-sen0609-co2.yaml
+      name: Everything Presence Lite HA SEN0609 CO₂
+      manifest_filename: everything-presence-lite-ha-sen0609-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-sen0609-co2
+
+  publish-everything-presence-lite-ha-sen0609-no-ble-co2:
+    name: Publish Everything Presence Lite HA SEN0609 No BLE CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-sen0609-no-ble-co2.yaml
+      name: Everything Presence Lite HA SEN0609 No BLE CO₂
+      manifest_filename: everything-presence-lite-ha-sen0609-no-ble-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-sen0609-no-ble-co2
+
+  publish-everything-presence-lite-ha-mr24hpc1-co2:
+    name: Publish Everything Presence Lite HA mr24hpc1 CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-mr24hpc1-co2.yaml
+      name: Everything Presence Lite HA mr24hpc1 CO₂
+      manifest_filename: everything-presence-lite-ha-mr24hpc1-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-mr24hpc1-co2
+
+  publish-everything-presence-lite-ha-mr24hpc1-no-ble-co2:
+    name: Publish Everything Presence Lite HA mr24hpc1 No BLE CO₂
+    uses: EverythingSmartHome/everything-presence-lite/.github/workflows/esphome-build.yml@main
+    with:
+      files: everything-presence-lite-ha-mr24hpc1-no-ble-co2.yaml
+      name: Everything Presence Lite HA mr24hpc1 No BLE CO₂
+      manifest_filename: everything-presence-lite-ha-mr24hpc1-no-ble-co2-manifest.json
+      clean: false
+      esphome_version: latest
+      directory_name: everything-presence-lite-ha-mr24hpc1-no-ble-co2
