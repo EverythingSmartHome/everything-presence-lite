@@ -9,10 +9,6 @@ api:
             id: scd40
 
 i2c:
-  - id: bus_a
-    sda: 21
-    scl: 22
-    scan: true
   - id: bus_b
     sda: 26
     scl: 27
