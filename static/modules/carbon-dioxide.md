@@ -27,36 +27,7 @@ Grab your CO2 module and push it onto the pins, making sure to line up the 3.3v 
 
 ## Software
 
-You will need the ESPHome add-on installed in Home Assistant and the code for your Everything Presence Lite adopted (you should be automatically prompted to do this if you haven't already done so).
-
-Once you have your config showing up in the ESPHome dashboard, hit edit on the config.
-
-Then at the bottom of the config, add the following lines:
-
-```
-i2c:
-  - id: bus_a
-    sda: 21
-    scl: 22
-    scan: true
-  - id: bus_b
-    sda: 26
-    scl: 27
-    scan: true
-
-sensor:
-  - id: !extend illuminance_sensor
-    i2c_id: bus_a
-  - platform: scd4x
-    i2c_id: bus_b
-    co2:
-      name: "CO2"
-```
-
-Then hit save and install to complete.
-
-{: .note }
-If your ESPHome config produces an error when trying to install, try hitting the "clean build files" button on the config to clear your cache, then try again.
+You will need to install the CO2 version of the firmware by heading over to the [update page](https://everythingsmarthome.github.io/everything-presence-lite/updating.html), selecting Home Assistant, select LD2450 (the default sensor), select CO2 and then choose between the Bluetooth or Non-Bluetooth versions of the firmware. Finally hit the Connect button and follow the instructions.
 
 Once installed, the CO2 sensor should automatically show up in Home Assistant, nice!
 
