@@ -143,12 +143,9 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
             <label>
                 <input type="radio" name="module" value="CO2 Module" />
                 <div class="option-content">
-                    <img src="images/co2-module.png" alt="CO₂ Module" class="option-image">
-                    <div>
-                        <div class="title">CO₂ Module</div>
-                        <div class="description">Add support for the CO₂ module.</div>
-                        <a href="https://link-to-co2-module" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
-                    </div>
+                        <div class="title">CO2 Module</div>
+                        <div class="description">Add support for the <a href="https://shop.everythingsmart.io/products/everything-presence-one-lite-co2-add-on">optional CO2 module</a>.</div>
+                        <a href="https://shop.everythingsmart.io/products/everything-presence-one-lite-co2-add-on" target="_blank" rel="noopener noreferrer" class="purchase-link">Buy</a>
                 </div>
             </label>
         </div>
