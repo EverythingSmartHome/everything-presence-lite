@@ -710,7 +710,7 @@ uart:
           int zone4_begin_y_value = id(zone4_begin_y).state;
           int zone4_end_y_value = id(zone4_end_y).state;
 
-          if (p1_distance < max_distance) {
+          if (p1_distance > 0 && p1_distance <= max_distance) {
             if(installation_angle != 0){
               p1_x = p1_distance * cos((p1_angle - installation_angle)/RADIANS_TO_DEGREES);
               p1_y = p1_distance * sin((p1_angle - installation_angle)/RADIANS_TO_DEGREES);
@@ -779,7 +779,7 @@ uart:
             }
           }
 
-          if (p2_distance < max_distance) {
+          if (p2_distance > 0 && p2_distance <= max_distance) {
             if(installation_angle != 0){
               p2_x = p2_distance * cos((p2_angle - installation_angle)/RADIANS_TO_DEGREES);
               p2_y = p2_distance * sin((p2_angle - installation_angle)/RADIANS_TO_DEGREES);
@@ -848,7 +848,7 @@ uart:
             }
           }
 
-          if (p3_distance < max_distance) {
+          if (p3_distance > 0 && p3_distance <= max_distance) {
             if(installation_angle != 0){
               p3_x = p3_distance * cos((p3_angle - installation_angle)/RADIANS_TO_DEGREES);
               p3_y = p3_distance * sin((p3_angle - installation_angle)/RADIANS_TO_DEGREES);
