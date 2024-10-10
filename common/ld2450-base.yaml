@@ -676,13 +676,9 @@ uart:
           if ((p1_distance > 0 && p1_distance <= max_distance) ||
             (p2_distance > 0 && p2_distance <= max_distance) ||
             (p3_distance > 0 && p3_distance <= max_distance)) {
-            if (id(occupancy).state != true) {
-              id(occupancy).publish_state(true);
-            }
+            id(occupancy).publish_state(true);
           } else {
-            if (id(occupancy).state != false) {
-              id(occupancy).publish_state(false);
-            }
+            id(occupancy).publish_state(false);
           }
 
           // Extracted for consistency of read values
@@ -918,64 +914,48 @@ uart:
           }
 
           if (zone1_count > 0) {
-            if (id(zone1_occupancy).state != true) {
-              id(zone1_occupancy).publish_state(true);
-            }
+            id(zone1_occupancy).publish_state(true);
             if (id(zone1_target_count).state != zone1_count) {
               id(zone1_target_count).publish_state(zone1_count);
             }
           } else {
-            if (id(zone1_occupancy).state != false) {
-              id(zone1_occupancy).publish_state(false);
-            }
+            id(zone1_occupancy).publish_state(false);
             if (id(zone1_target_count).state != 0) {
               id(zone1_target_count).publish_state(0);
             }
           }
 
           if (zone2_count > 0) {
-            if (id(zone2_occupancy).state != true) {
-              id(zone2_occupancy).publish_state(true);
-            }
+            id(zone2_occupancy).publish_state(true);
             if (id(zone2_target_count).state != zone2_count) {
               id(zone2_target_count).publish_state(zone2_count);
             }
           } else {
-            if (id(zone2_occupancy).state != false) {
-              id(zone2_occupancy).publish_state(false);
-            }
+            id(zone2_occupancy).publish_state(false);
             if (id(zone2_target_count).state != 0) {
               id(zone2_target_count).publish_state(0);
             }
           }
 
           if (zone3_count > 0) {
-            if (id(zone3_occupancy).state != true) {
-              id(zone3_occupancy).publish_state(true);
-            }
+            id(zone3_occupancy).publish_state(true);
             if (id(zone3_target_count).state != zone3_count) {
               id(zone3_target_count).publish_state(zone3_count);
             }
           } else {
-            if (id(zone3_occupancy).state != false) {
-              id(zone3_occupancy).publish_state(false);
-            }
+            id(zone3_occupancy).publish_state(false);
             if (id(zone3_target_count).state != 0) {
               id(zone3_target_count).publish_state(0);
             }
           }
 
           if (zone4_count > 0) {
-            if (id(zone4_occupancy).state != true) {
-              id(zone4_occupancy).publish_state(true);
-            }
+            id(zone4_occupancy).publish_state(true);
             if (id(zone4_target_count).state != zone4_count) {
               id(zone4_target_count).publish_state(zone4_count);
             }
           } else {
-            if (id(zone4_occupancy).state != false) {
-              id(zone4_occupancy).publish_state(false);
-            }
+            id(zone4_occupancy).publish_state(false);
             if (id(zone4_target_count).state != 0) {
               id(zone4_target_count).publish_state(0);
             }
