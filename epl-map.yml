@@ -228,6 +228,47 @@ entities:
         $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
         return zone4_begin_y ? zone4_begin_y.state : -9999; }
   - entity: ''
+    name: OccupancyMask1
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(20,20,20,0.06)
+    line:
+      color: RGBA(20,20,20,0.2)
+      shape: line
+      width: 2
+    x:
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_x"].state
+    "y":
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_y"].state
+  - entity: ''
     name: Coverage
     mode: lines
     fill: tonexty
