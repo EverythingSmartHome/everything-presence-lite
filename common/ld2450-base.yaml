@@ -423,7 +423,6 @@ number:
     min_value: -6000
     unit_of_measurement: "mm"
     step: 10
-    entity_category: config
     optimistic: True
     restore_value: True
   - platform: template
@@ -433,7 +432,6 @@ number:
     min_value: -6000
     unit_of_measurement: "mm"
     step: 10
-    entity_category: config
     optimistic: True
     restore_value: True
   - platform: template
@@ -443,7 +441,6 @@ number:
     min_value: -1560
     unit_of_measurement: "mm"
     step: 10
-    entity_category: config
     optimistic: True
     restore_value: True
   - platform: template
@@ -453,7 +450,6 @@ number:
     min_value: -1560
     unit_of_measurement: "mm"
     step: 10
-    entity_category: config
     optimistic: True
     restore_value: True
 
