@@ -683,28 +683,28 @@ uart:
 
           // Extracted for consistency of read values
           int zone1_count = 0;
-          int zone1_begin_x_value = id(zone1_begin_x).state;
-          int zone1_end_x_value = id(zone1_end_x).state;
-          int zone1_begin_y_value = id(zone1_begin_y).state;
-          int zone1_end_y_value = id(zone1_end_y).state;
+          int zone1_begin_x_value = min(id(zone1_begin_x).state, id(zone1_end_x).state);
+          int zone1_end_x_value = max(id(zone1_begin_x).state, id(zone1_end_x).state);
+          int zone1_begin_y_value = min(id(zone1_begin_y).state, id(zone1_end_y).state);
+          int zone1_end_y_value = max(id(zone1_begin_y).state, id(zone1_end_y).state);
 
           int zone2_count = 0;
-          int zone2_begin_x_value = id(zone2_begin_x).state;
-          int zone2_end_x_value = id(zone2_end_x).state;
-          int zone2_begin_y_value = id(zone2_begin_y).state;
-          int zone2_end_y_value = id(zone2_end_y).state;
+          int zone2_begin_x_value = min(id(zone2_begin_x).state, id(zone2_end_x).state);
+          int zone2_end_x_value = max(id(zone2_begin_x).state, id(zone2_end_x).state);
+          int zone2_begin_y_value = min(id(zone2_begin_y).state, id(zone2_end_y).state);
+          int zone2_end_y_value = max(id(zone2_begin_y).state, id(zone2_end_y).state);
 
           int zone3_count = 0;
-          int zone3_begin_x_value = id(zone3_begin_x).state;
-          int zone3_end_x_value = id(zone3_end_x).state;
-          int zone3_begin_y_value = id(zone3_begin_y).state;
-          int zone3_end_y_value = id(zone3_end_y).state;
+          int zone3_begin_x_value = min(id(zone3_begin_x).state, id(zone3_end_x).state);
+          int zone3_end_x_value = max(id(zone3_begin_x).state, id(zone3_end_x).state);
+          int zone3_begin_y_value = min(id(zone3_begin_y).state, id(zone3_end_y).state);
+          int zone3_end_y_value = max(id(zone3_begin_y).state, id(zone3_end_y).state);
 
           int zone4_count = 0;
-          int zone4_begin_x_value = id(zone4_begin_x).state;
-          int zone4_end_x_value = id(zone4_end_x).state;
-          int zone4_begin_y_value = id(zone4_begin_y).state;
-          int zone4_end_y_value = id(zone4_end_y).state;
+          int zone4_begin_x_value = min(id(zone4_begin_x).state, id(zone4_end_x).state);
+          int zone4_end_x_value = max(id(zone4_begin_x).state, id(zone4_end_x).state);
+          int zone4_begin_y_value = min(id(zone4_begin_y).state, id(zone4_end_y).state);
+          int zone4_end_y_value = max(id(zone4_begin_y).state, id(zone4_end_y).state);
 
           if (p1_distance > 0 && p1_distance <= max_distance) {
             if(installation_angle != 0){
