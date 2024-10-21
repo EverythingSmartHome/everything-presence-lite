@@ -9,11 +9,11 @@ update:
   - platform: http_request
     id: update_http_request
     name: Everything Presence Lite Firmware
-    source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-no-ble-manifest.json
+    source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-no-ble-co2-manifest.json
     disabled_by_default: true
 
 dashboard_import:
-  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-no-ble.yaml@main
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-mr24hpc1-no-ble-co2.yaml@main
   import_full_config: false # or true
 
 packages:
