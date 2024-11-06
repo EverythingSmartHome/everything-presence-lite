@@ -1,9 +1,74 @@
 esp32_ble_tracker:
   scan_parameters:
     active: true
+  on_ble_advertise:
+    - then:
+        - lambda: |-
+            if (x.get_ibeacon().has_value()) {
+                std::string uuid;
+                esp_bt_uuid_t raw_uuid = x.get_ibeacon().value().get_uuid().get_uuid();
+                char sbuf[64];
+                char *bpos = sbuf;
+                switch (raw_uuid.len) {
+                    case ESP_UUID_LEN_128:
+                        for (int8_t i = 0; i <= 15; i++) {
+                            sprintf(bpos, "%02x", raw_uuid.uuid.uuid128[i]);
+                            bpos += 2;
+                            if (i == 6 || i == 8 || i == 10 || i == 12)
+                                  sprintf(bpos++, "-");
+                        }
+                        sbuf[47] = '\0';
+                        uuid.assign(sbuf);
+                        break;
+                    default:
+                        uuid = x.get_ibeacon().value().get_uuid().to_string();
+                        std::transform(uuid.begin(), uuid.end(), uuid.begin(), [](unsigned char c){ return std::tolower(c); });
+                        break;
+                }
+                char mbuf[32] = {0};
+                int major = x.get_ibeacon().value().get_major();
+                sprintf(mbuf, "-%hu-%hu", x.get_ibeacon().value().get_major(), x.get_ibeacon().value().get_minor());                
+                uuid.append(mbuf);
+                int8_t tx_power = x.get_ibeacon().value().get_signal_power();
+                if (tx_power >= 100) {
+                  tx_power = -69;
+                }
+                float dist = pow(10, (float)(tx_power - x.get_rssi()) / (10 * 2));
+                if (dist < 50 && major == 100) {
+                    ESP_LOGD("ble_adv", "Sending MQTT room update for '%s' (%s): %.03fm (%d rssi, %d sigpow)",
+                             x.get_name().c_str(), uuid.c_str(), dist, x.get_rssi(), tx_power);
+                    id(mqtt_client).publish_json(id(room_topic), [=](JsonObject root) {
+                        root["id"] = uuid;
+                        root["name"] = x.get_name();
+                        root["distance"] = dist;
+                        root["rssi"] = x.get_rssi();
+                        root["tx_power"] = tx_power;
+                    });
+                } else {
+                    ESP_LOGD("ble_adv", "Skipping MQTT room update for '%s' (%s): %.03fm (%d rssi, %d sigpow)",
+                             x.get_name().c_str(), uuid.c_str(), dist, x.get_rssi(), tx_power);
+                }
+            }    
 
 bluetooth_proxy:
   active: true
 
 esp32_improv:
   authorizer: none
+
+mqtt:
+  broker: mqtt.juhonkoti.net
+  discovery: false # Only if you use the HA API usually
+  id: mqtt_client
+  topic_prefix: 'room_presence/radar/${room_name}'
+  log_topic: 
+
+# Define the room for this ESP32 node
+substitutions:
+  room_name: olohuone
+
+# Push the room name into a global
+globals:
+  - id: room_topic
+    type: std::string
+    initial_value: '"room_presence/ble/${room_name}"'  
