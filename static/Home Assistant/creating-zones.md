@@ -34,14 +34,11 @@ Select the add-on, then hit install. Once installed, hit start and then "Open We
 
 ### (Advanced) Alternative install with docker (no Supervisor)
 
-1. clone the git repository `git clone ttps://github.com/EverythingSmartHome/everything-presence-addons`
-2. change directory into `cd everything-presence-addons/everything-presence-mmwave-configurator`
-3. build the zone configurator web app image yourself `docker build -t presence-zones:local .`
-4. use docker run or docker compose similar to following examples, dont forget to adjust HA URL and generate a access token
+Use docker run or docker compose similar to following examples, dont forget to adjust HA URL and use a generated access token
 
 *docker run basic example:*
 ```
-docker run -p 8099:8099 -e HA_URL=http://10.0.1.11:8123 -e HA_TOKEN=123-generate-token-at-url:8123/profile/security-456 presence-zones:local
+docker run -d -e HA_URL=http://HA_URL:8123 -e HA_TOKEN=LONG_LIVE_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everything-presence-mmwave-configurator:latest 
 ```
 
 *docker compose basic example:*
@@ -50,7 +47,8 @@ services:
   zones:
     ports:
       - 8099:8099
-    image: presence-zones:local
+    image: everything-presence-mmwave-configurator:latest
+    container_name: everything-presence-mmwave-configurator
     environment:
       - HA_URL=http://10.0.1.11:8123
       - HA_TOKEN=123-generate-token-at-url:8123/profile/security-456
