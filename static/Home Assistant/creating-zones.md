@@ -47,7 +47,7 @@ services:
   zones:
     ports:
       - 8099:8099
-    image: everything-presence-mmwave-configurator:latest
+    image: everythingsmarthome/everything-presence-mmwave-configurator:latest
     container_name: everything-presence-mmwave-configurator
     environment:
       - HA_URL=http://10.0.1.11:8123
