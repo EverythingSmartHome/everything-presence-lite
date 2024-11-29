@@ -38,7 +38,7 @@ Use docker run or docker compose similar to following examples, dont forget to a
 
 *docker run basic example:*
 ```
-docker run -d -e HA_URL=http://HA_URL:8123 -e HA_TOKEN=LONG_LIVE_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everything-presence-mmwave-configurator:latest 
+docker run -d -e HA_URL=http://HA_URL:8123 -e HA_TOKEN=LONG_LIVE_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everythingsmarthome/everything-presence-mmwave-configurator:latest 
 ```
 
 *docker compose basic example:*
