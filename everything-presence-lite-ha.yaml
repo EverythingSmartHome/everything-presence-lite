@@ -3,7 +3,7 @@ substitutions:
   friendly_name: "Everything Presence Lite"
   illuminance_update_interval: "2s"
   hidden_ssid: "false"
-  log_level: DEBUG
+  log_level: INFO
 
 update:
   - platform: http_request
@@ -20,3 +20,4 @@ packages:
   device_base: !include common/everything-presence-lite-base.yaml
   ld2450_base: !include common/ld2450-base.yaml
   bluetooth_base: !include common/bluetooth-base.yaml
+
