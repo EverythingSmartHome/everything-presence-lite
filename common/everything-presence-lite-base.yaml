@@ -36,6 +36,10 @@ i2c:
    sda: 21
    scl: 22
    scan: true
+- id: bus_b
+  sda: 16
+  scl: 17
+  scan: true
 
 light:
   - platform: status_led
@@ -73,6 +77,45 @@ sensor:
       - lambda: "return x + id(illuminance_offset_ui).state;"
       - clamp:
           min_value: 0
+
+  - platform: bme280
+    i2c_id: bus_b
+    temperature:
+      name: "Temperature"
+      id: temperature_sensor
+      filters:
+        - calibrate_linear:
+          - 0.0 -> 0.0
+          - 18.11 -> 16.92
+          - 18.18 -> 16.83
+          - 18.29 -> 16.67
+          - 18.82 -> 17.46
+          - 18.84 -> 17.46
+          - 18.96 -> 17.55
+          - 18.99 -> 17.63
+          - 19.06 -> 17.7
+          - 19.06 -> 17.72
+          - 19.26 -> 17.72
+          - 19.4 -> 17.82
+          - 19.54 -> 17.98
+          - 19.66 -> 17.86
+          - 20.15 -> 18
+          - 20.31 -> 18.2
+          - 20.78 -> 18.85
+          - 20.79 -> 18.8
+          - 20.9 -> 18.82
+    pressure:
+      name: "Pressure"
+      id: pressure
+    humidity:
+      name: "Humidity"
+      id: humidity
+      filters:
+        - calibrate_linear:
+          - 0.0 -> 0.0
+          - 43.0 -> 53.0
+    address: 0x76
+    update_interval: 5s
 
 button:
   - platform: restart
