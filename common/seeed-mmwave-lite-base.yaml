@@ -67,7 +67,7 @@ sensor:
 
 switch:
   - platform: seeed_mr24hpc1
-    underly_open_function:
+    underlying_open_function:
       name: "Advanced mode"
       id: "advanced_mode"
 

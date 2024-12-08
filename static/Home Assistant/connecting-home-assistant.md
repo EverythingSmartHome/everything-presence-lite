@@ -38,7 +38,7 @@ Once you have the IP address, head over to Home Assistant and go to Settings > D
 Search for ESPHome to add an ESPHome device, and then enter the IP address into the box:
 
 ![Connecting the Lite to Home Assistant](../images/connecting-home-assistant-manual-2.png)
-W
+
 Hit next and finish, and the Lite is now connected to Home Assistant.
 
 ![Connecting the Lite to Home Assistant](../images/connecting-home-assistant-manual-3.png)

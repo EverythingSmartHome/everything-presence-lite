@@ -132,12 +132,10 @@ binary_sensor:
   - platform: template
     name: "Occupancy"
     device_class: occupancy
+    id: occupancy
     filters:
       - delayed_off: !lambda return (id(off_delay).state * 1000);
-    lambda: |-
-      return (id(target1_distance).state != 0
-        || id(target2_distance).state != 0
-        || id(target3_distance).state != 0);
+
   - platform: template
     name: "Zone 1 Occupancy"
     device_class: occupancy
@@ -165,21 +163,16 @@ binary_sensor:
     filters:
       - delayed_off: !lambda return (id(zone_4_off_delay).state * 1000);
     disabled_by_default: true
+
   - platform: template
     name: "Target 1 Active"
     id: target1_active
-    lambda: |-
-      return id(target1_distance).state != 0;
   - platform: template
     name: "Target 2 Active"
     id: target2_active
-    lambda: |-
-      return id(target2_distance).state != 0;
   - platform: template
     name: "Target 3 Active"
     id: target3_active
-    lambda: |-
-      return id(target3_distance).state != 0;
 
 number:
   - platform: template
@@ -202,12 +195,25 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 600
+  - platform: template
+    name: "Installation Angle"
+    id: installation_angle_ui
+    unit_of_measurement: "º"
+    min_value: -45
+    max_value: 45
+    step: 1
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:angle-acute"
+    entity_category: config
 
   - platform: template
     name: "Zone 1 Begin X"
     id: zone1_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -216,8 +222,8 @@ number:
   - platform: template
     name: "Zone 1 End X"
     id: zone1_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -227,7 +233,7 @@ number:
     name: "Zone 1 Begin Y"
     id: zone1_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560 # if epl is rotated 45deg, a target could be detected at negative values: -6000*sin(60deg-45deg) = ~-1552
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -237,7 +243,7 @@ number:
     name: "Zone 1 End Y"
     id: zone1_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -257,8 +263,8 @@ number:
   - platform: template
     name: "Zone 2 Begin X"
     id: zone2_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -267,8 +273,8 @@ number:
   - platform: template
     name: "Zone 2 End X"
     id: zone2_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -278,7 +284,7 @@ number:
     name: "Zone 2 Begin Y"
     id: zone2_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -288,7 +294,7 @@ number:
     name: "Zone 2 End Y"
     id: zone2_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -309,8 +315,8 @@ number:
   - platform: template
     name: "Zone 3 Begin X"
     id: zone3_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -319,8 +325,8 @@ number:
   - platform: template
     name: "Zone 3 End X"
     id: zone3_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -330,7 +336,7 @@ number:
     name: "Zone 3 Begin Y"
     id: zone3_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -340,7 +346,7 @@ number:
     name: "Zone 3 End Y"
     id: zone3_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -361,8 +367,8 @@ number:
   - platform: template
     name: "Zone 4 Begin X"
     id: zone4_begin_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -371,8 +377,8 @@ number:
   - platform: template
     name: "Zone 4 End X"
     id: zone4_end_x
-    max_value: 4000
-    min_value: -4000
+    max_value: 6000
+    min_value: -6000
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -382,7 +388,7 @@ number:
     name: "Zone 4 Begin Y"
     id: zone4_begin_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -392,7 +398,7 @@ number:
     name: "Zone 4 End Y"
     id: zone4_end_y
     max_value: 6000
-    min_value: 0
+    min_value: -1560
     unit_of_measurement: "mm"
     step: 10
     optimistic: True
@@ -409,6 +415,43 @@ number:
     unit_of_measurement: "s"
     initial_value: 15
     disabled_by_default: true
+
+  - platform: template
+    name: "Occupancy Mask 1 Begin X"
+    id: occupancy_mask_1_begin_x
+    max_value: 6000
+    min_value: -6000
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+  - platform: template
+    name: "Occupancy Mask 1 End X"
+    id: occupancy_mask_1_end_x
+    max_value: 6000
+    min_value: -6000
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+  - platform: template
+    name: "Occupancy Mask 1 Begin Y"
+    id: occupancy_mask_1_begin_y
+    max_value: 6000
+    min_value: -1560
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+  - platform: template
+    name: "Occupancy Mask 1 End Y"
+    id: occupancy_mask_1_end_y
+    max_value: 6000
+    min_value: -1560
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
 
 sensor:
   - platform: template
@@ -538,21 +581,32 @@ sensor:
     name: "Zone 1 Target Count"
     id: zone1_target_count
     accuracy_decimals: 0
+    unit_of_measurement: " "
   - platform: template
     name: "Zone 2 Target Count"
     id: zone2_target_count
     accuracy_decimals: 0
     disabled_by_default: true
+    unit_of_measurement: " "
   - platform: template
     name: "Zone 3 Target Count"
     id: zone3_target_count
     accuracy_decimals: 0
     disabled_by_default: true
+    unit_of_measurement: " "
   - platform: template
     name: "Zone 4 Target Count"
     id: zone4_target_count
     accuracy_decimals: 0
     disabled_by_default: true
+    unit_of_measurement: " "
+  - platform: template
+    name: "Occupancy Mask 1 Target Count"
+    id: occupancy_mask_1_target_count
+    accuracy_decimals: 0
+    disabled_by_default: true
+    unit_of_measurement: " "
+
 
 uart:
   id: uart_bus
@@ -584,287 +638,400 @@ uart:
           id(mmwave_update_time) = millis();
 
           int16_t p1_x = (uint16_t((bytes[5] << 8) | bytes[4] ));
-          if ((bytes[5] & 0x80) >> 7){
+          if ((bytes[5] & 0x80) >> 7) {
             p1_x -= pow(2, 15); 
-          }else{
+          } else {
             p1_x = 0 - p1_x; // was 0 - p1_x;
           }
 
           int16_t p1_y = (uint16_t((bytes[7] << 8) | bytes[6] ));
-          if ((bytes[7] & 0x80) >> 7){
+          if ((bytes[7] & 0x80) >> 7) {
             p1_y -= pow(2, 15);
-          }else{
+          } else {
             p1_y = 0 - p1_y;
           }
 
           float p1_speed = (bytes[9] << 8 | bytes[8] );
-          if ((bytes[9] & 0x80) >> 7){
+          if ((bytes[9] & 0x80) >> 7) {
             p1_speed -= pow(2, 15);
-          }else{
+          } else {
             p1_speed = 0 - p1_speed;
           }
           int16_t p1_distance_resolution = (uint16_t((bytes[11] << 8) | bytes[10] )); 
 
           int16_t p2_x = (uint16_t((bytes[13] << 8) | bytes[12] ));
-          if ((bytes[13] & 0x80) >> 7){
+          if ((bytes[13] & 0x80) >> 7) {
             p2_x -=  pow(2, 15); 
-          }else{
+          } else {
             p2_x = 0 - p2_x;
           }
 
           int16_t p2_y = (uint16_t((bytes[15] << 8) | bytes[14] ));
-          if ((bytes[15] & 0x80) >> 7){
+          if ((bytes[15] & 0x80) >> 7) {
             p2_y -= pow(2, 15);
-          }else{
+          } else {
             p2_y = 0 - p2_y;
           }
 
           float p2_speed = (bytes[17] << 8 | bytes[16] );
-          if ((bytes[17] & 0x80) >> 7){
+          if ((bytes[17] & 0x80) >> 7) {
             p2_speed -= pow(2, 15);
-          }else{
+          } else {
             p2_speed = 0 - p2_speed;
           }
           int16_t p2_distance_resolution = (uint16_t((bytes[19] << 8) | bytes[18] )); 
 
           int16_t p3_x = (uint16_t((bytes[21] << 8) | bytes[20] ));
-          if ((bytes[21] & 0x80) >> 7){
+          if ((bytes[21] & 0x80) >> 7) {
             p3_x -=  pow(2, 15); 
-          }else{
+          } else {
             p3_x = 0 - p3_x;
           }
 
           int16_t p3_y = (uint16_t((bytes[23] << 8) | bytes[22] ));
-          if ((bytes[23] & 0x80) >> 7){
+          if ((bytes[23] & 0x80) >> 7) {
             p3_y -= pow(2, 15);
-          }else{
+          } else {
             p3_y = 0 - p3_y;
           }
 
           float p3_speed = (bytes[25] << 8 | bytes[24] );
-          if ((bytes[25] & 0x80) >> 7){
+          if ((bytes[25] & 0x80) >> 7) {
             p3_speed -= pow(2, 15);
-          }else{
+          } else {
             p3_speed = 0 - p3_speed;
           }
           int16_t p3_distance_resolution = (uint16_t((bytes[27] << 8) | bytes[26] ));
 
-          const float RADIANS_TO_DEGREES = 180.0 / 3.14159265358979323846;
-          float p1_angle = atan2(p1_y, p1_x) * RADIANS_TO_DEGREES;
-          float p2_angle = atan2(p2_y, p2_x) * RADIANS_TO_DEGREES;
-          float p3_angle = atan2(p3_y, p3_x) * RADIANS_TO_DEGREES;
-          
+          const static float RADIANS_TO_DEGREES = 180.0 / 3.14159265358979323846;
+          const static float DEGREES_TO_RADIANS = 3.14159265358979323846 / 180.0;
+
+          float p1_angle = atan2(p1_y, p1_x);
+          float p2_angle = atan2(p2_y, p2_x);
+          float p3_angle = atan2(p3_y, p3_x);
+
           float p1_distance = sqrt(p1_x * p1_x + p1_y * p1_y);
           float p2_distance = sqrt(p2_x * p2_x + p2_y * p2_y);
           float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
-          
 
           float max_distance = float(id(distance).state) * 10;
-          if (p1_distance < max_distance) {
-            if (id(target1_x).state != p1_x)
+          float installation_angle = id(installation_angle_ui).state * DEGREES_TO_RADIANS;
+
+          // Extracted for consistency of read values
+          int zone1_count = 0;
+          int zone1_begin_x_value = min(id(zone1_begin_x).state, id(zone1_end_x).state);
+          int zone1_end_x_value = max(id(zone1_begin_x).state, id(zone1_end_x).state);
+          int zone1_begin_y_value = min(id(zone1_begin_y).state, id(zone1_end_y).state);
+          int zone1_end_y_value = max(id(zone1_begin_y).state, id(zone1_end_y).state);
+
+          int zone2_count = 0;
+          int zone2_begin_x_value = min(id(zone2_begin_x).state, id(zone2_end_x).state);
+          int zone2_end_x_value = max(id(zone2_begin_x).state, id(zone2_end_x).state);
+          int zone2_begin_y_value = min(id(zone2_begin_y).state, id(zone2_end_y).state);
+          int zone2_end_y_value = max(id(zone2_begin_y).state, id(zone2_end_y).state);
+
+          int zone3_count = 0;
+          int zone3_begin_x_value = min(id(zone3_begin_x).state, id(zone3_end_x).state);
+          int zone3_end_x_value = max(id(zone3_begin_x).state, id(zone3_end_x).state);
+          int zone3_begin_y_value = min(id(zone3_begin_y).state, id(zone3_end_y).state);
+          int zone3_end_y_value = max(id(zone3_begin_y).state, id(zone3_end_y).state);
+
+          int zone4_count = 0;
+          int zone4_begin_x_value = min(id(zone4_begin_x).state, id(zone4_end_x).state);
+          int zone4_end_x_value = max(id(zone4_begin_x).state, id(zone4_end_x).state);
+          int zone4_begin_y_value = min(id(zone4_begin_y).state, id(zone4_end_y).state);
+          int zone4_end_y_value = max(id(zone4_begin_y).state, id(zone4_end_y).state);
+
+          int occupancy_mask_1_count = 0;
+          int occupancy_mask_1_begin_x_value = min(id(occupancy_mask_1_begin_x).state, id(occupancy_mask_1_end_x).state);
+          int occupancy_mask_1_end_x_value = max(id(occupancy_mask_1_begin_x).state, id(occupancy_mask_1_end_x).state);
+          int occupancy_mask_1_begin_y_value = min(id(occupancy_mask_1_begin_y).state, id(occupancy_mask_1_end_y).state);
+          int occupancy_mask_1_end_y_value = max(id(occupancy_mask_1_begin_y).state, id(occupancy_mask_1_end_y).state);
+
+          int targets_detected = 0;
+
+          if (p1_distance > 0 && p1_distance <= max_distance) {
+            targets_detected++;
+            if (installation_angle != 0) {
+              float angle = p1_angle - installation_angle;
+              p1_x = p1_distance * cos(angle);
+              p1_y = p1_distance * sin(angle);
+            }
+            if ((p1_x >= occupancy_mask_1_begin_x_value && p1_x <= occupancy_mask_1_end_x_value) &&
+                (p1_y >= occupancy_mask_1_begin_y_value && p1_y <= occupancy_mask_1_end_y_value)) {
+              occupancy_mask_1_count++;
+            } else {
+              if ((p1_x >= zone1_begin_x_value && p1_x <= zone1_end_x_value) &&
+                  (p1_y >= zone1_begin_y_value && p1_y <= zone1_end_y_value)) {
+                zone1_count++;
+              }
+              if ((p1_x >= zone2_begin_x_value && p1_x <= zone2_end_x_value) &&
+                  (p1_y >= zone2_begin_y_value && p1_y <= zone2_end_y_value)) {
+                zone2_count++;
+              }
+              if ((p1_x >= zone3_begin_x_value && p1_x <= zone3_end_x_value) &&
+                  (p1_y >= zone3_begin_y_value && p1_y <= zone3_end_y_value)) {
+                zone3_count++;
+              }
+              if ((p1_x >= zone4_begin_x_value && p1_x <= zone4_end_x_value) &&
+                  (p1_y >= zone4_begin_y_value && p1_y <= zone4_end_y_value)) {
+                zone4_count++;
+              }
+            }
+
+            if (id(target1_x).state != p1_x) {
               id(target1_x).publish_state(p1_x);
-            if (id(target1_y).state != p1_y)
+            }
+            if (id(target1_y).state != p1_y) {
               id(target1_y).publish_state(p1_y);
+            }
             p1_speed /= 100.0;
-            if (id(target1_speed).state != p1_speed)
+            if (id(target1_speed).state != p1_speed) {
               id(target1_speed).publish_state(p1_speed);
-            if (id(target1_resolution).state != p1_distance_resolution)
+            }
+            if (id(target1_resolution).state != p1_distance_resolution) {
               id(target1_resolution).publish_state(p1_distance_resolution);
-            if (id(target1_distance).state != p1_distance)
+            }
+            if (id(target1_distance).state != p1_distance) {
               id(target1_distance).publish_state(p1_distance);
-            p1_angle -= 90;
-            if (id(target1_angle).state != p1_angle)
+            }
+            p1_angle = (p1_angle * RADIANS_TO_DEGREES) - 90;
+            if (id(target1_angle).state != p1_angle) {
               id(target1_angle).publish_state(p1_angle);
+            }
+            if (id(target1_active).state != true) {
+              id(target1_active).publish_state(true);
+            }
           } else {
-            if (id(target1_x).state != 0)
+            if (id(target1_x).state != 0) {
               id(target1_x).publish_state(0);
-            if (id(target1_y).state != 0)
+            }
+            if (id(target1_y).state != 0) {
               id(target1_y).publish_state(0);
-            if (id(target1_speed).state != 0)
+            }
+            if (id(target1_speed).state != 0) {
               id(target1_speed).publish_state(0);
-            if (id(target1_resolution).state != 0)
+            }
+            if (id(target1_resolution).state != 0) {
               id(target1_resolution).publish_state(0);
-            if (id(target1_distance).state != 0)
+            }
+            if (id(target1_distance).state != 0) {
               id(target1_distance).publish_state(0);
-            if (id(target1_angle).state != 0)
+            }
+            if (id(target1_angle).state != 0) {
               id(target1_angle).publish_state(0);
+            }
+            if (id(target1_active).state != false) {
+              id(target1_active).publish_state(false);
+            }
           }
 
-          if (p2_distance < max_distance) {
-            if (id(target2_x).state != p2_x)
+          if (p2_distance > 0 && p2_distance <= max_distance) {
+            targets_detected++;
+            if (installation_angle != 0) {
+              float angle = p2_angle - installation_angle;
+              p2_x = p2_distance * cos(angle);
+              p2_y = p2_distance * sin(angle);
+            }
+            if ((p2_x >= occupancy_mask_1_begin_x_value && p2_x <= occupancy_mask_1_end_x_value) &&
+                (p2_y >= occupancy_mask_1_begin_y_value && p2_y <= occupancy_mask_1_end_y_value)) {
+              occupancy_mask_1_count++;
+            } else {
+              if ((p2_x >= zone1_begin_x_value && p2_x <= zone1_end_x_value) &&
+                  (p2_y >= zone1_begin_y_value && p2_y <= zone1_end_y_value)) {
+                zone1_count++;
+              }
+              if ((p2_x >= zone2_begin_x_value && p2_x <= zone2_end_x_value) &&
+                  (p2_y >= zone2_begin_y_value && p2_y <= zone2_end_y_value)) {
+                zone2_count++;
+              }
+              if ((p2_x >= zone3_begin_x_value && p2_x <= zone3_end_x_value) &&
+                  (p2_y >= zone3_begin_y_value && p2_y <= zone3_end_y_value)) {
+                zone3_count++;
+              }
+              if ((p2_x >= zone4_begin_x_value && p2_x <= zone4_end_x_value) &&
+                  (p2_y >= zone4_begin_y_value && p2_y <= zone4_end_y_value)) {
+                zone4_count++;
+              }
+            }
+
+            if (id(target2_x).state != p2_x) {
               id(target2_x).publish_state(p2_x);
-            if (id(target2_y).state != p2_y)
+            }
+            if (id(target2_y).state != p2_y) {
               id(target2_y).publish_state(p2_y);
+            }
             p2_speed /= 100.0;
-            if (id(target2_speed).state != p2_speed)
+            if (id(target2_speed).state != p2_speed) {
               id(target2_speed).publish_state(p2_speed);
-            if (id(target2_resolution).state != p2_distance_resolution)
+            }
+            if (id(target2_resolution).state != p2_distance_resolution) {
               id(target2_resolution).publish_state(p2_distance_resolution);
-            if (id(target2_distance).state != p2_distance)
+            }
+            if (id(target2_distance).state != p2_distance) {
               id(target2_distance).publish_state(p2_distance);
-            p2_angle -= 90;
-            if (id(target2_angle).state != p2_angle)
+            }
+            p2_angle = (p2_angle * RADIANS_TO_DEGREES) - 90;
+            if (id(target2_angle).state != p2_angle) {
               id(target2_angle).publish_state(p2_angle);
+            }
+            if (id(target2_active).state != true) {
+              id(target2_active).publish_state(true);
+            }
           } else {
-            if (id(target2_x).state != 0)
+            if (id(target2_x).state != 0) {
               id(target2_x).publish_state(0);
-            if (id(target2_y).state != 0)
+            }
+            if (id(target2_y).state != 0) {
               id(target2_y).publish_state(0);
-            if (id(target2_speed).state != 0)
+            }
+            if (id(target2_speed).state != 0) {
               id(target2_speed).publish_state(0);
-            if (id(target2_resolution).state != 0)
+            }
+            if (id(target2_resolution).state != 0) {
               id(target2_resolution).publish_state(0);
-            if (id(target2_distance).state != 0)
+            }
+            if (id(target2_distance).state != 0) {
               id(target2_distance).publish_state(0);
-            if (id(target2_angle).state != 0)
+            }
+            if (id(target2_angle).state != 0) {
               id(target2_angle).publish_state(0);
+            }
+            if (id(target2_active).state != false) {
+              id(target2_active).publish_state(false);
+            }
           }
 
-          if (p3_distance < max_distance) {
-            if (id(target3_x).state != p3_x)
+          if (p3_distance > 0 && p3_distance <= max_distance) {
+            targets_detected++;
+            if (installation_angle != 0) {
+              float angle = p3_angle - installation_angle;
+              p3_x = p3_distance * cos(angle);
+              p3_y = p3_distance * sin(angle);
+            }
+            if ((p3_x >= occupancy_mask_1_begin_x_value && p3_x <= occupancy_mask_1_end_x_value) &&
+                (p3_y >= occupancy_mask_1_begin_y_value && p3_y <= occupancy_mask_1_end_y_value)) {
+              occupancy_mask_1_count++;
+            } else {
+              if ((p3_x >= zone1_begin_x_value && p3_x <= zone1_end_x_value) &&
+                  (p3_y >= zone1_begin_y_value && p3_y <= zone1_end_y_value)) {
+                zone1_count++;
+              }
+              if ((p3_x >= zone2_begin_x_value && p3_x <= zone2_end_x_value) &&
+                  (p3_y >= zone2_begin_y_value && p3_y <= zone2_end_y_value)) {
+                zone2_count++;
+              }
+              if ((p3_x >= zone3_begin_x_value && p3_x <= zone3_end_x_value) &&
+                  (p3_y >= zone3_begin_y_value && p3_y <= zone3_end_y_value)) {
+                zone3_count++;
+              }
+              if ((p3_x >= zone4_begin_x_value && p3_x <= zone4_end_x_value) &&
+                  (p3_y >= zone4_begin_y_value && p3_y <= zone4_end_y_value)) {
+                zone4_count++;
+              }
+            }
+
+            if (id(target3_x).state != p3_x) {
               id(target3_x).publish_state(p3_x);
-            if (id(target3_y).state != p3_y)
+            }
+            if (id(target3_y).state != p3_y) {
               id(target3_y).publish_state(p3_y);
+            }
             p3_speed /= 100.0;
-            if (id(target3_speed).state != p3_speed)
+            if (id(target3_speed).state != p3_speed) {
               id(target3_speed).publish_state(p3_speed);
-            if (id(target3_resolution).state != p3_distance_resolution)
+            }
+            if (id(target3_resolution).state != p3_distance_resolution) {
               id(target3_resolution).publish_state(p3_distance_resolution);
-            if (id(target3_distance).state != p3_distance)
+            }
+            if (id(target3_distance).state != p3_distance) {
               id(target3_distance).publish_state(p3_distance);
-            p3_angle -= 90;
-            if (id(target3_angle).state != p3_angle)
+            }
+            p3_angle = (p3_angle * RADIANS_TO_DEGREES) - 90;
+            if (id(target3_angle).state != p3_angle) {
               id(target3_angle).publish_state(p3_angle);
+            }
+            if (id(target3_active).state != true) {
+              id(target3_active).publish_state(true);
+            }
           } else {
-            if (id(target3_x).state != 0)
+            if (id(target3_x).state != 0) {
               id(target3_x).publish_state(0);
-            if (id(target3_y).state != 0)
+            }
+            if (id(target3_y).state != 0) {
               id(target3_y).publish_state(0);
-            if (id(target3_speed).state != 0)
+            }
+            if (id(target3_speed).state != 0) {
               id(target3_speed).publish_state(0);
-            if (id(target3_resolution).state != 0)
+            }
+            if (id(target3_resolution).state != 0) {
               id(target3_resolution).publish_state(0);
-            if (id(target3_distance).state != 0)
+            }
+            if (id(target3_distance).state != 0) {
               id(target3_distance).publish_state(0);
-            if (id(target3_angle).state != 0)
+            }
+            if (id(target3_angle).state != 0) {
               id(target3_angle).publish_state(0);
+            }
+            if (id(target3_active).state != false) {
+              id(target3_active).publish_state(false);
+            }
           }
 
-          int zone1_count = 0;      
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone1_begin_x).state && id(target1_x).state <= id(zone1_end_x).state) &&
-                  (id(target1_y).state >= id(zone1_begin_y).state && id(target1_y).state <= id(zone1_end_y).state)) {
-                  zone1_count++;
-              }
-          }
-
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone1_begin_x).state && id(target2_x).state <= id(zone1_end_x).state) &&
-                  (id(target2_y).state >= id(zone1_begin_y).state && id(target2_y).state <= id(zone1_end_y).state)) {
-                  zone1_count++;
-              }
-          }
-
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone1_begin_x).state && id(target3_x).state <= id(zone1_end_x).state) &&
-                  (id(target3_y).state >= id(zone1_begin_y).state && id(target3_y).state <= id(zone1_end_y).state)) {
-                  zone1_count++;
-              }
+          if (targets_detected > occupancy_mask_1_count) {
+            id(occupancy).publish_state(true);
+          } else {
+            id(occupancy).publish_state(false);
           }
 
           if (zone1_count > 0) {
             id(zone1_occupancy).publish_state(true);
-            if (id(zone1_target_count).state != zone1_count)
+            if (id(zone1_target_count).state != zone1_count) {
               id(zone1_target_count).publish_state(zone1_count);
+            }
           } else {
             id(zone1_occupancy).publish_state(false);
-            if (id(zone1_target_count).state != 0)
+            if (id(zone1_target_count).state != 0) {
               id(zone1_target_count).publish_state(0);
+            }
           }
 
-          int zone2_count = 0;
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone2_begin_x).state && id(target1_x).state <= id(zone2_end_x).state) &&
-                  (id(target1_y).state >= id(zone2_begin_y).state && id(target1_y).state <= id(zone2_end_y).state)) {
-                  zone2_count++;
-              }
-          }
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone2_begin_x).state && id(target2_x).state <= id(zone2_end_x).state) &&
-                  (id(target2_y).state >= id(zone2_begin_y).state && id(target2_y).state <= id(zone2_end_y).state)) {
-                  zone2_count++;
-              }
-          }
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone2_begin_x).state && id(target3_x).state <= id(zone2_end_x).state) &&
-                  (id(target3_y).state >= id(zone2_begin_y).state && id(target3_y).state <= id(zone2_end_y).state)) {
-                  zone2_count++;
-              }
-          }
           if (zone2_count > 0) {
             id(zone2_occupancy).publish_state(true);
-            if (id(zone2_target_count).state != zone2_count)
+            if (id(zone2_target_count).state != zone2_count) {
               id(zone2_target_count).publish_state(zone2_count);
+            }
           } else {
             id(zone2_occupancy).publish_state(false);
-            if (id(zone2_target_count).state != 0)
+            if (id(zone2_target_count).state != 0) {
               id(zone2_target_count).publish_state(0);
+            }
           }
 
-          int zone3_count = 0;
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone3_begin_x).state && id(target1_x).state <= id(zone3_end_x).state) &&
-                  (id(target1_y).state >= id(zone3_begin_y).state && id(target1_y).state <= id(zone3_end_y).state)) {
-                  zone3_count++;
-              }
-          }
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone3_begin_x).state && id(target2_x).state <= id(zone3_end_x).state) &&
-                  (id(target2_y).state >= id(zone3_begin_y).state && id(target2_y).state <= id(zone3_end_y).state)) {
-                  zone3_count++;
-              }
-          }
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone3_begin_x).state && id(target3_x).state <= id(zone3_end_x).state) &&
-                  (id(target3_y).state >= id(zone3_begin_y).state && id(target3_y).state <= id(zone3_end_y).state)) {
-                  zone3_count++;
-              }
-          }
           if (zone3_count > 0) {
             id(zone3_occupancy).publish_state(true);
-            if (id(zone3_target_count).state != zone3_count)
+            if (id(zone3_target_count).state != zone3_count) {
               id(zone3_target_count).publish_state(zone3_count);
+            }
           } else {
             id(zone3_occupancy).publish_state(false);
-            if (id(zone3_target_count).state != 0)
+            if (id(zone3_target_count).state != 0) {
               id(zone3_target_count).publish_state(0);
+            }
           }
 
-          int zone4_count = 0;
-          if (id(target1_active).state == true ) {
-              if ((id(target1_x).state >= id(zone4_begin_x).state && id(target1_x).state <= id(zone4_end_x).state) &&
-                  (id(target1_y).state >= id(zone4_begin_y).state && id(target1_y).state <= id(zone4_end_y).state)) {
-                  zone4_count++;
-              }
-          }
-          if (id(target2_active).state == true ) {
-              if ((id(target2_x).state >= id(zone4_begin_x).state && id(target2_x).state <= id(zone4_end_x).state) &&
-                  (id(target2_y).state >= id(zone4_begin_y).state && id(target2_y).state <= id(zone4_end_y).state)) {
-                  zone4_count++;
-              }
-          }
-          if (id(target3_active).state == true ) {
-              if ((id(target3_x).state >= id(zone4_begin_x).state && id(target3_x).state <= id(zone4_end_x).state) &&
-                  (id(target3_y).state >= id(zone4_begin_y).state && id(target3_y).state <= id(zone4_end_y).state)) {
-                  zone4_count++;
-              }
-          }
           if (zone4_count > 0) {
             id(zone4_occupancy).publish_state(true);
-            if (id(zone4_target_count).state != zone4_count)
+            if (id(zone4_target_count).state != zone4_count) {
               id(zone4_target_count).publish_state(zone4_count);
+            }
           } else {
             id(zone4_occupancy).publish_state(false);
-            if (id(zone4_target_count).state != 0)
+            if (id(zone4_target_count).state != 0) {
               id(zone4_target_count).publish_state(0);
+            }
+          }
+
+          if (id(occupancy_mask_1_target_count).state != occupancy_mask_1_count) {
+            id(occupancy_mask_1_target_count).publish_state(occupancy_mask_1_count);
           }
