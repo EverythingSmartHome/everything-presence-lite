@@ -32,14 +32,10 @@ wifi:
 improv_serial:
 
 i2c:
--  id: bus_a
-   sda: 21
-   scl: 22
-   scan: true
-- id: bus_b
-  sda: 16
-  scl: 17
-  scan: true
+  - id: bus_a
+    sda: 21
+    scl: 22
+    scan: true
 
 light:
   - platform: status_led
@@ -79,7 +75,7 @@ sensor:
           min_value: 0
 
   - platform: bme280
-    i2c_id: bus_b
+    i2c_id: bus_a
     temperature:
       name: "Temperature"
       id: temperature_sensor
