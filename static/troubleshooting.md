@@ -41,7 +41,7 @@ The entities below are enabled by default and update very frequently, especially
 This will expand the size of your Home Assistant database very quickly. Either of the following strategies can help reduce this impact:
 
 1. Disable the entities. This will mean they cannot be monitored or used in automations. The Zone Configurator will not work unless these entities are enabled.
-2. Exclude the entities from the database recorder by adding the following to your `configuration.yaml` file. This will prevent Home Assistant from storing history and long term statistics data for these entities, but they can still be monitored in realtime and used with automations.
+2. Exclude the entities from the database recorder by adding the following to your `configuration.yaml` file. This will prevent Home Assistant from storing history and long term statistics data for these entities, but the Zone Configurator will work, they can be monitored in realtime and continue to be used with automations.
 
 ```
 recorder:
