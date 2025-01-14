@@ -32,6 +32,28 @@ Select the add-on, then hit install. Once installed, hit start and then "Open We
 
 ![Everything Presence Zone Configurator Dashboard](../images/home-assistant-creating-zones-zone-configurator-dashboard.png)
 
+### (Advanced) Alternative install with docker (no Supervisor)
+
+Use docker run or docker compose similar to following examples, dont forget to adjust HA URL and use a generated access token
+
+*docker run basic example:*
+```
+docker run -d -e HA_URL=http://HA_URL:8123 -e HA_TOKEN=LONG_LIVE_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everythingsmarthome/everything-presence-mmwave-configurator:latest 
+```
+
+*docker compose basic example:*
+```
+services:
+  zones:
+    ports:
+      - 8099:8099
+    image: everythingsmarthome/everything-presence-mmwave-configurator:latest
+    container_name: everything-presence-mmwave-configurator
+    environment:
+      - HA_URL=http://10.0.1.11:8123
+      - HA_TOKEN=123-generate-token-at-url:8123/profile/security-456
+```
+
 ### Using the Add-on
 
 From the top left, use the dropdown to select a device. This will load up the real-time tracking information from the Everything Presence Lite:
