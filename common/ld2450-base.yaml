@@ -489,6 +489,18 @@ number:
     optimistic: True
     restore_value: True
 
+  - platform: template
+    name: "Stale Target Reset Timeout"
+    id: aggressive_timeout
+    min_value: 1
+    max_value: 60
+    step: 1
+    unit_of_measurement: "s"
+    optimistic: true
+    restore_value: true
+    initial_value: 3
+    entity_category: config
+
 sensor:
   - platform: template
     name: "Target 1 X"
