@@ -19,8 +19,35 @@ esphome:
 globals:
   - id: mmwave_update_time
     type: unsigned long
-    restore_value: no
+    restore_value: False
     initial_value: '0'
+  - id: target1_last_update
+    type: unsigned long
+    initial_value: '0'
+    restore_value: False
+  - id: target1_reset
+    type: int
+    initial_value: "1"
+    restore_value: False
+
+
+interval:
+  - interval: 1s
+    then:
+      - lambda: |-
+          unsigned long now = millis();
+          unsigned long timeout_ms = (unsigned long)(id(aggressive_timeout).state * 1000);
+          if (id(aggressive_target_clearing).state) {
+            if ((now - id(target1_last_update)) > timeout_ms) {
+              if (id(target1_reset) == 0) {
+                if (id(target1_active).state == true) {
+                  ESP_LOGD("custom", "No update in 3s, clearing");
+                  id(reboot_mmwave_sensor).press();
+                  id(target1_reset) = 1;
+                }
+              }
+            }
+          }
 
 text_sensor:
   - platform: template
@@ -61,6 +88,8 @@ button:
     entity_category: config
     on_press:
       then:
+      - switch.turn_on: mmwave_configuration
+      - delay: 1s  
       - uart.write:
           id: uart_bus
           data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA3, 0x00, 0x04, 0x03, 0x02, 0x01]
@@ -127,6 +156,13 @@ switch:
       - button.press: reboot_mmwave_sensor  # Reboot after enabling Bluetooth
       - delay: 2s
       - switch.turn_off: mmwave_configuration
+
+  - platform: template
+    name: "Stale Target Reset"
+    id: aggressive_target_clearing
+    restore_mode: RESTORE_DEFAULT_OFF 
+    optimistic: True
+    entity_category: config
 
 binary_sensor:
   - platform: template
