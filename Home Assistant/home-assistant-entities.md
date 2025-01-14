@@ -84,6 +84,8 @@ Click the entity you want to enable, then click the settings icon in the right h
 
 Wait 30 seconds, refresh the page and the entity is now enabled. Repeat this for each entity, making sure to do all 5 entities to activate a single zone.
 
+For setting up zones in a visual way, I recommend checking out the docs [here](https://everythingsmarthome.github.io/everything-presence-lite/Home%20Assistant/creating-zones.html)
+
 ### Targets
 
 Along with zones, the Everything Presence Lite supports targets. A target a source of movement that the sensor detects, usually a person. The sensor can provide information about the target, such as the X and Y coordinate (which the sensor uses to detect if a target is within a zone), the distance the target is from the sensor, the angle relative to the sensor, the speed the target is moving at and if the target is active or not:
@@ -91,6 +93,16 @@ Along with zones, the Everything Presence Lite supports targets. A target a sour
 ![Home Assistant Target Tracking Entities](../images/home-assistant-entities-target-tracking-summary.png)
 
 The Everything Presence Lite can track upto 3 targets at one time.
+
+### Stale Target Reset
+
+In some environments, you may find the sensor "hangs on" to targets after they have left the space for 30s to a few minutes before clearing. This can happen if you have the sensor positioned in such a way that someone can leave the room without exiting the sensors field of view, for example if you have it facing a door way in the centre of it's vision.
+
+The stale target reset switch will detect targets that have not cleared in this situation and will force a reset to clear them.
+
+The timeout period is configurable with the stale target timeout slider, allowing you to define how long the sensor should wait before it considers a target to be stale and clears it.
+
+*I'd recommend leaving this off unless you need it, as it could cause targets to be falsely cleared when still in the room*
 
 ### Turning off LEDs
 
