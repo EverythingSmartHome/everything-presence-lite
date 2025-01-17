@@ -21,6 +21,10 @@ globals:
     type: unsigned long
     restore_value: False
     initial_value: '0'
+  - id: mmwave_update_interval
+    type: unsigned long
+    restore_value: False
+    initial_value: '250'
   - id: target1_last_update
     type: unsigned long
     initial_value: '0'
@@ -655,6 +659,23 @@ sensor:
     disabled_by_default: true
     unit_of_measurement: " "
 
+select:
+  - platform: template
+    name: 'Update speed'
+    icon: 'mdi:speedometer'
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    options:
+      - Faster (0.1s)
+      - Fast (0.2s)
+      - Normal (0.3s)
+      - Slow (0.4s)
+      - Slower (0.5s)
+    initial_option: Normal (0.3s)
+    on_value:
+      then:
+        - lambda: id(mmwave_update_interval) = (i * 100) + 50;
 
 uart:
   id: uart_bus
@@ -680,7 +701,7 @@ uart:
     sequence:
       # - lambda: UARTDebug::log_hex(direction, bytes, ' ');
       - lambda: |-
-          if ((millis() - id(mmwave_update_time)) <= 250) { 
+          if ((millis() - id(mmwave_update_time)) <= id(mmwave_update_interval)) { 
             return;
           };
           id(mmwave_update_time) = millis();
