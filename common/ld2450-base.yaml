@@ -41,6 +41,10 @@ globals:
     type: unsigned int
     restore_value: False
     initial_value: '0'
+  - id: extra_entities
+    type: unsigned int
+    restore_value: False
+    initial_value: '0'
 
 
 interval:
@@ -714,6 +718,23 @@ select:
               default:
                 id(entities_update_max_count) = i + 1;
             }
+  - platform: template
+    name: "Extra entities"
+    icon: 'mdi:dots-vertical'
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    options:
+      - None
+      - Targets Position 
+      - Above + Zone count
+      - Above + Targets active
+      - Above + Distance and Angle
+      - Above + Speed and Resolution
+    initial_option: Above + Zone count
+    on_value:
+      then:
+        - lambda: id(extra_entities) = i;
 
 uart:
   id: uart_bus
@@ -749,10 +770,13 @@ uart:
             return;
           }
 
-          id(entities_update_count) += 1;
-          bool update_entities = id(entities_update_count) >= id(entities_update_max_count);
-          if (update_entities) {
-            id(entities_update_count) = 0;
+          bool update_entities = false;
+          if(id(extra_entities) != 0) {
+            id(entities_update_count) += 1;
+            update_entities = id(entities_update_count) >= id(entities_update_max_count);
+            if (update_entities) {
+              id(entities_update_count) = 0;
+            }
           }
 
           const static float RADIANS_TO_DEGREES = 180.0 / 3.14159265358979323846;
@@ -812,7 +836,10 @@ uart:
             if (p1_distance > max_distance) {
               p1_detected = false;
             } else {
-              float p1_angle = atan2(p1_y, p1_x);
+              float p1_angle;
+              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+                p1_angle = atan2(p1_y, p1_x);
+              }
               if (installation_angle != 0) {
                 float angle = p1_angle - installation_angle;
                 p1_x = p1_distance * cos(angle);
@@ -842,57 +869,73 @@ uart:
                 }
               }
               if (update_entities) {
-                if (id(target1_x).state != p1_x) {
-                  id(target1_x).publish_state(p1_x);
-                }
-                if (id(target1_y).state != p1_y) {
-                  id(target1_y).publish_state(p1_y);
-                }
-                int16_t p1_speed = *((int16_t *)(&bytes[8]));
-                if (p1_speed < 0) p1_speed += MIN_INT16_VAL;
-                else p1_speed = -p1_speed;
-                float p1_speed_float = p1_speed / 100.0;
-                if (id(target1_speed).state != p1_speed_float) {
-                  id(target1_speed).publish_state(p1_speed_float);
-                }
-                uint16_t p1_resolution = *((uint16_t *)(&bytes[10]));
-                if (id(target1_resolution).state != p1_resolution) {
-                  id(target1_resolution).publish_state(p1_resolution);
-                }
-                if (id(target1_distance).state != p1_distance) {
-                  id(target1_distance).publish_state(p1_distance);
-                }
-                p1_angle = (p1_angle * RADIANS_TO_DEGREES) - 90;
-                if (id(target1_angle).state != p1_angle) {
-                  id(target1_angle).publish_state(p1_angle);
+                switch (id(extra_entities)) {
+                  case 5:
+                    {
+                      uint16_t p1_resolution = *((uint16_t *)(&bytes[10]));
+                      int16_t p1_speed = *((int16_t *)(&bytes[8]));
+                      if (p1_speed < 0) p1_speed += MIN_INT16_VAL;
+                      else p1_speed = -p1_speed;
+                      float p1_speed_float = p1_speed / 100.0;
+
+                      if (id(target1_speed).state != p1_speed_float) {
+                        id(target1_speed).publish_state(p1_speed_float);
+                      }
+                      if (id(target1_resolution).state != p1_resolution) {
+                        id(target1_resolution).publish_state(p1_resolution);
+                      }
+                    }
+                  case 4:
+                    p1_angle = (p1_angle * RADIANS_TO_DEGREES) - 90;
+
+                    if (id(target1_angle).state != p1_angle) {
+                      id(target1_angle).publish_state(p1_angle);
+                    }
+                    if (id(target1_distance).state != p1_distance) {
+                      id(target1_distance).publish_state(p1_distance);
+                    }
+                  case 3:
+                    id(target1_active).publish_state(true);
+                  case 2:
+                  case 1:
+                    if (id(target1_x).state != p1_x) {
+                      id(target1_x).publish_state(p1_x);
+                    }
+                    if (id(target1_y).state != p1_y) {
+                      id(target1_y).publish_state(p1_y);
+                    }
                 }
               }
-              id(target1_active).publish_state(true);
             }
           }
 
-          if (!p1_detected && !target_masked) {
-            if (update_entities) {
-              if (id(target1_x).state != 0) {
-                id(target1_x).publish_state(0);
-              }
-              if (id(target1_y).state != 0) {
-                id(target1_y).publish_state(0);
-              }
-              if (id(target1_speed).state != 0) {
-                id(target1_speed).publish_state(0);
-              }
-              if (id(target1_resolution).state != 0) {
-                id(target1_resolution).publish_state(0);
-              }
-              if (id(target1_distance).state != 0) {
-                id(target1_distance).publish_state(0);
-              }
-              if (id(target1_angle).state != 0) {
-                id(target1_angle).publish_state(0);
-              }
+          if (update_entities && !p1_detected && !target_masked) {
+            switch (id(extra_entities)) {
+              case 5:
+                if (id(target1_speed).state != 0) {
+                  id(target1_speed).publish_state(0);
+                }
+                if (id(target1_resolution).state != 0) {
+                  id(target1_resolution).publish_state(0);
+                }
+              case 4:
+                if (id(target1_distance).state != 0) {
+                  id(target1_distance).publish_state(0);
+                }
+                if (id(target1_angle).state != 0) {
+                  id(target1_angle).publish_state(0);
+                }
+              case 3:
+                id(target1_active).publish_state(false);
+              case 2:
+              case 1:
+                if (id(target1_x).state != 0) {
+                  id(target1_x).publish_state(0);
+                }
+                if (id(target1_y).state != 0) {
+                  id(target1_y).publish_state(0);
+                }
             }
-            id(target1_active).publish_state(false);
           }
 
           target_masked = false;
@@ -911,7 +954,10 @@ uart:
             if (p2_distance > max_distance) {
               p2_detected = false;
             } else {
-              float p2_angle = atan2(p2_y, p2_x);
+              float p2_angle;
+              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+                p2_angle = atan2(p2_y, p2_x);
+              }
               if (installation_angle != 0) {
                 float angle = p2_angle - installation_angle;
                 p2_x = p2_distance * cos(angle);
@@ -941,57 +987,73 @@ uart:
                 }
               }
               if (update_entities) {
-                if (id(target2_x).state != p2_x) {
-                  id(target2_x).publish_state(p2_x);
-                }
-                if (id(target2_y).state != p2_y) {
-                  id(target2_y).publish_state(p2_y);
-                }
-                int16_t p2_speed = *((int16_t *)(&bytes[16]));
-                if (p2_speed < 0) p2_speed += MIN_INT16_VAL;
-                else p2_speed = -p2_speed;
-                float p2_speed_float = p2_speed / 100.0;
-                if (id(target2_speed).state != p2_speed_float) {
-                  id(target2_speed).publish_state(p2_speed_float);
-                }
-                uint16_t p2_resolution = *((uint16_t *)(&bytes[18]));
-                if (id(target2_resolution).state != p2_resolution) {
-                  id(target2_resolution).publish_state(p2_resolution);
-                }
-                if (id(target2_distance).state != p2_distance) {
-                  id(target2_distance).publish_state(p2_distance);
-                }
-                p2_angle = (p2_angle * RADIANS_TO_DEGREES) - 90;
-                if (id(target2_angle).state != p2_angle) {
-                  id(target2_angle).publish_state(p2_angle);
+                switch (id(extra_entities)) {
+                  case 5:
+                    {
+                      uint16_t p2_resolution = *((uint16_t *)(&bytes[18]));
+                      int16_t p2_speed = *((int16_t *)(&bytes[16]));
+                      if (p2_speed < 0) p2_speed += MIN_INT16_VAL;
+                      else p2_speed = -p2_speed;
+                      float p2_speed_float = p2_speed / 100.0;
+
+                      if (id(target2_speed).state != p2_speed_float) {
+                        id(target2_speed).publish_state(p2_speed_float);
+                      }
+                      if (id(target2_resolution).state != p2_resolution) {
+                        id(target2_resolution).publish_state(p2_resolution);
+                      }
+                    }
+                  case 4:
+                    p2_angle = (p2_angle * RADIANS_TO_DEGREES) - 90;
+
+                    if (id(target2_angle).state != p2_angle) {
+                      id(target2_angle).publish_state(p2_angle);
+                    }
+                    if (id(target2_distance).state != p2_distance) {
+                      id(target2_distance).publish_state(p2_distance);
+                    }
+                  case 3:
+                    id(target2_active).publish_state(true);
+                  case 2:
+                  case 1:
+                    if (id(target2_x).state != p2_x) {
+                      id(target2_x).publish_state(p2_x);
+                    }
+                    if (id(target2_y).state != p2_y) {
+                      id(target2_y).publish_state(p2_y);
+                    }
                 }
               }
-              id(target2_active).publish_state(true);
             }
           }
 
-          if (!p2_detected && !target_masked) {
-            if (update_entities) {
-              if (id(target2_x).state != 0) {
-                id(target2_x).publish_state(0);
-              }
-              if (id(target2_y).state != 0) {
-                id(target2_y).publish_state(0);
-              }
-              if (id(target2_speed).state != 0) {
-                id(target2_speed).publish_state(0);
-              }
-              if (id(target2_resolution).state != 0) {
-                id(target2_resolution).publish_state(0);
-              }
-              if (id(target2_distance).state != 0) {
-                id(target2_distance).publish_state(0);
-              }
-              if (id(target2_angle).state != 0) {
-                id(target2_angle).publish_state(0);
-              }
+          if (update_entities && !p2_detected && !target_masked) {
+            switch (id(extra_entities)) {
+              case 5:
+                if (id(target2_speed).state != 0) {
+                  id(target2_speed).publish_state(0);
+                }
+                if (id(target2_resolution).state != 0) {
+                  id(target2_resolution).publish_state(0);
+                }
+              case 4:
+                if (id(target2_distance).state != 0) {
+                  id(target2_distance).publish_state(0);
+                }
+                if (id(target2_angle).state != 0) {
+                  id(target2_angle).publish_state(0);
+                }
+              case 3:
+                id(target2_active).publish_state(false);
+              case 2:
+              case 1:
+                if (id(target2_x).state != 0) {
+                  id(target2_x).publish_state(0);
+                }
+                if (id(target2_y).state != 0) {
+                  id(target2_y).publish_state(0);
+                }
             }
-            id(target2_active).publish_state(false);
           }
 
           target_masked = false;
@@ -1010,7 +1072,10 @@ uart:
             if (p3_distance > max_distance) {
               p3_detected = false;
             } else {
-              float p3_angle = atan2(p3_y, p3_x);
+              float p3_angle;
+              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+                p3_angle = atan2(p3_y, p3_x);
+              }
               if (installation_angle != 0) {
                 float angle = p3_angle - installation_angle;
                 p3_x = p3_distance * cos(angle);
@@ -1040,60 +1105,76 @@ uart:
                 }
               }
               if (update_entities) {
-                if (id(target3_x).state != p3_x) {
-                  id(target3_x).publish_state(p3_x);
-                }
-                if (id(target3_y).state != p3_y) {
-                  id(target3_y).publish_state(p3_y);
-                }
-                int16_t p3_speed = *((int16_t *)(&bytes[24]));
-                if (p3_speed < 0) p3_speed += MIN_INT16_VAL;
-                else p3_speed = -p3_speed;
-                float p3_speed_float = p3_speed / 100.0;
-                if (id(target3_speed).state != p3_speed_float) {
-                  id(target3_speed).publish_state(p3_speed_float);
-                }
-                uint16_t p3_resolution = *((uint16_t *)(&bytes[26]));
-                if (id(target3_resolution).state != p3_resolution) {
-                  id(target3_resolution).publish_state(p3_resolution);
-                }
-                if (id(target3_distance).state != p3_distance) {
-                  id(target3_distance).publish_state(p3_distance);
-                }
-                p3_angle = (p3_angle * RADIANS_TO_DEGREES) - 90;
-                if (id(target3_angle).state != p3_angle) {
-                  id(target3_angle).publish_state(p3_angle);
+                switch (id(extra_entities)) {
+                  case 5:
+                    {
+                      uint16_t p3_resolution = *((uint16_t *)(&bytes[26]));
+                      int16_t p3_speed = *((int16_t *)(&bytes[24]));
+                      if (p3_speed < 0) p3_speed += MIN_INT16_VAL;
+                      else p3_speed = -p3_speed;
+                      float p3_speed_float = p3_speed / 100.0;
+
+                      if (id(target3_speed).state != p3_speed_float) {
+                        id(target3_speed).publish_state(p3_speed_float);
+                      }
+                      if (id(target3_resolution).state != p3_resolution) {
+                        id(target3_resolution).publish_state(p3_resolution);
+                      }
+                    }
+                  case 4:
+                    p3_angle = (p3_angle * RADIANS_TO_DEGREES) - 90;
+                    
+                    if (id(target3_angle).state != p3_angle) {
+                      id(target3_angle).publish_state(p3_angle);
+                    }
+                    if (id(target3_distance).state != p3_distance) {
+                      id(target3_distance).publish_state(p3_distance);
+                    }
+                  case 3:
+                    id(target3_active).publish_state(true);
+                  case 2:
+                  case 1:
+                    if (id(target3_x).state != p3_x) {
+                      id(target3_x).publish_state(p3_x);
+                    }
+                    if (id(target3_y).state != p3_y) {
+                      id(target3_y).publish_state(p3_y);
+                    }
                 }
               }
-              id(target3_active).publish_state(true);
             }
           }
 
-          if (!p3_detected && !target_masked) {
-            if (update_entities) {
-              if (id(target3_x).state != 0) {
-                id(target3_x).publish_state(0);
-              }
-              if (id(target3_y).state != 0) {
-                id(target3_y).publish_state(0);
-              }
-              if (id(target3_speed).state != 0) {
-                id(target3_speed).publish_state(0);
-              }
-              if (id(target3_resolution).state != 0) {
-                id(target3_resolution).publish_state(0);
-              }
-              if (id(target3_distance).state != 0) {
-                id(target3_distance).publish_state(0);
-              }
-              if (id(target3_angle).state != 0) {
-                id(target3_angle).publish_state(0);
-              }
+          if (update_entities && !p3_detected && !target_masked) {
+            switch (id(extra_entities)) {
+              case 5:
+                if (id(target3_speed).state != 0) {
+                  id(target3_speed).publish_state(0);
+                }
+                if (id(target3_resolution).state != 0) {
+                  id(target3_resolution).publish_state(0);
+                }
+              case 4:
+                if (id(target3_distance).state != 0) {
+                  id(target3_distance).publish_state(0);
+                }
+                if (id(target3_angle).state != 0) {
+                  id(target3_angle).publish_state(0);
+                }
+              case 3:
+                id(target3_active).publish_state(false);
+              case 2:
+              case 1:
+                if (id(target3_x).state != 0) {
+                  id(target3_x).publish_state(0);
+                }
+                if (id(target3_y).state != 0) {
+                  id(target3_y).publish_state(0);
+                }
             }
-            id(target3_active).publish_state(false);
           }
 
-          if (update_entities) {
+          if (update_entities && id(extra_entities) >= 2) {
             if (id(zone1_target_count).state != zone1_count) {
               id(zone1_target_count).publish_state(zone1_count);
             }
