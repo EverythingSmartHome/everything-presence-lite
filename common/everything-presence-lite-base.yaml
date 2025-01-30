@@ -5,7 +5,7 @@ esphome:
   name_add_mac_suffix: True
   project: 
     name: EverythingSmartTechnology.Everything Presence Lite
-    version: "1.2.1"
+    version: "1.2.2"
 
 esp32:
   board: esp32dev
@@ -18,6 +18,12 @@ logger:
 
 # Enable Home Assistant API
 api:
+
+external_components:
+  - source: github://pr#7547
+    components:
+      - api
+    refresh: 0s
 
 ota:
   - platform: esphome
