@@ -43,7 +43,7 @@ Each of the main components is labelled directly on the board itself to help wit
 
 ![Everything Presence Lite Official Case](images/hardware-overview-official-case.jpg)
 
-The case for the EPL is currently shipped in the box. If you prefer to print your own, in a different colour the STL is located on Printables (link pending!)
+The case for the EPL is currently shipped in the box. If you prefer to print your own, in a different colour the STL is [located on Printables](https://www.printables.com/model/624830-everything-presence-lite-official-case).
 
 The case has 5 components - Front, Back, Stand, Ball Joint and Locking Ring.
 
