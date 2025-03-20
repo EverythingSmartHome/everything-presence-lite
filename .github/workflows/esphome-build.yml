@@ -57,7 +57,7 @@ jobs:
       project-version: ${{ steps.esphome-build.outputs.project-version }}
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: esphome/build-action@v3.2.0
+      - uses: esphome/build-action@v6
         id: esphome-build
         with:
           yaml_file: ${{ matrix.file }}
