@@ -86,8 +86,17 @@ jobs:
 
       - name: Create single manifest.json
         run: |
-          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.project-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
-          sed -i 's/${{ needs.build.outputs.esphome-build-name }}\//${{ inputs.directory_name }}\//g' output/${{ inputs.manifest_filename }}
+          # Create the merged manifest:
+          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.project-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json \
+            > output/${{ inputs.manifest_filename }}
+      
+          # Rewrite .path using jq
+          jq --arg dir "${{ inputs.directory_name }}" \
+             '.builds[] |= (.path = "\($dir)/\(.path)")' \
+             output/${{ inputs.manifest_filename }} \
+          > output/manifest_temp.json
+      
+          mv output/manifest_temp.json output/${{ inputs.manifest_filename }}
 
 
       - run: cp -R static/* output
