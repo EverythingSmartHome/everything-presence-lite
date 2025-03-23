@@ -91,10 +91,12 @@ jobs:
             > output/${{ inputs.manifest_filename }}
       
           # Rewrite .path using jq to add unique directory to manifest
-          jq --arg dir "${{ inputs.directory_name }}" \
-             '.builds[] |= (.path = "\($dir)/\(.path)")' \
-             output/${{ inputs.manifest_filename }} \
-          > output/manifest_temp.json
+          jq --arg dir "${{ inputs.directory_name }}" '
+            .builds[].ota.path |= "\($dir)/\(.)" |
+            .builds[].parts[].path |= "\($dir)/\(.)"
+          ' \
+            output/${{ inputs.manifest_filename }} \
+            > output/manifest_temp.json
       
           mv output/manifest_temp.json output/${{ inputs.manifest_filename }}
 
