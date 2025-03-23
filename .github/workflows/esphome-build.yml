@@ -90,7 +90,7 @@ jobs:
           jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.project-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json \
             > output/${{ inputs.manifest_filename }}
       
-          # Rewrite .path using jq
+          # Rewrite .path using jq to add unique directory to manifest
           jq --arg dir "${{ inputs.directory_name }}" \
              '.builds[] |= (.path = "\($dir)/\(.path)")' \
              output/${{ inputs.manifest_filename }} \
@@ -108,3 +108,4 @@ jobs:
           folder: output
           clean: ${{ inputs.clean }}
           force: false
+          attempt-limit: 6
