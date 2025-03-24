@@ -21,6 +21,12 @@ sensor:
     co2:
       name: "CO2"
       id: "co2"
+    temperature:
+      name: "Temperature"
+      id: "temperature"
+    humidity:
+      name: "Humidity"
+      id: "humidity"
     automatic_self_calibration: false
 
 button:
