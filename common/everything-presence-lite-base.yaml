@@ -73,6 +73,12 @@ sensor:
       - lambda: "return x + id(illuminance_offset_ui).state;"
       - clamp:
           min_value: 0
+  - platform: wifi_signal
+    disabled_by_default: True
+    name: "WiFi Signal"
+  - platform: internal_temperature
+    disabled_by_default: True
+    name: "ESP Temperature"
 
 button:
   - platform: restart
