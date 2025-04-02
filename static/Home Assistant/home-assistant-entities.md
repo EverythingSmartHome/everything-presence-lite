@@ -96,7 +96,7 @@ The Everything Presence Lite can track upto 3 targets at one time.
 
 ### Stale Target Reset
 
-In some environments, you may find the sensor "hangs on" to targets after they have left the space for 30s to a few minutes before clearing. This can happen if you have the sensor positioned in such a way that someone can leave the room without exiting the sensors field of view, for example if you have it facing a door way in the centre of it's vision.
+In some environments, you may find the sensor "hangs on" to targets after they have left the space for 30s to a few minutes before clearing. This can happen if you have the sensor positioned in such a way that someone can leave the room without exiting the sensors field of view, for example if you have it facing a door way in the centre of its vision.
 
 The stale target reset switch will detect targets that have not cleared in this situation and will force a reset to clear them.
 
