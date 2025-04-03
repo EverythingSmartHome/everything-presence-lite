@@ -57,17 +57,17 @@ jobs:
       project-version: ${{ steps.esphome-build.outputs.project-version }}
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: esphome/build-action@v3.2.0
+      - uses: esphome/build-action@v6
         id: esphome-build
         with:
-          yaml_file: ${{ matrix.file }}
+          yaml-file: ${{ matrix.file }}
           version: ${{ inputs.esphome_version }}
       - run: |
           mkdir output
           mv "${{ steps.esphome-build.outputs.name}}" temp
           mv temp "${{ inputs.directory_name }}"
           mv "${{ inputs.directory_name }}" output/
-      - uses: actions/upload-artifact@v3.1.2
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.name }}
           path: output
@@ -79,15 +79,26 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: actions/download-artifact@v3.0.2
+      - uses: actions/download-artifact@v4
         with:
           path: output
           name: ${{ inputs.name }}
 
       - name: Create single manifest.json
         run: |
-          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.project-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
-          sed -i 's/${{ needs.build.outputs.esphome-build-name }}\//${{ inputs.directory_name }}\//g' output/${{ inputs.manifest_filename }}
+          # Create the merged manifest:
+          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.project-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json \
+            > output/${{ inputs.manifest_filename }}
+      
+          # Rewrite .path using jq to add unique directory to manifest
+          jq --arg dir "${{ inputs.directory_name }}" '
+            .builds[].ota.path |= "\($dir)/\(.)" |
+            .builds[].parts[].path |= "\($dir)/\(.)"
+          ' \
+            output/${{ inputs.manifest_filename }} \
+            > output/manifest_temp.json
+      
+          mv output/manifest_temp.json output/${{ inputs.manifest_filename }}
 
 
       - run: cp -R static/* output
@@ -99,3 +110,4 @@ jobs:
           folder: output
           clean: ${{ inputs.clean }}
           force: false
+          attempt-limit: 6
