@@ -504,6 +504,42 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+  - platform: template
+    name: "Occupancy Mask 2 Begin X"
+    id: occupancy_mask_2_begin_x
+    max_value: 6000
+    min_value: -6000
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+  - platform: template
+    name: "Occupancy Mask 2 End X"
+    id: occupancy_mask_2_end_x
+    max_value: 6000
+    min_value: -6000
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+  - platform: template
+    name: "Occupancy Mask 2 Begin Y"
+    id: occupancy_mask_2_begin_y
+    max_value: 6000
+    min_value: -1560
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+  - platform: template
+    name: "Occupancy Mask 2 End Y"
+    id: occupancy_mask_2_end_y
+    max_value: 6000
+    min_value: -1560
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
 
   - platform: template
     name: "Stale Target Reset Timeout"
@@ -670,6 +706,12 @@ sensor:
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+  - platform: template
+    name: "Occupancy Mask 2 Target Count"
+    id: occupancy_mask_2_target_count
+    accuracy_decimals: 0
+    disabled_by_default: true
+    unit_of_measurement: " "
 
 select:
   - platform: template
@@ -816,6 +858,11 @@ uart:
           int occupancy_mask_1_end_x_value = max(id(occupancy_mask_1_begin_x).state, id(occupancy_mask_1_end_x).state);
           int occupancy_mask_1_begin_y_value = min(id(occupancy_mask_1_begin_y).state, id(occupancy_mask_1_end_y).state);
           int occupancy_mask_1_end_y_value = max(id(occupancy_mask_1_begin_y).state, id(occupancy_mask_1_end_y).state);
+          int occupancy_mask_2_count = 0;
+          int occupancy_mask_2_begin_x_value = min(id(occupancy_mask_2_begin_x).state, id(occupancy_mask_2_end_x).state);
+          int occupancy_mask_2_end_x_value = max(id(occupancy_mask_2_begin_x).state, id(occupancy_mask_2_end_x).state);
+          int occupancy_mask_2_begin_y_value = min(id(occupancy_mask_2_begin_y).state, id(occupancy_mask_2_end_y).state);
+          int occupancy_mask_2_end_y_value = max(id(occupancy_mask_2_begin_y).state, id(occupancy_mask_2_end_y).state);
 
           bool p1_detected = *((uint16_t *)(&bytes[10])) != 0;
           bool p2_detected = *((uint16_t *)(&bytes[18])) != 0;
@@ -848,6 +895,11 @@ uart:
               if ((occupancy_mask_1_begin_x_value <= p1_x && p1_x <= occupancy_mask_1_end_x_value) &&
                   (occupancy_mask_1_begin_y_value <= p1_y && p1_y <= occupancy_mask_1_end_y_value)) {
                 occupancy_mask_1_count++;
+                p1_detected = false;
+                target_masked = true;
+              } else if ((occupancy_mask_2_begin_x_value <= p1_x && p1_x <= occupancy_mask_2_end_x_value) &&
+                  (occupancy_mask_2_begin_y_value <= p1_y && p1_y <= occupancy_mask_2_end_y_value)) {
+                occupancy_mask_2_count++;
                 p1_detected = false;
                 target_masked = true;
               } else {
@@ -968,6 +1020,11 @@ uart:
                 occupancy_mask_1_count++;
                 p2_detected = false;
                 target_masked = true;
+              } else if ((occupancy_mask_2_begin_x_value <= p2_x && p2_x <= occupancy_mask_2_end_x_value) &&
+                  (occupancy_mask_2_begin_y_value <= p2_y && p2_y <= occupancy_mask_2_end_y_value)) {
+                occupancy_mask_2_count++;
+                p2_detected = false;
+                target_masked = true;
               } else {
                 if ((zone1_begin_x_value <= p2_x && p2_x <= zone1_end_x_value) &&
                     (zone1_begin_y_value <= p2_y && p2_y <= zone1_end_y_value)) {
@@ -1086,6 +1143,11 @@ uart:
                 occupancy_mask_1_count++;
                 p3_detected = false;
                 target_masked = true;
+              } else if ((occupancy_mask_2_begin_x_value <= p3_x && p3_x <= occupancy_mask_2_end_x_value) &&
+                  (occupancy_mask_2_begin_y_value <= p3_y && p3_y <= occupancy_mask_2_end_y_value)) {
+                occupancy_mask_2_count++;
+                p3_detected = false;
+                target_masked = true;
               } else {
                 if ((zone1_begin_x_value <= p3_x && p3_x <= zone1_end_x_value) &&
                     (zone1_begin_y_value <= p3_y && p3_y <= zone1_end_y_value)) {
@@ -1189,6 +1251,9 @@ uart:
             }
             if (id(occupancy_mask_1_target_count).state != occupancy_mask_1_count) {
               id(occupancy_mask_1_target_count).publish_state(occupancy_mask_1_count);
+            }
+            if (id(occupancy_mask_2_target_count).state != occupancy_mask_2_count) {
+              id(occupancy_mask_2_target_count).publish_state(occupancy_mask_2_count);
             }
           }
 
