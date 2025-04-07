@@ -5,7 +5,7 @@ esphome:
   name_add_mac_suffix: True
   project: 
     name: EverythingSmartTechnology.Everything Presence Lite
-    version: "1.2.2"
+    version: "1.2.3"
 
 esp32:
   board: esp32dev
@@ -40,6 +40,7 @@ i2c:
 light:
   - platform: status_led
     name: ESP32 LED
+    id: esp32_led
     pin: GPIO14
     internal: False
     restore_mode: ALWAYS_OFF
@@ -74,7 +75,31 @@ sensor:
       - clamp:
           min_value: 0
 
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 0
+      inverted: true
+    id: flash_button
+    internal: True
+    on_multi_click:
+      - timing:
+        - ON for at least 10s
+        then:
+          - repeat: 
+              count: 5
+              then:
+                - light.turn_on: esp32_led
+                - delay: 150ms
+                - light.turn_off: esp32_led
+                - delay: 150ms
+          - light.turn_on: esp32_led
+          - button.press: factory_reset_button
+
 button:
   - platform: restart
     icon: mdi:power-cycle
     name: "ESP Reboot"
+  - platform: factory_reset
+    id: "factory_reset_button"
+    internal: True

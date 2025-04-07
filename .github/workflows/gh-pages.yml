@@ -8,9 +8,7 @@ name: Deploy from GH-Pages
 
 on:
   push:
-    branches: ["main"]
-    paths:
-      - '**.md'
+    branches: ["gh-pages"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
