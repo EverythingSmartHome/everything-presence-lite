@@ -153,7 +153,7 @@ number:
       - switch.turn_off: mmwave_sensor
       - delay: 1s
       - uart.write: !lambda
-          std::string ms = "setRangeReduced " + to_string(x);
+          std::string ms = "setTrigRange " + to_string(x);
           return std::vector<unsigned char>(ms.begin(), ms.end());
       - delay: 1s
       - uart.write: "saveConfig"
