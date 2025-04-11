@@ -311,18 +311,18 @@ button:
       - switch.turn_on: mmwave_sensor
   
   - platform: template
-      name: "Stop Sensor"
-      id: stop_sensor
-      entity_category: config
-      on_press:
-        - switch.turn_off: mmwave_sensor
+    name: "Stop Sensor"
+    id: stop_sensor
+    entity_category: config
+    on_press:
+      - switch.turn_off: mmwave_sensor
   
   - platform: template
-      name: "Start Sensor"
-      id: start_sensor
-      entity_category: config
-      on_press:
-        - switch.turn_on: mmwave_sensor
+    name: "Start Sensor"
+    id: start_sensor
+    entity_category: config
+    on_press:
+      - switch.turn_on: mmwave_sensor
 
   - platform: template
     name: "Get Sensor Settings"
