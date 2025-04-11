@@ -315,6 +315,8 @@ button:
     id: get_sensor_settings
     entity_category: config
     on_press:
+      - uart.write: "sensorStop"
+      - delay: 500ms
       - uart.write: "getSWV"
       - delay: 500ms
       - uart.write: "getHWV"
@@ -332,3 +334,5 @@ button:
       - uart.write: "getGpioMode"
       - delay: 500ms
       - uart.write: "getStatus"
+      - delay: 5000ms
+      - uart.write: "sensorStart"
