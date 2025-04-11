@@ -6,7 +6,7 @@ binary_sensor:
     pin:
       number: GPIO16
       mode: INPUT_PULLDOWN
-
+      
 uart:
   id: uart_bus
   tx_pin: GPIO18
