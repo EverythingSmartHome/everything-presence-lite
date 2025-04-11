@@ -154,7 +154,7 @@ number:
     set_action:
       - switch.turn_off: mmwave_sensor
       - delay: 1s
-      - uart.write: !lambda
+      - uart.write: !lambda |-
           // Retrieve current values from the two sensors
           float trigger_value = x;
           float detection_max = id(mmwave_distance_max).state;
