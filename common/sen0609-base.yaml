@@ -310,6 +310,20 @@ button:
       - delay: 3s
       - switch.turn_on: mmwave_sensor
 
+- platform: template
+    name: "Stop Sensor"
+    id: stop_sensor
+    entity_category: config
+    on_press:
+      - uart.write: "sensorStop"
+
+- platform: template
+    name: "Start Sensor"
+    id: start_sensor
+    entity_category: config
+    on_press:
+      - uart.write: "sensorStart"
+
   - platform: template
     name: "Get Sensor Settings"
     id: get_sensor_settings
@@ -332,7 +346,5 @@ button:
       - uart.write: "getPwm"
       - delay: 500ms
       - uart.write: "getGpioMode"
-      - delay: 500ms
-      - uart.write: "getStatus"
       - delay: 5000ms
       - uart.write: "sensorStart"
