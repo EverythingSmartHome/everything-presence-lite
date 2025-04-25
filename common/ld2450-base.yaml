@@ -761,7 +761,8 @@ select:
                 id(entities_update_max_count) = i + 1;
             }
   - platform: template
-    name: "Extra entities"
+    name: "Tracking Behaviour"
+    id: tracking_behaviour
     icon: 'mdi:dots-vertical'
     optimistic: true
     restore_value: true
