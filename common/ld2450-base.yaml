@@ -21,6 +21,10 @@ globals:
     type: unsigned long
     restore_value: False
     initial_value: '0'
+  - id: mmwave_update_interval
+    type: unsigned long
+    restore_value: False
+    initial_value: '250'
   - id: target1_last_update
     type: unsigned long
     initial_value: '0'
@@ -29,6 +33,18 @@ globals:
     type: int
     initial_value: "1"
     restore_value: False
+  - id: entities_update_count
+    type: unsigned int
+    restore_value: False
+    initial_value: '0'
+  - id: entities_update_max_count
+    type: unsigned int
+    restore_value: False
+    initial_value: '0'
+  - id: extra_entities
+    type: unsigned int
+    restore_value: False
+    initial_value: '0'
 
 
 interval:
@@ -488,6 +504,46 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+  - platform: template
+    name: "Occupancy Mask 2 Begin X"
+    id: occupancy_mask_2_begin_x
+    max_value: 6000
+    min_value: -6000
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+    disabled_by_default: true
+  - platform: template
+    name: "Occupancy Mask 2 End X"
+    id: occupancy_mask_2_end_x
+    max_value: 6000
+    min_value: -6000
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+    disabled_by_default: true
+  - platform: template
+    name: "Occupancy Mask 2 Begin Y"
+    id: occupancy_mask_2_begin_y
+    max_value: 6000
+    min_value: -1560
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+    disabled_by_default: true
+  - platform: template
+    name: "Occupancy Mask 2 End Y"
+    id: occupancy_mask_2_end_y
+    max_value: 6000
+    min_value: -1560
+    unit_of_measurement: "mm"
+    step: 10
+    optimistic: True
+    restore_value: True
+    disabled_by_default: true
 
   - platform: template
     name: "Stale Target Reset Timeout"
@@ -654,7 +710,121 @@ sensor:
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+  - platform: template
+    name: "Occupancy Mask 2 Target Count"
+    id: occupancy_mask_2_target_count
+    accuracy_decimals: 0
+    disabled_by_default: true
+    unit_of_measurement: " "
 
+select:
+  - platform: template
+    name: 'Update speed'
+    icon: 'mdi:speedometer'
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    options:
+      - Faster (0.1s)
+      - Fast (0.2s)
+      - Normal (0.3s)
+      - Slow (0.4s)
+      - Slower (0.5s)
+    initial_option: Normal (0.3s)
+    on_value:
+      then:
+        - lambda: id(mmwave_update_interval) = (i + 1) * 100;
+  - platform: template
+    name: "Extra entities update"
+    icon: 'mdi:update'
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    options:
+      - Every update
+      - Every 2 updates
+      - Every 3 updates
+      - Every 5 updates
+      - Every 10 updates
+      - Every 20 updates
+    initial_option: Every update
+    on_value:
+      then:
+        - lambda: |-
+            switch (i) {
+              case 3:
+                id(entities_update_max_count) = 5;
+                break;
+              case 4:
+                id(entities_update_max_count) = 10;
+                break;
+              case 5:
+                id(entities_update_max_count) = 20;
+                break;
+              default:
+                id(entities_update_max_count) = i + 1;
+            }
+  - platform: template
+    name: "Tracking Behaviour"
+    id: tracking_behaviour
+    icon: 'mdi:dots-vertical'
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    options:
+      - None
+      - Targets Position 
+      - Above + Zone count
+      - Above + Targets active
+      - Above + Distance and Angle
+      - Above + Speed and Resolution
+    initial_option: Above + Speed and Resolution
+    on_value:
+      then:
+        - lambda: |-
+            id(extra_entities) = i;
+            
+            if (i < 5) {  // If not using Speed and Resolution
+              id(target1_speed).publish_state(NAN);
+              id(target2_speed).publish_state(NAN);
+              id(target3_speed).publish_state(NAN);
+              id(target1_resolution).publish_state(NAN);
+              id(target2_resolution).publish_state(NAN);
+              id(target3_resolution).publish_state(NAN);
+            }
+            
+            if (i < 4) {  // If not using Distance and Angle
+              id(target1_distance).publish_state(NAN);
+              id(target2_distance).publish_state(NAN);
+              id(target3_distance).publish_state(NAN);
+              id(target1_angle).publish_state(NAN);
+              id(target2_angle).publish_state(NAN);
+              id(target3_angle).publish_state(NAN);
+            }
+            
+            if (i < 3) {  // If not using Targets active
+              id(target1_active).publish_state(false);
+              id(target2_active).publish_state(false);
+              id(target3_active).publish_state(false);
+            }
+            
+            if (i < 2) {  // If not using Zone count
+              id(zone1_target_count).publish_state(NAN);
+              id(zone2_target_count).publish_state(NAN);
+              id(zone3_target_count).publish_state(NAN);
+              id(zone4_target_count).publish_state(NAN);
+              id(occupancy_mask_1_target_count).publish_state(NAN);
+              id(occupancy_mask_2_target_count).publish_state(NAN);
+            }
+            
+            if (i < 1) {  // If using None
+              id(target1_x).publish_state(NAN);
+              id(target1_y).publish_state(NAN);
+              id(target2_x).publish_state(NAN);
+              id(target2_y).publish_state(NAN);
+              id(target3_x).publish_state(NAN);
+              id(target3_y).publish_state(NAN);
+            }
 
 uart:
   id: uart_bus
@@ -680,87 +850,28 @@ uart:
     sequence:
       # - lambda: UARTDebug::log_hex(direction, bytes, ' ');
       - lambda: |-
-          if ((millis() - id(mmwave_update_time)) <= 250) { 
+          if ((millis() - id(mmwave_update_time)) <= id(mmwave_update_interval)) { 
             return;
           };
           id(mmwave_update_time) = millis();
 
-          int16_t p1_x = (uint16_t((bytes[5] << 8) | bytes[4] ));
-          if ((bytes[5] & 0x80) >> 7) {
-            p1_x -= pow(2, 15); 
-          } else {
-            p1_x = 0 - p1_x; // was 0 - p1_x;
+          if (bytes.size() != 30) {
+            ESP_LOGW("LD2450", "Expected 30 bytes but received %hu!", bytes.size());
+            return;
           }
 
-          int16_t p1_y = (uint16_t((bytes[7] << 8) | bytes[6] ));
-          if ((bytes[7] & 0x80) >> 7) {
-            p1_y -= pow(2, 15);
-          } else {
-            p1_y = 0 - p1_y;
+          bool update_entities = false;
+          if(id(extra_entities) != 0) {
+            id(entities_update_count) += 1;
+            update_entities = id(entities_update_count) >= id(entities_update_max_count);
+            if (update_entities) {
+              id(entities_update_count) = 0;
+            }
           }
-
-          float p1_speed = (bytes[9] << 8 | bytes[8] );
-          if ((bytes[9] & 0x80) >> 7) {
-            p1_speed -= pow(2, 15);
-          } else {
-            p1_speed = 0 - p1_speed;
-          }
-          int16_t p1_distance_resolution = (uint16_t((bytes[11] << 8) | bytes[10] )); 
-
-          int16_t p2_x = (uint16_t((bytes[13] << 8) | bytes[12] ));
-          if ((bytes[13] & 0x80) >> 7) {
-            p2_x -=  pow(2, 15); 
-          } else {
-            p2_x = 0 - p2_x;
-          }
-
-          int16_t p2_y = (uint16_t((bytes[15] << 8) | bytes[14] ));
-          if ((bytes[15] & 0x80) >> 7) {
-            p2_y -= pow(2, 15);
-          } else {
-            p2_y = 0 - p2_y;
-          }
-
-          float p2_speed = (bytes[17] << 8 | bytes[16] );
-          if ((bytes[17] & 0x80) >> 7) {
-            p2_speed -= pow(2, 15);
-          } else {
-            p2_speed = 0 - p2_speed;
-          }
-          int16_t p2_distance_resolution = (uint16_t((bytes[19] << 8) | bytes[18] )); 
-
-          int16_t p3_x = (uint16_t((bytes[21] << 8) | bytes[20] ));
-          if ((bytes[21] & 0x80) >> 7) {
-            p3_x -=  pow(2, 15); 
-          } else {
-            p3_x = 0 - p3_x;
-          }
-
-          int16_t p3_y = (uint16_t((bytes[23] << 8) | bytes[22] ));
-          if ((bytes[23] & 0x80) >> 7) {
-            p3_y -= pow(2, 15);
-          } else {
-            p3_y = 0 - p3_y;
-          }
-
-          float p3_speed = (bytes[25] << 8 | bytes[24] );
-          if ((bytes[25] & 0x80) >> 7) {
-            p3_speed -= pow(2, 15);
-          } else {
-            p3_speed = 0 - p3_speed;
-          }
-          int16_t p3_distance_resolution = (uint16_t((bytes[27] << 8) | bytes[26] ));
 
           const static float RADIANS_TO_DEGREES = 180.0 / 3.14159265358979323846;
           const static float DEGREES_TO_RADIANS = 3.14159265358979323846 / 180.0;
-
-          float p1_angle = atan2(p1_y, p1_x);
-          float p2_angle = atan2(p2_y, p2_x);
-          float p3_angle = atan2(p3_y, p3_x);
-
-          float p1_distance = sqrt(p1_x * p1_x + p1_y * p1_y);
-          float p2_distance = sqrt(p2_x * p2_x + p2_y * p2_y);
-          float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
+          const static int16_t MIN_INT16_VAL = -32768;
 
           float max_distance = float(id(distance).state) * 10;
           float installation_angle = id(installation_angle_ui).state * DEGREES_TO_RADIANS;
@@ -795,291 +906,407 @@ uart:
           int occupancy_mask_1_end_x_value = max(id(occupancy_mask_1_begin_x).state, id(occupancy_mask_1_end_x).state);
           int occupancy_mask_1_begin_y_value = min(id(occupancy_mask_1_begin_y).state, id(occupancy_mask_1_end_y).state);
           int occupancy_mask_1_end_y_value = max(id(occupancy_mask_1_begin_y).state, id(occupancy_mask_1_end_y).state);
+          int occupancy_mask_2_count = 0;
+          int occupancy_mask_2_begin_x_value = min(id(occupancy_mask_2_begin_x).state, id(occupancy_mask_2_end_x).state);
+          int occupancy_mask_2_end_x_value = max(id(occupancy_mask_2_begin_x).state, id(occupancy_mask_2_end_x).state);
+          int occupancy_mask_2_begin_y_value = min(id(occupancy_mask_2_begin_y).state, id(occupancy_mask_2_end_y).state);
+          int occupancy_mask_2_end_y_value = max(id(occupancy_mask_2_begin_y).state, id(occupancy_mask_2_end_y).state);
 
-          int targets_detected = 0;
+          bool p1_detected = *((uint16_t *)(&bytes[10])) != 0;
+          bool p2_detected = *((uint16_t *)(&bytes[18])) != 0;
+          bool p3_detected = *((uint16_t *)(&bytes[26])) != 0;
+          bool target_masked = false;
 
-          if (p1_distance > 0 && p1_distance <= max_distance) {
-            targets_detected++;
-            if (installation_angle != 0) {
-              float angle = p1_angle - installation_angle;
-              p1_x = p1_distance * cos(angle);
-              p1_y = p1_distance * sin(angle);
-            }
-            if ((p1_x >= occupancy_mask_1_begin_x_value && p1_x <= occupancy_mask_1_end_x_value) &&
-                (p1_y >= occupancy_mask_1_begin_y_value && p1_y <= occupancy_mask_1_end_y_value)) {
-              occupancy_mask_1_count++;
+          if (p1_detected) {
+            int16_t p1_x = *((int16_t *)(&bytes[4]));
+            if (p1_x < 0) p1_x += MIN_INT16_VAL;
+            else p1_x = -p1_x;
+
+            int16_t p1_y = *((int16_t *)(&bytes[6]));
+            if (p1_y < 0) p1_y += MIN_INT16_VAL;
+            else p1_y = -p1_y;
+
+            float p1_distance = sqrt(p1_x * p1_x + p1_y * p1_y);
+            
+            if (p1_distance > max_distance) {
+              p1_detected = false;
             } else {
-              if ((p1_x >= zone1_begin_x_value && p1_x <= zone1_end_x_value) &&
-                  (p1_y >= zone1_begin_y_value && p1_y <= zone1_end_y_value)) {
-                zone1_count++;
+              float p1_angle;
+              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+                p1_angle = atan2(p1_y, p1_x);
               }
-              if ((p1_x >= zone2_begin_x_value && p1_x <= zone2_end_x_value) &&
-                  (p1_y >= zone2_begin_y_value && p1_y <= zone2_end_y_value)) {
-                zone2_count++;
+              if (installation_angle != 0) {
+                float angle = p1_angle - installation_angle;
+                p1_x = p1_distance * cos(angle);
+                p1_y = p1_distance * sin(angle);
               }
-              if ((p1_x >= zone3_begin_x_value && p1_x <= zone3_end_x_value) &&
-                  (p1_y >= zone3_begin_y_value && p1_y <= zone3_end_y_value)) {
-                zone3_count++;
+              if ((occupancy_mask_1_begin_x_value <= p1_x && p1_x <= occupancy_mask_1_end_x_value) &&
+                  (occupancy_mask_1_begin_y_value <= p1_y && p1_y <= occupancy_mask_1_end_y_value)) {
+                occupancy_mask_1_count++;
+                p1_detected = false;
+                target_masked = true;
+              } else if ((occupancy_mask_2_begin_x_value <= p1_x && p1_x <= occupancy_mask_2_end_x_value) &&
+                  (occupancy_mask_2_begin_y_value <= p1_y && p1_y <= occupancy_mask_2_end_y_value)) {
+                occupancy_mask_2_count++;
+                p1_detected = false;
+                target_masked = true;
+              } else {
+                if ((zone1_begin_x_value <= p1_x && p1_x <= zone1_end_x_value) &&
+                    (zone1_begin_y_value <= p1_y && p1_y <= zone1_end_y_value)) {
+                  zone1_count++;
+                }
+                if ((zone2_begin_x_value <= p1_x && p1_x <= zone2_end_x_value) &&
+                    (zone2_begin_y_value <= p1_y && p1_y <= zone2_end_y_value)) {
+                  zone2_count++;
+                }
+                if ((zone3_begin_x_value <= p1_x && p1_x <= zone3_end_x_value) &&
+                    (zone3_begin_y_value <= p1_y && p1_y <= zone3_end_y_value)) {
+                  zone3_count++;
+                }
+                if ((zone4_begin_x_value <= p1_x && p1_x <= zone4_end_x_value) &&
+                    (zone4_begin_y_value <= p1_y && p1_y <= zone4_end_y_value)) {
+                  zone4_count++;
+                }
               }
-              if ((p1_x >= zone4_begin_x_value && p1_x <= zone4_end_x_value) &&
-                  (p1_y >= zone4_begin_y_value && p1_y <= zone4_end_y_value)) {
-                zone4_count++;
-              }
-            }
+              if (update_entities) {
+                switch (id(extra_entities)) {
+                  case 5:
+                    {
+                      uint16_t p1_resolution = *((uint16_t *)(&bytes[10]));
+                      int16_t p1_speed = *((int16_t *)(&bytes[8]));
+                      if (p1_speed < 0) p1_speed += MIN_INT16_VAL;
+                      else p1_speed = -p1_speed;
+                      float p1_speed_float = p1_speed / 100.0;
 
-            if (id(target1_x).state != p1_x) {
-              id(target1_x).publish_state(p1_x);
-            }
-            if (id(target1_y).state != p1_y) {
-              id(target1_y).publish_state(p1_y);
-            }
-            p1_speed /= 100.0;
-            if (id(target1_speed).state != p1_speed) {
-              id(target1_speed).publish_state(p1_speed);
-            }
-            if (id(target1_resolution).state != p1_distance_resolution) {
-              id(target1_resolution).publish_state(p1_distance_resolution);
-            }
-            if (id(target1_distance).state != p1_distance) {
-              id(target1_distance).publish_state(p1_distance);
-            }
-            p1_angle = (p1_angle * RADIANS_TO_DEGREES) - 90;
-            if (id(target1_angle).state != p1_angle) {
-              id(target1_angle).publish_state(p1_angle);
-            }
-            if (id(target1_active).state != true) {
-              id(target1_active).publish_state(true);
-            }
-          } else {
-            if (id(target1_x).state != 0) {
-              id(target1_x).publish_state(0);
-            }
-            if (id(target1_y).state != 0) {
-              id(target1_y).publish_state(0);
-            }
-            if (id(target1_speed).state != 0) {
-              id(target1_speed).publish_state(0);
-            }
-            if (id(target1_resolution).state != 0) {
-              id(target1_resolution).publish_state(0);
-            }
-            if (id(target1_distance).state != 0) {
-              id(target1_distance).publish_state(0);
-            }
-            if (id(target1_angle).state != 0) {
-              id(target1_angle).publish_state(0);
-            }
-            if (id(target1_active).state != false) {
-              id(target1_active).publish_state(false);
+                      if (id(target1_speed).state != p1_speed_float) {
+                        id(target1_speed).publish_state(p1_speed_float);
+                      }
+                      if (id(target1_resolution).state != p1_resolution) {
+                        id(target1_resolution).publish_state(p1_resolution);
+                      }
+                    }
+                  case 4:
+                    p1_angle = (p1_angle * RADIANS_TO_DEGREES) - 90;
+
+                    if (id(target1_angle).state != p1_angle) {
+                      id(target1_angle).publish_state(p1_angle);
+                    }
+                    if (id(target1_distance).state != p1_distance) {
+                      id(target1_distance).publish_state(p1_distance);
+                    }
+                  case 3:
+                    id(target1_active).publish_state(true);
+                  case 2:
+                  case 1:
+                    if (id(target1_x).state != p1_x) {
+                      id(target1_x).publish_state(p1_x);
+                    }
+                    if (id(target1_y).state != p1_y) {
+                      id(target1_y).publish_state(p1_y);
+                    }
+                }
+              }
             }
           }
 
-          if (p2_distance > 0 && p2_distance <= max_distance) {
-            targets_detected++;
-            if (installation_angle != 0) {
-              float angle = p2_angle - installation_angle;
-              p2_x = p2_distance * cos(angle);
-              p2_y = p2_distance * sin(angle);
+          if (update_entities && !p1_detected && !target_masked) {
+            switch (id(extra_entities)) {
+              case 5:
+                if (id(target1_speed).state != 0) {
+                  id(target1_speed).publish_state(0);
+                }
+                if (id(target1_resolution).state != 0) {
+                  id(target1_resolution).publish_state(0);
+                }
+              case 4:
+                if (id(target1_distance).state != 0) {
+                  id(target1_distance).publish_state(0);
+                }
+                if (id(target1_angle).state != 0) {
+                  id(target1_angle).publish_state(0);
+                }
+              case 3:
+                id(target1_active).publish_state(false);
+              case 2:
+              case 1:
+                if (id(target1_x).state != 0) {
+                  id(target1_x).publish_state(0);
+                }
+                if (id(target1_y).state != 0) {
+                  id(target1_y).publish_state(0);
+                }
             }
-            if ((p2_x >= occupancy_mask_1_begin_x_value && p2_x <= occupancy_mask_1_end_x_value) &&
-                (p2_y >= occupancy_mask_1_begin_y_value && p2_y <= occupancy_mask_1_end_y_value)) {
-              occupancy_mask_1_count++;
+          }
+
+          target_masked = false;
+
+          if (p2_detected) {
+            int16_t p2_x = *((int16_t *)(&bytes[12]));
+            if (p2_x < 0) p2_x += MIN_INT16_VAL;
+            else p2_x = -p2_x;
+
+            int16_t p2_y = *((int16_t *)(&bytes[14]));
+            if (p2_y < 0) p2_y += MIN_INT16_VAL;
+            else p2_y = -p2_y;
+
+            float p2_distance = sqrt(p2_x * p2_x + p2_y * p2_y);
+            
+            if (p2_distance > max_distance) {
+              p2_detected = false;
             } else {
-              if ((p2_x >= zone1_begin_x_value && p2_x <= zone1_end_x_value) &&
-                  (p2_y >= zone1_begin_y_value && p2_y <= zone1_end_y_value)) {
-                zone1_count++;
+              float p2_angle;
+              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+                p2_angle = atan2(p2_y, p2_x);
               }
-              if ((p2_x >= zone2_begin_x_value && p2_x <= zone2_end_x_value) &&
-                  (p2_y >= zone2_begin_y_value && p2_y <= zone2_end_y_value)) {
-                zone2_count++;
+              if (installation_angle != 0) {
+                float angle = p2_angle - installation_angle;
+                p2_x = p2_distance * cos(angle);
+                p2_y = p2_distance * sin(angle);
               }
-              if ((p2_x >= zone3_begin_x_value && p2_x <= zone3_end_x_value) &&
-                  (p2_y >= zone3_begin_y_value && p2_y <= zone3_end_y_value)) {
-                zone3_count++;
+              if ((occupancy_mask_1_begin_x_value <= p2_x && p2_x <= occupancy_mask_1_end_x_value) &&
+                  (occupancy_mask_1_begin_y_value <= p2_y && p2_y <= occupancy_mask_1_end_y_value)) {
+                occupancy_mask_1_count++;
+                p2_detected = false;
+                target_masked = true;
+              } else if ((occupancy_mask_2_begin_x_value <= p2_x && p2_x <= occupancy_mask_2_end_x_value) &&
+                  (occupancy_mask_2_begin_y_value <= p2_y && p2_y <= occupancy_mask_2_end_y_value)) {
+                occupancy_mask_2_count++;
+                p2_detected = false;
+                target_masked = true;
+              } else {
+                if ((zone1_begin_x_value <= p2_x && p2_x <= zone1_end_x_value) &&
+                    (zone1_begin_y_value <= p2_y && p2_y <= zone1_end_y_value)) {
+                  zone1_count++;
+                }
+                if ((zone2_begin_x_value <= p2_x && p2_x <= zone2_end_x_value) &&
+                    (zone2_begin_y_value <= p2_y && p2_y <= zone2_end_y_value)) {
+                  zone2_count++;
+                }
+                if ((zone3_begin_x_value <= p2_x && p2_x <= zone3_end_x_value) &&
+                    (zone3_begin_y_value <= p2_y && p2_y <= zone3_end_y_value)) {
+                  zone3_count++;
+                }
+                if ((zone4_begin_x_value <= p2_x && p2_x <= zone4_end_x_value) &&
+                    (zone4_begin_y_value <= p2_y && p2_y <= zone4_end_y_value)) {
+                  zone4_count++;
+                }
               }
-              if ((p2_x >= zone4_begin_x_value && p2_x <= zone4_end_x_value) &&
-                  (p2_y >= zone4_begin_y_value && p2_y <= zone4_end_y_value)) {
-                zone4_count++;
-              }
-            }
+              if (update_entities) {
+                switch (id(extra_entities)) {
+                  case 5:
+                    {
+                      uint16_t p2_resolution = *((uint16_t *)(&bytes[18]));
+                      int16_t p2_speed = *((int16_t *)(&bytes[16]));
+                      if (p2_speed < 0) p2_speed += MIN_INT16_VAL;
+                      else p2_speed = -p2_speed;
+                      float p2_speed_float = p2_speed / 100.0;
 
-            if (id(target2_x).state != p2_x) {
-              id(target2_x).publish_state(p2_x);
-            }
-            if (id(target2_y).state != p2_y) {
-              id(target2_y).publish_state(p2_y);
-            }
-            p2_speed /= 100.0;
-            if (id(target2_speed).state != p2_speed) {
-              id(target2_speed).publish_state(p2_speed);
-            }
-            if (id(target2_resolution).state != p2_distance_resolution) {
-              id(target2_resolution).publish_state(p2_distance_resolution);
-            }
-            if (id(target2_distance).state != p2_distance) {
-              id(target2_distance).publish_state(p2_distance);
-            }
-            p2_angle = (p2_angle * RADIANS_TO_DEGREES) - 90;
-            if (id(target2_angle).state != p2_angle) {
-              id(target2_angle).publish_state(p2_angle);
-            }
-            if (id(target2_active).state != true) {
-              id(target2_active).publish_state(true);
-            }
-          } else {
-            if (id(target2_x).state != 0) {
-              id(target2_x).publish_state(0);
-            }
-            if (id(target2_y).state != 0) {
-              id(target2_y).publish_state(0);
-            }
-            if (id(target2_speed).state != 0) {
-              id(target2_speed).publish_state(0);
-            }
-            if (id(target2_resolution).state != 0) {
-              id(target2_resolution).publish_state(0);
-            }
-            if (id(target2_distance).state != 0) {
-              id(target2_distance).publish_state(0);
-            }
-            if (id(target2_angle).state != 0) {
-              id(target2_angle).publish_state(0);
-            }
-            if (id(target2_active).state != false) {
-              id(target2_active).publish_state(false);
+                      if (id(target2_speed).state != p2_speed_float) {
+                        id(target2_speed).publish_state(p2_speed_float);
+                      }
+                      if (id(target2_resolution).state != p2_resolution) {
+                        id(target2_resolution).publish_state(p2_resolution);
+                      }
+                    }
+                  case 4:
+                    p2_angle = (p2_angle * RADIANS_TO_DEGREES) - 90;
+
+                    if (id(target2_angle).state != p2_angle) {
+                      id(target2_angle).publish_state(p2_angle);
+                    }
+                    if (id(target2_distance).state != p2_distance) {
+                      id(target2_distance).publish_state(p2_distance);
+                    }
+                  case 3:
+                    id(target2_active).publish_state(true);
+                  case 2:
+                  case 1:
+                    if (id(target2_x).state != p2_x) {
+                      id(target2_x).publish_state(p2_x);
+                    }
+                    if (id(target2_y).state != p2_y) {
+                      id(target2_y).publish_state(p2_y);
+                    }
+                }
+              }
             }
           }
 
-          if (p3_distance > 0 && p3_distance <= max_distance) {
-            targets_detected++;
-            if (installation_angle != 0) {
-              float angle = p3_angle - installation_angle;
-              p3_x = p3_distance * cos(angle);
-              p3_y = p3_distance * sin(angle);
+          if (update_entities && !p2_detected && !target_masked) {
+            switch (id(extra_entities)) {
+              case 5:
+                if (id(target2_speed).state != 0) {
+                  id(target2_speed).publish_state(0);
+                }
+                if (id(target2_resolution).state != 0) {
+                  id(target2_resolution).publish_state(0);
+                }
+              case 4:
+                if (id(target2_distance).state != 0) {
+                  id(target2_distance).publish_state(0);
+                }
+                if (id(target2_angle).state != 0) {
+                  id(target2_angle).publish_state(0);
+                }
+              case 3:
+                id(target2_active).publish_state(false);
+              case 2:
+              case 1:
+                if (id(target2_x).state != 0) {
+                  id(target2_x).publish_state(0);
+                }
+                if (id(target2_y).state != 0) {
+                  id(target2_y).publish_state(0);
+                }
             }
-            if ((p3_x >= occupancy_mask_1_begin_x_value && p3_x <= occupancy_mask_1_end_x_value) &&
-                (p3_y >= occupancy_mask_1_begin_y_value && p3_y <= occupancy_mask_1_end_y_value)) {
-              occupancy_mask_1_count++;
+          }
+
+          target_masked = false;
+
+          if (p3_detected) {
+            int16_t p3_x = *((int16_t *)(&bytes[20]));
+            if (p3_x < 0) p3_x += MIN_INT16_VAL;
+            else p3_x = -p3_x;
+
+            int16_t p3_y = *((int16_t *)(&bytes[22]));
+            if (p3_y < 0) p3_y += MIN_INT16_VAL;
+            else p3_y = -p3_y;
+
+            float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
+            
+            if (p3_distance > max_distance) {
+              p3_detected = false;
             } else {
-              if ((p3_x >= zone1_begin_x_value && p3_x <= zone1_end_x_value) &&
-                  (p3_y >= zone1_begin_y_value && p3_y <= zone1_end_y_value)) {
-                zone1_count++;
+              float p3_angle;
+              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+                p3_angle = atan2(p3_y, p3_x);
               }
-              if ((p3_x >= zone2_begin_x_value && p3_x <= zone2_end_x_value) &&
-                  (p3_y >= zone2_begin_y_value && p3_y <= zone2_end_y_value)) {
-                zone2_count++;
+              if (installation_angle != 0) {
+                float angle = p3_angle - installation_angle;
+                p3_x = p3_distance * cos(angle);
+                p3_y = p3_distance * sin(angle);
               }
-              if ((p3_x >= zone3_begin_x_value && p3_x <= zone3_end_x_value) &&
-                  (p3_y >= zone3_begin_y_value && p3_y <= zone3_end_y_value)) {
-                zone3_count++;
+              if ((occupancy_mask_1_begin_x_value <= p3_x && p3_x <= occupancy_mask_1_end_x_value) &&
+                  (occupancy_mask_1_begin_y_value <= p3_y && p3_y <= occupancy_mask_1_end_y_value)) {
+                occupancy_mask_1_count++;
+                p3_detected = false;
+                target_masked = true;
+              } else if ((occupancy_mask_2_begin_x_value <= p3_x && p3_x <= occupancy_mask_2_end_x_value) &&
+                  (occupancy_mask_2_begin_y_value <= p3_y && p3_y <= occupancy_mask_2_end_y_value)) {
+                occupancy_mask_2_count++;
+                p3_detected = false;
+                target_masked = true;
+              } else {
+                if ((zone1_begin_x_value <= p3_x && p3_x <= zone1_end_x_value) &&
+                    (zone1_begin_y_value <= p3_y && p3_y <= zone1_end_y_value)) {
+                  zone1_count++;
+                }
+                if ((zone2_begin_x_value <= p3_x && p3_x <= zone2_end_x_value) &&
+                    (zone2_begin_y_value <= p3_y && p3_y <= zone2_end_y_value)) {
+                  zone2_count++;
+                }
+                if ((zone3_begin_x_value <= p3_x && p3_x <= zone3_end_x_value) &&
+                    (zone3_begin_y_value <= p3_y && p3_y <= zone3_end_y_value)) {
+                  zone3_count++;
+                }
+                if ((zone4_begin_x_value <= p3_x && p3_x <= zone4_end_x_value) &&
+                    (zone4_begin_y_value <= p3_y && p3_y <= zone4_end_y_value)) {
+                  zone4_count++;
+                }
               }
-              if ((p3_x >= zone4_begin_x_value && p3_x <= zone4_end_x_value) &&
-                  (p3_y >= zone4_begin_y_value && p3_y <= zone4_end_y_value)) {
-                zone4_count++;
-              }
-            }
+              if (update_entities) {
+                switch (id(extra_entities)) {
+                  case 5:
+                    {
+                      uint16_t p3_resolution = *((uint16_t *)(&bytes[26]));
+                      int16_t p3_speed = *((int16_t *)(&bytes[24]));
+                      if (p3_speed < 0) p3_speed += MIN_INT16_VAL;
+                      else p3_speed = -p3_speed;
+                      float p3_speed_float = p3_speed / 100.0;
 
-            if (id(target3_x).state != p3_x) {
-              id(target3_x).publish_state(p3_x);
-            }
-            if (id(target3_y).state != p3_y) {
-              id(target3_y).publish_state(p3_y);
-            }
-            p3_speed /= 100.0;
-            if (id(target3_speed).state != p3_speed) {
-              id(target3_speed).publish_state(p3_speed);
-            }
-            if (id(target3_resolution).state != p3_distance_resolution) {
-              id(target3_resolution).publish_state(p3_distance_resolution);
-            }
-            if (id(target3_distance).state != p3_distance) {
-              id(target3_distance).publish_state(p3_distance);
-            }
-            p3_angle = (p3_angle * RADIANS_TO_DEGREES) - 90;
-            if (id(target3_angle).state != p3_angle) {
-              id(target3_angle).publish_state(p3_angle);
-            }
-            if (id(target3_active).state != true) {
-              id(target3_active).publish_state(true);
-            }
-          } else {
-            if (id(target3_x).state != 0) {
-              id(target3_x).publish_state(0);
-            }
-            if (id(target3_y).state != 0) {
-              id(target3_y).publish_state(0);
-            }
-            if (id(target3_speed).state != 0) {
-              id(target3_speed).publish_state(0);
-            }
-            if (id(target3_resolution).state != 0) {
-              id(target3_resolution).publish_state(0);
-            }
-            if (id(target3_distance).state != 0) {
-              id(target3_distance).publish_state(0);
-            }
-            if (id(target3_angle).state != 0) {
-              id(target3_angle).publish_state(0);
-            }
-            if (id(target3_active).state != false) {
-              id(target3_active).publish_state(false);
+                      if (id(target3_speed).state != p3_speed_float) {
+                        id(target3_speed).publish_state(p3_speed_float);
+                      }
+                      if (id(target3_resolution).state != p3_resolution) {
+                        id(target3_resolution).publish_state(p3_resolution);
+                      }
+                    }
+                  case 4:
+                    p3_angle = (p3_angle * RADIANS_TO_DEGREES) - 90;
+                    
+                    if (id(target3_angle).state != p3_angle) {
+                      id(target3_angle).publish_state(p3_angle);
+                    }
+                    if (id(target3_distance).state != p3_distance) {
+                      id(target3_distance).publish_state(p3_distance);
+                    }
+                  case 3:
+                    id(target3_active).publish_state(true);
+                  case 2:
+                  case 1:
+                    if (id(target3_x).state != p3_x) {
+                      id(target3_x).publish_state(p3_x);
+                    }
+                    if (id(target3_y).state != p3_y) {
+                      id(target3_y).publish_state(p3_y);
+                    }
+                }
+              }
             }
           }
 
-          if (targets_detected > occupancy_mask_1_count) {
-            id(occupancy).publish_state(true);
-          } else {
-            id(occupancy).publish_state(false);
+          if (update_entities && !p3_detected && !target_masked) {
+            switch (id(extra_entities)) {
+              case 5:
+                if (id(target3_speed).state != 0) {
+                  id(target3_speed).publish_state(0);
+                }
+                if (id(target3_resolution).state != 0) {
+                  id(target3_resolution).publish_state(0);
+                }
+              case 4:
+                if (id(target3_distance).state != 0) {
+                  id(target3_distance).publish_state(0);
+                }
+                if (id(target3_angle).state != 0) {
+                  id(target3_angle).publish_state(0);
+                }
+              case 3:
+                id(target3_active).publish_state(false);
+              case 2:
+              case 1:
+                if (id(target3_x).state != 0) {
+                  id(target3_x).publish_state(0);
+                }
+                if (id(target3_y).state != 0) {
+                  id(target3_y).publish_state(0);
+                }
+            }
           }
 
-          if (zone1_count > 0) {
-            id(zone1_occupancy).publish_state(true);
+          if (update_entities && id(extra_entities) >= 2) {
             if (id(zone1_target_count).state != zone1_count) {
               id(zone1_target_count).publish_state(zone1_count);
             }
-          } else {
-            id(zone1_occupancy).publish_state(false);
-            if (id(zone1_target_count).state != 0) {
-              id(zone1_target_count).publish_state(0);
-            }
-          }
-
-          if (zone2_count > 0) {
-            id(zone2_occupancy).publish_state(true);
             if (id(zone2_target_count).state != zone2_count) {
               id(zone2_target_count).publish_state(zone2_count);
             }
-          } else {
-            id(zone2_occupancy).publish_state(false);
-            if (id(zone2_target_count).state != 0) {
-              id(zone2_target_count).publish_state(0);
-            }
-          }
-
-          if (zone3_count > 0) {
-            id(zone3_occupancy).publish_state(true);
             if (id(zone3_target_count).state != zone3_count) {
               id(zone3_target_count).publish_state(zone3_count);
             }
-          } else {
-            id(zone3_occupancy).publish_state(false);
-            if (id(zone3_target_count).state != 0) {
-              id(zone3_target_count).publish_state(0);
-            }
-          }
-
-          if (zone4_count > 0) {
-            id(zone4_occupancy).publish_state(true);
             if (id(zone4_target_count).state != zone4_count) {
               id(zone4_target_count).publish_state(zone4_count);
             }
-          } else {
-            id(zone4_occupancy).publish_state(false);
-            if (id(zone4_target_count).state != 0) {
-              id(zone4_target_count).publish_state(0);
+            if (id(occupancy_mask_1_target_count).state != occupancy_mask_1_count) {
+              id(occupancy_mask_1_target_count).publish_state(occupancy_mask_1_count);
+            }
+            if (id(occupancy_mask_2_target_count).state != occupancy_mask_2_count) {
+              id(occupancy_mask_2_target_count).publish_state(occupancy_mask_2_count);
             }
           }
 
-          if (id(occupancy_mask_1_target_count).state != occupancy_mask_1_count) {
-            id(occupancy_mask_1_target_count).publish_state(occupancy_mask_1_count);
-          }
+          id(occupancy).publish_state(p1_detected || p2_detected || p3_detected);
+          id(zone1_occupancy).publish_state(zone1_count > 0);
+          id(zone2_occupancy).publish_state(zone2_count > 0);
+          id(zone3_occupancy).publish_state(zone3_count > 0);
+          id(zone4_occupancy).publish_state(zone4_count > 0);
