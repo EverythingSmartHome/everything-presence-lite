@@ -513,6 +513,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    disabled_by_default: true
   - platform: template
     name: "Occupancy Mask 2 End X"
     id: occupancy_mask_2_end_x
@@ -522,6 +523,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    disabled_by_default: true
   - platform: template
     name: "Occupancy Mask 2 Begin Y"
     id: occupancy_mask_2_begin_y
@@ -531,6 +533,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    disabled_by_default: true
   - platform: template
     name: "Occupancy Mask 2 End Y"
     id: occupancy_mask_2_end_y
@@ -540,6 +543,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    disabled_by_default: true
 
   - platform: template
     name: "Stale Target Reset Timeout"
