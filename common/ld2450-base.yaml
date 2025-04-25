@@ -729,7 +729,7 @@ select:
     initial_option: Normal (0.3s)
     on_value:
       then:
-        - lambda: id(mmwave_update_interval) = (i * 100) + 50;
+        - lambda: id(mmwave_update_interval) = (i + 1) * 100;
   - platform: template
     name: "Extra entities update"
     icon: 'mdi:update'
@@ -773,10 +773,53 @@ select:
       - Above + Targets active
       - Above + Distance and Angle
       - Above + Speed and Resolution
-    initial_option: Above + Zone count
+    initial_option: Above + Speed and Resolution
     on_value:
       then:
-        - lambda: id(extra_entities) = i;
+        - lambda: |-
+            id(extra_entities) = i;
+            
+            if (i < 5) {  // If not using Speed and Resolution
+              id(target1_speed).publish_state(NAN);
+              id(target2_speed).publish_state(NAN);
+              id(target3_speed).publish_state(NAN);
+              id(target1_resolution).publish_state(NAN);
+              id(target2_resolution).publish_state(NAN);
+              id(target3_resolution).publish_state(NAN);
+            }
+            
+            if (i < 4) {  // If not using Distance and Angle
+              id(target1_distance).publish_state(NAN);
+              id(target2_distance).publish_state(NAN);
+              id(target3_distance).publish_state(NAN);
+              id(target1_angle).publish_state(NAN);
+              id(target2_angle).publish_state(NAN);
+              id(target3_angle).publish_state(NAN);
+            }
+            
+            if (i < 3) {  // If not using Targets active
+              id(target1_active).publish_state(false);
+              id(target2_active).publish_state(false);
+              id(target3_active).publish_state(false);
+            }
+            
+            if (i < 2) {  // If not using Zone count
+              id(zone1_target_count).publish_state(NAN);
+              id(zone2_target_count).publish_state(NAN);
+              id(zone3_target_count).publish_state(NAN);
+              id(zone4_target_count).publish_state(NAN);
+              id(occupancy_mask_1_target_count).publish_state(NAN);
+              id(occupancy_mask_2_target_count).publish_state(NAN);
+            }
+            
+            if (i < 1) {  // If using None
+              id(target1_x).publish_state(NAN);
+              id(target1_y).publish_state(NAN);
+              id(target2_x).publish_state(NAN);
+              id(target2_y).publish_state(NAN);
+              id(target3_x).publish_state(NAN);
+              id(target3_y).publish_state(NAN);
+            }
 
 uart:
   id: uart_bus
