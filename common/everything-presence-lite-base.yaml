@@ -63,6 +63,22 @@ number:
     on_value:
       - lambda: 'id(illuminance_sensor).update();'
 
+  - platform: template
+    name: "Illuminance Scale"
+    id: illuminance_scale_ui
+    min_value: 0.01
+    max_value: 10.0
+    step: 0.01
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 1.0
+    icon: "mdi:contrast-circle"
+    entity_category: config
+    disabled_by_default: true
+    on_value:
+      - lambda: 'id(illuminance_sensor).update();'
+
 sensor:
   - platform: bh1750
     name: Illuminance
@@ -71,7 +87,7 @@ sensor:
     address: 0x23
     update_interval: ${illuminance_update_interval}
     filters:
-      - lambda: "return x + id(illuminance_offset_ui).state;"
+      - lambda: "return x*id(illuminance_scale_ui).state + id(illuminance_offset_ui).state;"
       - clamp:
           min_value: 0
 
