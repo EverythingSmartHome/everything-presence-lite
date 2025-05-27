@@ -1,6 +1,6 @@
 {
   "name": "Everything Presence Lite HA SEN0395 No BLE",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "home_assistant_domain": "esphome",
   "new_install_skip_erase": false,
   "builds": [
@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "ota": {
         "path": "everything-presence-lite-ha-sen0395-no-ble/everything-presence-lite-esp32.ota.bin",
-        "md5": "7650e54b5e9faf6c155782c1d9abf5e0"
+        "md5": "5e193e653f3ef39286c92e4667701733"
       },
       "parts": [
         {
