@@ -180,6 +180,14 @@ switch:
     optimistic: True
     entity_category: config
 
+  - platform: template
+    name: "Inverse Mounting"
+    id: inverse_mounting
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    entity_category: config
+    icon: "mdi:rotate-180"
+
 binary_sensor:
   - platform: template
     name: "Occupancy"
@@ -940,6 +948,9 @@ uart:
                 p1_x = p1_distance * cos(angle);
                 p1_y = p1_distance * sin(angle);
               }
+              if (id(inverse_mounting).state) {
+                p1_x = -p1_x;
+              }
               if ((occupancy_mask_1_begin_x_value <= p1_x && p1_x <= occupancy_mask_1_end_x_value) &&
                   (occupancy_mask_1_begin_y_value <= p1_y && p1_y <= occupancy_mask_1_end_y_value)) {
                 occupancy_mask_1_count++;
@@ -1063,6 +1074,9 @@ uart:
                 p2_x = p2_distance * cos(angle);
                 p2_y = p2_distance * sin(angle);
               }
+              if (id(inverse_mounting).state) {
+                p2_x = -p2_x;
+              }
               if ((occupancy_mask_1_begin_x_value <= p2_x && p2_x <= occupancy_mask_1_end_x_value) &&
                   (occupancy_mask_1_begin_y_value <= p2_y && p2_y <= occupancy_mask_1_end_y_value)) {
                 occupancy_mask_1_count++;
@@ -1185,6 +1199,9 @@ uart:
                 float angle = p3_angle - installation_angle;
                 p3_x = p3_distance * cos(angle);
                 p3_y = p3_distance * sin(angle);
+              }
+              if (id(inverse_mounting).state) {
+                p3_x = -p3_x;
               }
               if ((occupancy_mask_1_begin_x_value <= p3_x && p3_x <= occupancy_mask_1_end_x_value) &&
                   (occupancy_mask_1_begin_y_value <= p3_y && p3_y <= occupancy_mask_1_end_y_value)) {
