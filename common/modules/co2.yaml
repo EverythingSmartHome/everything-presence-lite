@@ -7,6 +7,11 @@ api:
         - scd4x.perform_forced_calibration:
             value: !lambda "return co2_ppm;"
             id: scd40
+    - action: set_ambient_pressure
+      variables:
+        pressure_mbar: int
+      then:
+        - lambda: "id(scd40)->set_ambient_pressure_compensation(pressure_mbar);"             
 
 i2c:
   - id: bus_b
