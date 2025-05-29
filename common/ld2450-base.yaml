@@ -180,6 +180,14 @@ switch:
     optimistic: True
     entity_category: config
 
+  - platform: template
+    name: "Upside Down Mounting"
+    id: inverse_mounting
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    entity_category: config
+    icon: "mdi:rotate-180"
+
 binary_sensor:
   - platform: template
     name: "Occupancy"
@@ -928,6 +936,10 @@ uart:
 
             float p1_distance = sqrt(p1_x * p1_x + p1_y * p1_y);
             
+            if (id(inverse_mounting).state) {
+              p1_x = -p1_x;
+            }
+            
             if (p1_distance > max_distance) {
               p1_detected = false;
             } else {
@@ -1051,6 +1063,10 @@ uart:
 
             float p2_distance = sqrt(p2_x * p2_x + p2_y * p2_y);
             
+            if (id(inverse_mounting).state) {
+              p2_x = -p2_x;
+            }
+            
             if (p2_distance > max_distance) {
               p2_detected = false;
             } else {
@@ -1173,6 +1189,10 @@ uart:
             else p3_y = -p3_y;
 
             float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
+            
+            if (id(inverse_mounting).state) {
+              p3_x = -p3_x;
+            }
             
             if (p3_distance > max_distance) {
               p3_detected = false;
