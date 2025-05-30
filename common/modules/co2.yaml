@@ -18,7 +18,6 @@ sensor:
   - platform: scd4x
     i2c_id: bus_b
     id: scd40
-    measurement_mode: low_power_periodic    
     co2:
       name: "CO2"
       id: "co2"
