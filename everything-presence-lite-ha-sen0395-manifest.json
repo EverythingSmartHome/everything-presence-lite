@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "ota": {
         "path": "everything-presence-lite-ha-sen0395/everything-presence-lite-esp32.ota.bin",
-        "md5": "e98623e77498dcfe67d782d67d77376d"
+        "md5": "3e6bdd167c3ef5dfd7b148869ee28666"
       },
       "parts": [
         {
