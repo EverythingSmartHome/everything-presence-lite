@@ -23,7 +23,7 @@ binary_sensor:
       name: Still Target
   - platform: gpio
     pin: 18
-    name: Occupancy
+    name: Occupancy GPIO
     device_class: Occupancy
 
 sensor:
