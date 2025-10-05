@@ -728,6 +728,7 @@ sensor:
 select:
   - platform: template
     name: 'Update speed'
+    id: "update_speed_select"
     icon: 'mdi:speedometer'
     optimistic: true
     restore_value: true
