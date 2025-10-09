@@ -70,6 +70,7 @@ text_sensor:
     disabled_by_default: True
     name: "mmWave Firmware"
     id: "firmware_version"
+    entity_category: diagnostic
 
 button:
   - platform: template
@@ -227,12 +228,15 @@ binary_sensor:
   - platform: template
     name: "Target 1 Active"
     id: target1_active
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 Active"
     id: target2_active
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 Active"
     id: target3_active
+    entity_category: diagnostic
 
 number:
   - platform: template
@@ -245,6 +249,7 @@ number:
     restore_value: True
     unit_of_measurement: "s"
     initial_value: 15
+    entity_category: config
   - platform: template
     name: "Max Distance"
     id: distance
@@ -255,6 +260,7 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 600
+    entity_category: config
   - platform: template
     name: "Installation Angle"
     id: installation_angle_ui
@@ -279,6 +285,7 @@ number:
     optimistic: True
     restore_value: True
     initial_value: -4000
+    entity_category: config
   - platform: template
     name: "Zone 1 End X"
     id: zone1_end_x
@@ -289,6 +296,7 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 4000
+    entity_category: config
   - platform: template
     name: "Zone 1 Begin Y"
     id: zone1_begin_y
@@ -299,6 +307,7 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 0
+    entity_category: config
   - platform: template
     name: "Zone 1 End Y"
     id: zone1_end_y
@@ -309,6 +318,7 @@ number:
     optimistic: True
     restore_value: True
     initial_value: 6000
+    entity_category: config
   - platform: template
     name: "Zone 1 Occupancy Off Delay"
     id: zone_1_off_delay
@@ -319,6 +329,7 @@ number:
     restore_value: True
     unit_of_measurement: "s"
     initial_value: 15
+    entity_category: config
 
   - platform: template
     name: "Zone 2 Begin X"
@@ -330,6 +341,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 2 End X"
     id: zone2_end_x
@@ -340,6 +352,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 2 Begin Y"
     id: zone2_begin_y
@@ -350,6 +363,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 2 End Y"
     id: zone2_end_y
@@ -360,6 +374,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 2 Occupancy Off Delay"
     id: zone_2_off_delay
@@ -371,6 +386,7 @@ number:
     unit_of_measurement: "s"
     initial_value: 15
     disabled_by_default: true
+    entity_category: config
 
   - platform: template
     name: "Zone 3 Begin X"
@@ -382,6 +398,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 3 End X"
     id: zone3_end_x
@@ -392,6 +409,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 3 Begin Y"
     id: zone3_begin_y
@@ -402,6 +420,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 3 End Y"
     id: zone3_end_y
@@ -412,6 +431,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 3 Occupancy Off Delay"
     id: zone_3_off_delay
@@ -423,6 +443,7 @@ number:
     unit_of_measurement: "s"
     initial_value: 15
     disabled_by_default: true
+    entity_category: config
 
   - platform: template
     name: "Zone 4 Begin X"
@@ -434,6 +455,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 4 End X"
     id: zone4_end_x
@@ -444,6 +466,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 4 Begin Y"
     id: zone4_begin_y
@@ -454,6 +477,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 4 End Y"
     id: zone4_end_y
@@ -464,6 +488,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Zone 4 Occupancy Off Delay"
     id: zone_4_off_delay
@@ -475,6 +500,7 @@ number:
     unit_of_measurement: "s"
     initial_value: 15
     disabled_by_default: true
+    entity_category: config
 
   - platform: template
     name: "Occupancy Mask 1 Begin X"
@@ -485,6 +511,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 1 End X"
     id: occupancy_mask_1_end_x
@@ -494,6 +521,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 1 Begin Y"
     id: occupancy_mask_1_begin_y
@@ -503,6 +531,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 1 End Y"
     id: occupancy_mask_1_end_y
@@ -512,6 +541,7 @@ number:
     step: 10
     optimistic: True
     restore_value: True
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 2 Begin X"
     id: occupancy_mask_2_begin_x
@@ -522,6 +552,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 2 End X"
     id: occupancy_mask_2_end_x
@@ -532,6 +563,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 2 Begin Y"
     id: occupancy_mask_2_begin_y
@@ -542,6 +574,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
   - platform: template
     name: "Occupancy Mask 2 End Y"
     id: occupancy_mask_2_end_y
@@ -552,6 +585,7 @@ number:
     optimistic: True
     restore_value: True
     disabled_by_default: true
+    entity_category: config
 
   - platform: template
     name: "Stale Target Reset Timeout"
@@ -573,6 +607,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 1 Y"
     id: target1_y
@@ -580,6 +615,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 1 Speed"
     id: target1_speed
@@ -587,6 +623,7 @@ sensor:
     unit_of_measurement: 'm/s'
     state_class: measurement
     device_class: speed
+    entity_category: diagnostic
   - platform: template
     name: "Target 1 Resolution"
     id: target1_resolution
@@ -594,6 +631,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 X"
     id: target2_x
@@ -601,6 +639,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 Y"
     id: target2_y
@@ -608,6 +647,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 Speed"
     id: target2_speed
@@ -615,6 +655,7 @@ sensor:
     unit_of_measurement: 'm/s'
     state_class: measurement
     device_class: speed
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 Resolution"
     id: target2_resolution
@@ -622,6 +663,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 X"
     id: target3_x
@@ -629,6 +671,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 Y"
     id: target3_y
@@ -636,6 +679,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 Speed"
     id: target3_speed
@@ -643,6 +687,7 @@ sensor:
     unit_of_measurement: 'm/s'
     state_class: measurement
     device_class: speed
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 Resolution"
     id: target3_resolution
@@ -650,24 +695,28 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 1 Angle"
     id: target1_angle
     accuracy_decimals: 0
     unit_of_measurement: '°'
     state_class: measurement
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 Angle"
     id: target2_angle
     accuracy_decimals: 0
     unit_of_measurement: '°'
     state_class: measurement
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 Angle"
     id: target3_angle
     accuracy_decimals: 0
     unit_of_measurement: '°'
     state_class: measurement
+    entity_category: diagnostic
   - platform: template
     name: "Target 1 Distance"
     id: target1_distance
@@ -675,6 +724,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 2 Distance"
     id: target2_distance
@@ -682,6 +732,7 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Target 3 Distance"
     id: target3_distance
@@ -689,41 +740,48 @@ sensor:
     unit_of_measurement: 'mm'
     state_class: measurement
     device_class: distance
+    entity_category: diagnostic
   - platform: template
     name: "Zone 1 Target Count"
     id: zone1_target_count
     accuracy_decimals: 0
     unit_of_measurement: " "
+    entity_category: diagnostic
   - platform: template
     name: "Zone 2 Target Count"
     id: zone2_target_count
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+    entity_category: diagnostic
   - platform: template
     name: "Zone 3 Target Count"
     id: zone3_target_count
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+    entity_category: diagnostic
   - platform: template
     name: "Zone 4 Target Count"
     id: zone4_target_count
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+    entity_category: diagnostic
   - platform: template
     name: "Occupancy Mask 1 Target Count"
     id: occupancy_mask_1_target_count
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+    entity_category: diagnostic
   - platform: template
     name: "Occupancy Mask 2 Target Count"
     id: occupancy_mask_2_target_count
     accuracy_decimals: 0
     disabled_by_default: true
     unit_of_measurement: " "
+    entity_category: diagnostic
 
 select:
   - platform: template
