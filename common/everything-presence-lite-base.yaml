@@ -44,6 +44,7 @@ light:
     pin: GPIO14
     internal: False
     restore_mode: ALWAYS_OFF
+    entity_category: config
 
 number:
   - platform: template
@@ -108,6 +109,7 @@ button:
   - platform: restart
     icon: mdi:power-cycle
     name: "ESP Reboot"
+    entity_category: config
   - platform: factory_reset
     id: "factory_reset_button"
     internal: True
