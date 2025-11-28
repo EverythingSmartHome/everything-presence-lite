@@ -222,7 +222,7 @@ switch:
     optimistic: true
     entity_category: config
     icon: "mdi:vector-polygon"
-    disabled_by_default: true
+    disabled_by_default: false
 
 binary_sensor:
   - platform: template
@@ -1065,7 +1065,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1075,7 +1075,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1085,7 +1085,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1095,7 +1095,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1105,7 +1105,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1115,7 +1115,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1125,7 +1125,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
   - platform: template
@@ -1135,7 +1135,7 @@ text:
     optimistic: true
     restore_value: true
     initial_value: ""
-    disabled_by_default: true
+    disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
 
