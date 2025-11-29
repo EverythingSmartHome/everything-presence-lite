@@ -38,7 +38,7 @@ Use docker run or docker compose similar to following examples, dont forget to a
 
 *docker run basic example:*
 ```
-docker run -d -e HA_URL=http://HA_URL:8123 -e HA_TOKEN=LONG_LIVE_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everythingsmarthome/everything-presence-mmwave-configurator:latest 
+docker run -d -e HA_BASE_URL=http://HA_URL:8123 -e HA_LONG_LIVED_TOKEN=LONG_LIVED_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everythingsmarthome/everything-presence-mmwave-configurator:latest 
 ```
 
 *docker compose basic example:*
@@ -50,8 +50,8 @@ services:
     image: everythingsmarthome/everything-presence-mmwave-configurator:latest
     container_name: everything-presence-mmwave-configurator
     environment:
-      - HA_URL=http://10.0.1.11:8123
-      - HA_TOKEN=123-generate-token-at-url:8123/profile/security-456
+      - HA_BASE_URL=http://10.0.1.11:8123
+      - HA_LONG_LIVED_TOKEN=123-generate-token-at-url:8123/profile/security-456
 ```
 
 ### Using the Add-on
