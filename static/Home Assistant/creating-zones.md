@@ -34,24 +34,43 @@ Select the add-on, then hit install. Once installed, hit start and then "Open We
 
 ### (Advanced) Alternative install with docker (no Supervisor)
 
-Use docker run or docker compose similar to following examples, dont forget to adjust HA URL and use a generated access token
+Create a file named `ep-mmwave-configurator.env` to store environment configuration.
+Update `HA_BASE_URL` to your Home Assistant URL and update `HA_LONG_LIVED_TOKEN` with a [Home Assistant long-lived access token](https://developers.home-assistant.io/docs/auth_api/#long-lived-access-token).
+
+```
+# file: ./ep-mmwave-configurator.env
+HA_BASE_URL=http://example.com:8123
+HA_LONG_LIVED_TOKEN=<YOUR_GENERATED_ACCESS_TOKEN>
+```
+
+Use docker run or docker compose with the new environment file similar to the following examples.
+You may need to update the published ports if you're already running something listening on port 3000.
 
 *docker run basic example:*
 ```
-docker run -d -e HA_URL=http://HA_URL:8123 -e HA_TOKEN=LONG_LIVE_TOKEN -p 8099:8099 --name everything-presence-mmwave-configurator everythingsmarthome/everything-presence-mmwave-configurator:latest 
+docker run \
+    --detach \
+    --env-file ./ep-mmwave-configurator.env \
+    -p 3000:3000 \
+    --volume ./config:/config/ \
+    --name everything-presence-mmwave-configurator \
+    everythingsmarthome/everything-presence-mmwave-configurator:latest
 ```
 
 *docker compose basic example:*
-```
+```yaml
+---
 services:
   zones:
     ports:
-      - 8099:8099
+      - 3000:3000
     image: everythingsmarthome/everything-presence-mmwave-configurator:latest
     container_name: everything-presence-mmwave-configurator
-    environment:
-      - HA_URL=http://10.0.1.11:8123
-      - HA_TOKEN=123-generate-token-at-url:8123/profile/security-456
+    env_file:
+      - path: ./ep-mmwave-configurator.env
+        required: true
+    volumes:
+      - './config:/config/'
 ```
 
 ### Using the Add-on
