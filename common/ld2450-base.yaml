@@ -3,6 +3,7 @@ esphome:
     priority: -100
     then:
       - button.press: get_mmwave_firmware
+      - button.press: get_mmwave_mac
       - binary_sensor.template.publish:
           id: zone1_occupancy
           state: false 
@@ -91,32 +92,46 @@ text_sensor:
     id: "firmware_version"
     entity_category: diagnostic
 
+  - platform: template
+    disabled_by_default: True
+    name: "mmWave MAC"
+    id: "mmwave_mac"
+    entity_category: diagnostic
+
+
 button:
   - platform: template
     id: get_mmwave_firmware
+    name: mmWave get Firmware Version
     internal: True
     entity_category: config
     disabled_by_default: True
-    on_press: 
+    on_press:
       then:
       - switch.turn_on: mmwave_configuration
-      - delay: 1s
+      - delay: 100ms
       - uart.write:
           id: uart_bus
           data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA0, 0x00, 0x04, 0x03, 0x02, 0x01]
-      - lambda: |-
-          uint8_t response[20];
-          if (id(uart_bus).read_array(response, 20)) {
-            int firmware_major = response[13];
-            int firmware_minor = response[12];
-            char firmware_version_str[32];
-            sprintf(firmware_version_str, "V%d.%02d", firmware_major, firmware_minor);
-            id(firmware_version).publish_state(std::string(firmware_version_str));
-          } else {
-            id(firmware_version).publish_state("Unknown");
-          }
+      - delay: 100ms
       - switch.turn_off: mmwave_configuration
-      - delay: 1s
+
+  - platform: template
+    id: get_mmwave_mac
+    name: mmWave get MAC
+    internal: True
+    entity_category: config
+    disabled_by_default: True
+    on_press:
+      then:
+      - switch.turn_on: mmwave_configuration
+      - delay: 100ms
+      - uart.write:
+          id: uart_bus
+          data: [0xFD, 0xFC, 0xFB, 0xFA, 0x04, 0x00, 0xA5, 0x00, 0x01, 0x00, 0x04, 0x03, 0x02, 0x01]
+      - delay: 100ms
+      - switch.turn_off: mmwave_configuration
+
   - platform: template
     name: "Reboot mmWave Sensor"
     id: reboot_mmwave_sensor
@@ -125,10 +140,13 @@ button:
     on_press:
       then:
       - switch.turn_on: mmwave_configuration
-      - delay: 1s  
+      - delay: 100ms
       - uart.write:
           id: uart_bus
           data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA3, 0x00, 0x04, 0x03, 0x02, 0x01]
+      - delay: 5s
+      - button.press: get_mmwave_mac
+
   - platform: template
     name: "Factory Reset mmWave Sensor"
     id: factory_reset_mmwave_sensor
@@ -154,7 +172,7 @@ switch:
     disabled_by_default: True
     internal: True
     entity_category: config
-    optimistic: true
+    optimistic: false
     restore_mode: DISABLED
     turn_on_action:
       - uart.write:
@@ -164,11 +182,10 @@ switch:
       - uart.write:
           id: uart_bus
           data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xFE, 0x00, 0x04, 0x03, 0x02, 0x01]
-
   - platform: template
     name: "mmWave Bluetooth"
     id: bluetooth_switch
-    optimistic: true
+    optimistic: False
     disabled_by_default: True
     entity_category: config
     turn_on_action:
@@ -1161,17 +1178,99 @@ uart:
     after:
       delimiter: [0X55, 0XCC]
     sequence:
-      # - lambda: UARTDebug::log_hex(direction, bytes, ' ');
+      #- lambda: UARTDebug::log_hex(direction, bytes, ' ');
       - lambda: |-
-          if ((millis() - id(mmwave_update_time)) <= id(mmwave_update_interval)) { 
+          // log all cfg messages
+          if(bytes[0] != 0xAA || bytes[1] != 0xFF || bytes.size() != 30) {
+            UARTDebug::log_hex(direction, bytes, ' ');
+          }
+
+          // check for CMD FD FC FB FA / config changes
+          if(direction == uart::UART_DIRECTION_RX && bytes[0] == 0xFD && bytes[1] == 0xFC && bytes[2] == 0xFB && bytes[3] == 0xFA) {
+            // ENTER cfg
+            static constexpr uint8_t RESP_CFG_ON[] = {0x08, 0x00, 0xFF, 0x01, 0x00, 0x00, 0x01, 0x00, 0x40, 0x00};
+            if(std::memcmp(&bytes[4], RESP_CFG_ON, sizeof(RESP_CFG_ON)) == 0) {
+              id(mmwave_configuration).publish_state(true);
+              ESP_LOGW("LD2450", "Enter configuration mode");
+              return;
+            }
+
+            // END cfg
+            static constexpr uint8_t RESP_CFG_OFF[] = {0x04, 0x00, 0xFE, 0x01, 0x00, 0x00};
+            if(std::memcmp(&bytes[4], RESP_CFG_OFF, sizeof(RESP_CFG_OFF)) == 0) {
+              id(mmwave_configuration).publish_state(false);
+              ESP_LOGW("LD2450", "End configuration mode");
+              return;
+            }
+
+            // MAC
+            static constexpr uint8_t NO_MAC[] = {0x08, 0x05, 0x04, 0x03, 0x02, 0x01};
+            static constexpr uint8_t RESP_MAC[] = {0x0A, 0x00, 0xA5, 0x01, 0x00, 0x00};
+            if(std::memcmp(&bytes[4], RESP_MAC, sizeof(RESP_MAC)) == 0) {
+              char mmwave_mac_str[18] = {0x00};
+              sprintf(mmwave_mac_str, "%02X:%02X:%02X:%02X:%02X:%02X", bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15]);
+              ESP_LOGI("LD2450", "Got MAC: %s", mmwave_mac_str);
+              if(std::memcmp(&bytes[10], NO_MAC, sizeof(NO_MAC)) != 0) {
+                id(bluetooth_switch).publish_state(true);
+                id(mmwave_mac).publish_state(std::string(mmwave_mac_str));
+              } else {
+                id(bluetooth_switch).publish_state(false);
+                id(mmwave_mac).publish_state("bluetooth dsiabled");
+              }
+              return;
+            }
+
+            // fw version
+            static constexpr uint8_t RESP_FW[] = {0x0C, 0x00, 0xA0, 0x01, 0x00, 0x00, 0x00};
+            if(std::memcmp(&bytes[4], RESP_FW, sizeof(RESP_FW)) == 0) {
+              char firmware_version_str[32];
+              sprintf(firmware_version_str, "V%X.%02X.%02X%02X%02X%02X",  bytes[13], bytes[12], bytes[17], bytes[16], bytes[15], bytes[14]);
+              id(firmware_version).publish_state(std::string(firmware_version_str));
+              ESP_LOGI("LD2450", "Got Firmware: %s", firmware_version_str);
+              return;
+            }
+
+            // reboot in progress
+            static constexpr uint8_t RESP_REBOOT[] = {0x04, 0x00, 0xA3, 0x01, 0x00, 0x00};
+            if(std::memcmp(&bytes[4], RESP_REBOOT, sizeof(RESP_REBOOT)) == 0) {
+              ESP_LOGI("LD2450", "Reboot triggert");
+              return;
+            }
+
+            // BLE changed to ON
+            static constexpr uint8_t BLE_ON[] = {0x04, 0x00, 0xA4, 0x01, 0x00, 0x00};
+            if(std::memcmp(&bytes[4], BLE_ON, sizeof(BLE_ON)) == 0) {
+              ESP_LOGI("LD2450", "BLE On");
+              return;
+            }
+
+            // BLE changed to OFF
+            static constexpr uint8_t BLE_OFF[] = {0x04, 0x00, 0xA4, 0x00, 0x00, 0x00};
+            if(std::memcmp(&bytes[4], BLE_OFF, sizeof(BLE_OFF)) == 0) {
+              ESP_LOGI("LD2450", "BLE On");
+              return;
+            }
+
+            ESP_LOGW("LD2450", "Unknown command direction: %d len: %hu!", direction, bytes.size());
+            UARTDebug::log_hex(direction, bytes, ' ');
             return;
-          };
-          id(mmwave_update_time) = millis();
+          }
+
+          if(direction != uart::UART_DIRECTION_RX) {
+            // ignore TX
+            return;
+          }
 
           if (bytes.size() != 30) {
             ESP_LOGW("LD2450", "Expected 30 bytes but received %hu!", bytes.size());
+            UARTDebug::log_hex(direction, bytes, ' ');
             return;
           }
+
+          if ((millis() - id(mmwave_update_time)) <= id(mmwave_update_interval)) {
+            return;
+          };
+          id(mmwave_update_time) = millis();
 
           bool update_entities = false;
           if(id(extra_entities) != 0) {
