@@ -71,10 +71,12 @@ sensor:
     i2c_id: bus_a
     address: 0x23
     update_interval: ${illuminance_update_interval}
-    accuracy_decimals: 1
+    accuracy_decimals: 0
     filters:
       - lambda: "return x + id(illuminance_offset_ui).state;"
-      - delta: 5%
+      - or:
+        - delta: 5%
+        - delta: 5
       - clamp:
           min_value: 0
 
