@@ -1844,7 +1844,7 @@ uart:
           // Clear last_zone_hold if targets are detected but not in any zone
           // This prevents stale zone data from being used when assumed presence triggers
           bool in_any_zone = (zone1_count > 0 || zone2_count > 0 || zone3_count > 0 || zone4_count > 0);
-          if (any_detected_now && !in_any_zone) {
+          if (any_now && !in_any_zone) {
             id(last_zone_hold) = 0;
           }
 
