@@ -1,6 +1,6 @@
 api:
-  services:
-    - service: calibrate_co2_value
+  actions:
+    - action: calibrate_co2_value
       variables:
         co2_ppm: int
       then:
@@ -11,7 +11,7 @@ api:
       variables:
         pressure_mbar: int
       then:
-        - lambda: "id(scd40)->set_ambient_pressure_compensation(pressure_mbar);"             
+        - lambda: "id(scd40)->set_ambient_pressure_compensation(pressure_mbar);"
 
 i2c:
   - id: bus_b
