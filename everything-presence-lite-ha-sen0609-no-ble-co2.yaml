@@ -5,6 +5,16 @@ substitutions:
   hidden_ssid: "false"
   log_level: ERROR
 
+
+  device_config:
+    ethernet_enabled: false
+    co2_enabled: true
+    bluetooth_enabled: false
+    board_revision: "1.2"
+    sensor_variant: "sen0609"
+    firmware_channel: "stable"
+    model: "everything-presence-lite"
+
 wifi:
   on_connect:
     - switch.turn_on: mmwave_sensor

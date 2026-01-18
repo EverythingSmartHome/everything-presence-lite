@@ -5,6 +5,16 @@ substitutions:
   hidden_ssid: "false"
   log_level: ERROR
 
+
+  device_config:
+    ethernet_enabled: false
+    co2_enabled: false
+    bluetooth_enabled: false
+    board_revision: "1.2"
+    sensor_variant: "mr24hpc1"
+    firmware_channel: "stable"
+    model: "everything-presence-lite"
+
 update:
   - platform: http_request
     id: update_http_request
