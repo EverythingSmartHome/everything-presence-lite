@@ -1,0 +1,33 @@
+substitutions:
+  name: "everything-presence-lite"
+  friendly_name: "Everything Presence Lite"
+  illuminance_update_interval: "2s"
+  hidden_ssid: "false"
+  log_level: DEBUG
+
+
+  device_config:
+    ethernet_enabled: false
+    co2_enabled: true
+    bluetooth_enabled: true
+    board_revision: "1.2"
+    sensor_variant: "ld2450"
+    firmware_channel: "stable"
+    model: "everything-presence-lite"
+
+update:
+  - platform: http_request
+    id: update_http_request
+    name: Everything Presence Lite Firmware
+    source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-co2-manifest.json
+    disabled_by_default: true
+
+dashboard_import:
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-co2.yaml@main
+  import_full_config: false # or true
+
+packages:
+  device_base: !include common/everything-presence-lite-base.yaml
+  ld2450_base: !include common/ld2450-base.yaml
+  bluetooth_base: !include common/bluetooth-base.yaml
+  co2_base: !include common/modules/co2.yaml

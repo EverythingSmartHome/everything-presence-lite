@@ -1,0 +1,339 @@
+#Card based on athua's code (https://github.com/athua/ha-utils) and https://docs.screek.io/2a/add-a-map-card with some custom modifications  It requires Plotly Graph Card from HACS.
+#This assumes you havent change entity names.  Line 16, 18 and 21 needs to change to match your sensor_id.
+
+type: custom:plotly-graph
+title: $ex "Living Room Map"
+refresh_interval: 1
+hours_to_show: current_day
+config:
+  modeBarButtonsToRemove:
+    - select2d
+    - lasso2d
+    - toImage
+  displaylogo: false
+entities:
+  - entity: ''
+    sensor_suffix: $ex vars.sensor_id = "2fbc58";
+    sensor_prefix: >-
+      $ex vars.sensor_name_prefix = "sensor.everything_presence_lite_" +
+      vars.sensor_id + "_";
+    number_prefix: >-
+      $ex vars.number_name_prefix = "number.everything_presence_lite_" +
+      vars.sensor_id + "_";
+    units: >-
+      $ex vars.is_inch_unit = hass.states[vars.sensor_name_prefix +
+      "target_1_x"].attributes.unit_of_measurement == false;
+  - entity: ''
+    name: Target1
+    marker:
+      size: 10
+      symbol: star-diamond
+    line:
+      shape: spline
+      width: 5
+    x:
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_1_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_1_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { x = x * 25.4
+        }; return x; }
+    'y':
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_1_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_1_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { y = y * 25.4
+        }; return y; }
+  - entity: ''
+    name: Target2
+    marker:
+      size: 10
+      symbol: star-diamond
+    line:
+      shape: spline
+      width: 5
+    x:
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_2_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_2_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { x = x * 25.4
+        }; return x; }
+    'y':
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_2_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_2_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { y = y * 25.4
+        }; return y; }
+  - entity: ''
+    name: Target3
+    marker:
+      size: 10
+      symbol: star-diamond
+    line:
+      shape: spline
+      width: 5
+    x:
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_3_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_3_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { x = x * 25.4
+        }; return x; }
+    'y':
+      - >-
+        $ex { var x = hass.states[vars.sensor_name_prefix + "target_3_x"].state;
+        var y = hass.states[vars.sensor_name_prefix + "target_3_y"].state; if (x
+        == 0 && y == 0) { return -9999 }; if (vars.is_inch_unit) { y = y * 25.4
+        }; return y; }
+  - entity: ''
+    name: Zone1
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(20,200,0,0.06)
+    line:
+      color: RGBA(20,200,0,0.2)
+      shape: line
+      width: 2
+    x:
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_x"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_x"].state
+    'y':
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_end_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_y"].state
+      - $ex hass.states[vars.number_name_prefix + "zone_1_begin_y"].state
+  - entity: ''
+    name: Zone2
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(200,0,255,0.06)
+    line:
+      color: RGBA(200,0,255,0.2)
+      shape: line
+      width: 2
+    x:
+      - >-
+        $ex { var zone2_begin_x = hass.states[vars.number_name_prefix + "zone_2_begin_x"];
+        return zone2_begin_x ? zone2_begin_x.state : -9999; }
+      - >-
+        $ex { var zone2_begin_x = hass.states[vars.number_name_prefix + "zone_2_begin_x"];
+        return zone2_begin_x ? zone2_begin_x.state : -9999; }
+      - >-
+        $ex { var zone2_end_x = hass.states[vars.number_name_prefix + "zone_2_end_x"];
+        return zone2_end_x ? zone2_end_x.state : -9999; }
+      - >-
+        $ex { var zone2_end_x = hass.states[vars.number_name_prefix + "zone_2_end_x"];
+        return zone2_end_x ? zone2_end_x.state : -9999; }
+      - >-
+        $ex { var zone2_begin_x = hass.states[vars.number_name_prefix + "zone_2_begin_x"];
+        return zone2_begin_x ? zone2_begin_x.state : -9999; }
+    'y':
+      - >-
+        $ex { var zone2_begin_y = hass.states[vars.number_name_prefix + "zone_2_begin_y"];
+        return zone2_begin_y ? zone2_begin_y.state : -9999; }
+      - >-
+        $ex { var zone2_end_y = hass.states[vars.number_name_prefix + "zone_2_end_y"];
+        return zone2_end_y ? zone2_end_y.state : -9999; }
+      - >-
+        $ex { var zone2_end_y = hass.states[vars.number_name_prefix + "zone_2_end_y"];
+        return zone2_end_y ? zone2_end_y.state : -9999; }
+      - >-
+        $ex { var zone2_begin_y = hass.states[vars.number_name_prefix + "zone_2_begin_y"];
+        return zone2_begin_y ? zone2_begin_y.state : -9999; }
+      - >-
+        $ex { var zone2_begin_y = hass.states[vars.number_name_prefix + "zone_2_begin_y"];
+        return zone2_begin_y ? zone2_begin_y.state : -9999; }
+  - entity: ''
+    name: Zone3
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(200,120,55,0.06)
+    line:
+      color: RGBA(200,120,55,0.2)
+      shape: line
+      width: 2
+    x:
+      - >-
+        $ex { var zone3_begin_x = hass.states[vars.number_name_prefix + "zone_3_begin_x"];
+        return zone3_begin_x ? zone3_begin_x.state : -9999; }
+      - >-
+        $ex { var zone3_begin_x = hass.states[vars.number_name_prefix + "zone_3_begin_x"];
+        return zone3_begin_x ? zone3_begin_x.state : -9999; }
+      - >-
+        $ex { var zone3_end_x = hass.states[vars.number_name_prefix + "zone_3_end_x"];
+        return zone3_end_x ? zone3_end_x.state : -9999; }
+      - >-
+        $ex { var zone3_end_x = hass.states[vars.number_name_prefix + "zone_3_end_x"];
+        return zone3_end_x ? zone3_end_x.state : -9999; }
+      - >-
+        $ex { var zone3_begin_x = hass.states[vars.number_name_prefix + "zone_3_begin_x"];
+        return zone3_begin_x ? zone3_begin_x.state : -9999; }
+    'y':
+      - >-
+        $ex { var zone3_begin_y = hass.states[vars.number_name_prefix + "zone_3_begin_y"];
+        return zone3_begin_y ? zone3_begin_y.state : -9999; }
+      - >-
+        $ex { var zone3_end_y = hass.states[vars.number_name_prefix + "zone_3_end_y"];
+        return zone3_end_y ? zone3_end_y.state : -9999; }
+      - >-
+        $ex { var zone3_end_y = hass.states[vars.number_name_prefix + "zone_3_end_y"];
+        return zone3_end_y ? zone3_end_y.state : -9999; }
+      - >-
+        $ex { var zone3_begin_y = hass.states[vars.number_name_prefix + "zone_3_begin_y"];
+        return zone3_begin_y ? zone3_begin_y.state : -9999; }
+      - >-
+        $ex { var zone3_begin_y = hass.states[vars.number_name_prefix + "zone_3_begin_y"];
+        return zone3_begin_y ? zone3_begin_y.state : -9999; }
+  - entity: ''
+    name: Zone4
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(255,0,0,0.15)
+    line:
+      shape: line
+      width: 1
+      color: RGBA(255,0,0,0.2)
+    x:
+      - >-
+        $ex { var zone4_begin_x = hass.states[vars.number_name_prefix + "zone_4_begin_x"];
+        return zone4_begin_x ? zone4_begin_x.state : -9999; }
+      - >-
+        $ex { var zone4_begin_x = hass.states[vars.number_name_prefix + "zone_4_begin_x"];
+        return zone4_begin_x ? zone4_begin_x.state : -9999; }
+      - >-
+        $ex { var zone4_end_x = hass.states[vars.number_name_prefix + "zone_4_end_x"];
+        return zone4_end_x ? zone4_end_x.state : -9999; }
+      - >-
+        $ex { var zone4_end_x = hass.states[vars.number_name_prefix + "zone_4_end_x"];
+        return zone4_end_x ? zone4_end_x.state : -9999; }
+      - >-
+        $ex { var zone4_begin_x = hass.states[vars.number_name_prefix + "zone_4_begin_x"];
+        return zone4_begin_x ? zone4_begin_x.state : -9999; }
+    'y':
+      - >-
+        $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
+        return zone4_begin_y ? zone4_begin_y.state : -9999; }
+      - >-
+        $ex { var zone4_end_y = hass.states[vars.number_name_prefix + "zone_4_end_y"];
+        return zone4_end_y ? zone4_end_y.state : -9999; }
+      - >-
+        $ex { var zone4_end_y = hass.states[vars.number_name_prefix + "zone_4_end_y"];
+        return zone4_end_y ? zone4_end_y.state : -9999; }
+      - >-
+        $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
+        return zone4_begin_y ? zone4_begin_y.state : -9999; }
+      - >-
+        $ex { var zone4_begin_y = hass.states[vars.number_name_prefix + "zone_4_begin_y"];
+        return zone4_begin_y ? zone4_begin_y.state : -9999; }
+  - entity: ''
+    name: OccupancyMask1
+    mode: lines
+    fill: toself
+    fillcolor: RGBA(20,20,20,0.06)
+    line:
+      color: RGBA(20,20,20,0.2)
+      shape: line
+      width: 2
+    x:
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_x"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_x"].state
+    "y":
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_end_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_y"].state
+      - >-
+        $ex hass.states[vars.number_name_prefix +
+        "occupancy_mask_1_begin_y"].state
+  - entity: ''
+    name: Coverage
+    mode: lines
+    fill: tonexty
+    fillcolor: rgba(168, 216, 234, 0.15)
+    line:
+      shape: line
+      width: 1
+      dash: dot
+    x: >-
+      $ex { vars.installation_angle = Number(hass.states[vars.number_name_prefix + "installation_angle"]?.state ?? 0);
+      vars.installation_angle_cos = Math.cos(Math.PI/180 * vars.installation_angle);
+      vars.installation_angle_sin = Math.sin(Math.PI/180 * vars.installation_angle);
+      vars.max_distance = 10 * hass.states[vars.number_name_prefix + "max_distance"].state;
+      var distance_ratio = vars.max_distance/7500;
+      var coverage_steps = [5500,4500,4000,3000,2000,1000,0,-1000,-2000,-3000,-4000,-4500,-5500];
+
+      vars.coverage_x = [0, vars.max_distance * Math.sin(Math.PI/180 * 60)];
+      coverage_steps.forEach((step) => vars.coverage_x.push(step * distance_ratio));
+      vars.coverage_x.push(-vars.max_distance * Math.sin(Math.PI/180 * 60), 0);
+
+      vars.coverage_y = [0, vars.max_distance * Math.cos(Math.PI/180 * 60)];
+      coverage_steps.forEach((step) => { 
+        return vars.coverage_y.push(Math.sqrt(vars.max_distance**2 - (step * distance_ratio)**2));
+      });
+      vars.coverage_y.push(vars.max_distance * Math.cos(Math.PI/180 * 60), 0);
+      return vars.coverage_x.map((x, i)=> {
+        return x * vars.installation_angle_cos +
+        vars.coverage_y[i] * vars.installation_angle_sin;
+        });
+      }
+    'y': >-
+      $ex vars.coverage_y.map((y,i)=> {
+        return -vars.coverage_x[i] * vars.installation_angle_sin
+         + y * vars.installation_angle_cos
+        })
+layout:
+  height: 240
+  margin:
+    l: 40
+    r: 20
+    t: 20
+    b: 55
+  showlegend: false
+  xaxis:
+    showticklabels: false
+    dtick: 1000
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    type: number
+    fixedrange: true
+    range:
+      - $ex -vars.max_distance
+      - $ex vars.max_distance
+  yaxis:
+    showticklabels: false
+    dtick: 1000
+    gridcolor: RGBA(200,200,200,0.15)
+    zerolinecolor: RGBA(200,200,200,0.15)
+    scaleanchor: x
+    scaleratio: 1
+    fixedrange: true
+    range:
+      - $ex vars.max_distance
+      - >-
+        $ex {if(Math.abs(vars.installation_angle) <= 30) return 0;
+        return -vars.max_distance * Math.sin(Math.PI/180 *
+        (Math.abs(vars.installation_angle)-30));}
+raw_plotly_config: true

@@ -1,0 +1,290 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-01-18T14:59:15.556Z",
+  "product": {
+    "id": "everything-presence-lite",
+    "displayName": "Everything Presence Lite",
+    "latestVersion": "1.4.1"
+  },
+  "firmwares": [
+    {
+      "version": "1.4.1",
+      "channel": "stable",
+      "releaseDate": "2026-01-18",
+      "releaseNotes": "",
+      "minPreviousVersion": "1.0.0",
+      "variants": [
+        {
+          "id": "epl-co2",
+          "manifestUrl": "everything-presence-lite-ha-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2450",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-ld2410-co2",
+          "manifestUrl": "everything-presence-lite-ha-ld2410-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2410",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-ld2410-no-ble-co2",
+          "manifestUrl": "everything-presence-lite-ha-ld2410-no-ble-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2410",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-ld2410-no-ble",
+          "manifestUrl": "everything-presence-lite-ha-ld2410-no-ble-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2410",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-ld2410",
+          "manifestUrl": "everything-presence-lite-ha-ld2410-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2410",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-mr24hpc1-co2",
+          "manifestUrl": "everything-presence-lite-ha-mr24hpc1-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "mr24hpc1",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-mr24hpc1-no-ble-co2",
+          "manifestUrl": "everything-presence-lite-ha-mr24hpc1-no-ble-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "mr24hpc1",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-mr24hpc1-no-ble",
+          "manifestUrl": "everything-presence-lite-ha-mr24hpc1-no-ble-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "mr24hpc1",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-mr24hpc1",
+          "manifestUrl": "everything-presence-lite-ha-mr24hpc1-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "mr24hpc1",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-no-ble-co2",
+          "manifestUrl": "everything-presence-lite-ha-no-ble-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2450",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-no-ble",
+          "manifestUrl": "everything-presence-lite-ha-no-ble-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2450",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0395-co2",
+          "manifestUrl": "everything-presence-lite-ha-sen0395-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0395",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0395-no-ble-co2",
+          "manifestUrl": "everything-presence-lite-ha-sen0395-no-ble-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0395",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0395-no-ble",
+          "manifestUrl": "everything-presence-lite-ha-sen0395-no-ble-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0395",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0395",
+          "manifestUrl": "everything-presence-lite-ha-sen0395-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0395",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0609-co2",
+          "manifestUrl": "everything-presence-lite-ha-sen0609-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0609",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0609-no-ble-co2",
+          "manifestUrl": "everything-presence-lite-ha-sen0609-no-ble-co2-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": true,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0609",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0609-no-ble",
+          "manifestUrl": "everything-presence-lite-ha-sen0609-no-ble-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": false,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0609",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-sen0609",
+          "manifestUrl": "everything-presence-lite-ha-sen0609-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "sen0609",
+            "firmware_channel": "stable"
+          }
+        },
+        {
+          "id": "epl-ld2450-ble",
+          "manifestUrl": "everything-presence-lite-ha-manifest.json",
+          "requirements": {
+            "model": "everything-presence-lite",
+            "ethernet_enabled": false,
+            "co2_enabled": false,
+            "bluetooth_enabled": true,
+            "board_revision": "1.2",
+            "sensor_variant": "ld2450",
+            "firmware_channel": "stable"
+          }
+        }
+      ]
+    }
+  ],
+  "migrations": [
+    {
+      "id": "rectangular-to-polygon-zones",
+      "fromVersion": "<2.0.0",
+      "toVersion": ">=2.0.0",
+      "description": "Rectangular zones replaced with polygon zones",
+      "backupRequired": true,
+      "handler": "rectangularToPolygon"
+    }
+  ]
+}
