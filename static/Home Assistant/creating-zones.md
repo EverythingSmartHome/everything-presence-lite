@@ -34,6 +34,10 @@ Select the add-on, then hit install. Once installed, hit start and then "Open We
 
 ### (Advanced) Alternative install with docker (no Supervisor)
 
+This method starts the Zone Configurator as a Docker container on the IP address and port of your choice. After the container has started successfully, add a [Website dashboard](https://www.home-assistant.io/dashboards/dashboards/#creating-a-new-dashboard) in Home Assistant that points to the container URL.
+
+Tip: You can also open the container directly in your browser (http://\<IP>:\<PORT>) to test it. The Home Assistant dashboard integration is simply more convenient.
+
 Create a file named `ep-mmwave-configurator.env` to store environment configuration.
 Update `HA_BASE_URL` to your Home Assistant URL and update `HA_LONG_LIVED_TOKEN` with a [Home Assistant long-lived access token](https://developers.home-assistant.io/docs/auth_api/#long-lived-access-token).
 
