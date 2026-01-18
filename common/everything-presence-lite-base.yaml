@@ -6,6 +6,21 @@ esphome:
   project: 
     name: EverythingSmartTechnology.Everything Presence Lite
     version: "1.4.1"
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          if (${device_config.bluetooth_enabled}) {
+            id(firmware_ble).publish_state("Enabled");
+          } else {
+            id(firmware_ble).publish_state("Disabled");
+          }
+
+          if (${device_config.co2_enabled}) {
+            id(firmware_co2).publish_state("Enabled");
+          } else {
+            id(firmware_co2).publish_state("Disabled");
+          }
 
 esp32:
   board: esp32dev
@@ -18,6 +33,30 @@ logger:
 
 # Enable Home Assistant API
 api:
+  actions:
+    - action: set_update_manifest
+      variables:
+        url: string
+      then:
+        - lambda: |-
+            ESP_LOGI("fw", "Setting update manifest URL: %s", url.c_str());
+            id(update_http_request).set_source_url(url);
+        - component.update: update_http_request
+        - delay: 1s
+        - update.perform:
+            id: update_http_request
+            force_update: true
+    - action: get_build_flags
+      then:
+        - api.respond:
+            data: !lambda |-
+              root["ethernet_enabled"]  = ${ device_config.ethernet_enabled | lower };
+              root["co2_enabled"]       = ${ device_config.co2_enabled | lower };
+              root["bluetooth_enabled"] = ${ device_config.bluetooth_enabled | lower };
+              root["board_revision"]    = "${ device_config.board_revision }";
+              root["sensor_variant"]    = "${ device_config.sensor_variant }";
+              root["firmware_channel"]  = "${ device_config.firmware_channel }";
+              root["model"]             = "${ device_config.model }";
 
 ota:
   - platform: esphome
@@ -112,6 +151,65 @@ button:
     icon: mdi:power-cycle
     name: "ESP Reboot"
     entity_category: config
+  - platform: template
+    name: "Apply Update"
+    entity_category: diagnostic
+    on_press:
+      - logger.log: "Applying firmware update based on selected configuration"
+      - lambda: |-
+          std::string base_url = "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha";
+          std::string variant = "${device_config.sensor_variant}";
+          if (variant == "ld2450") {
+            variant.clear();
+          }
+
+          if (!variant.empty()) {
+            base_url += "-";
+            base_url += variant;
+          }
+
+          if (id(firmware_ble).state == "Disabled") {
+            base_url += "-no-ble";
+          }
+
+          if (id(firmware_co2).state == "Enabled") {
+            base_url += "-co2";
+          }
+
+          base_url += "-manifest.json";
+
+          ESP_LOGI("firmware", "Switching to manifest: %s", base_url.c_str());
+          id(update_http_request).set_source_url(base_url.c_str());
+      - component.update: update_http_request
+      - delay: 2s
+      - update.perform:
+          id: update_http_request
+          force_update: true
   - platform: factory_reset
     id: "factory_reset_button"
     internal: True
+
+select:
+  - platform: template
+    id: firmware_ble
+    name: Bluetooth Proxy
+    icon: "mdi:bluetooth"
+    entity_category: diagnostic
+    optimistic: true
+    restore_value: true
+    options:
+      - "Disabled"
+      - "Enabled"
+    initial_option: "Disabled"
+
+  - platform: template
+    id: firmware_co2
+    name: CO2 Sensor
+    icon: "mdi:molecule-co2"
+    entity_category: diagnostic
+    optimistic: true
+    restore_value: true
+    options:
+      - "Disabled"
+      - "Enabled"
+    initial_option: "Disabled"
