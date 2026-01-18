@@ -10,13 +10,13 @@ esphome:
     priority: -100
     then:
       - lambda: |-
-          if (${device_config.bluetooth_enabled}) {
+          if (std::string("${ device_config.bluetooth_enabled | lower }") == "true") {
             id(firmware_ble).publish_state("Enabled");
           } else {
             id(firmware_ble).publish_state("Disabled");
           }
 
-          if (${device_config.co2_enabled}) {
+          if (std::string("${ device_config.co2_enabled | lower }") == "true") {
             id(firmware_co2).publish_state("Enabled");
           } else {
             id(firmware_co2).publish_state("Disabled");
