@@ -214,8 +214,8 @@ function generateFirmwareIndex() {
     migrations: [
       {
         id: 'rectangular-to-polygon-zones',
-        fromVersion: '<2.0.0',
-        toVersion: '>=2.0.0',
+        fromVersion: '<1.5.0',
+        toVersion: '>=1.5.0',
         description: 'Rectangular zones replaced with polygon zones',
         backupRequired: true,
         handler: 'rectangularToPolygon'
