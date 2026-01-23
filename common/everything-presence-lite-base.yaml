@@ -118,6 +118,12 @@ sensor:
         - delta: 5
       - clamp:
           min_value: 0
+  - platform: wifi_signal
+    disabled_by_default: True
+    name: "WiFi Signal"
+  - platform: internal_temperature
+    disabled_by_default: True
+    name: "ESP Temperature"
 
 binary_sensor:
   - platform: gpio
