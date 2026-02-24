@@ -23,25 +23,33 @@ text_sensor:
     heart_beat:
       name: "mmWave Heartbeat"
       disabled_by_default: true
+      entity_category: diagnostic
     product_model:
       name: "mmWave Model"
       disabled_by_default: true
+      entity_category: diagnostic
     product_id:
       name: "mmWave Product ID"
       disabled_by_default: true
+      entity_category: diagnostic
     hardware_model:
       name: "mmWave Hardware Model"
       disabled_by_default: true
+      entity_category: diagnostic
     hardware_version:
       name: "mmWave Hardware Version"
       disabled_by_default: true
+      entity_category: diagnostic
     keep_away:
       name: "Active Reporting Of Proximity"
+      entity_category: diagnostic
     motion_status:
       name: "mmWave Motion Information"
       disabled_by_default: true
+      entity_category: diagnostic
     custom_mode_end:
       name: "Custom Mode Status"
+      entity_category: diagnostic
 
 binary_sensor:
   - platform: seeed_mr24hpc1
@@ -52,57 +60,78 @@ sensor:
   - platform: seeed_mr24hpc1
     custom_presence_of_detection:
       name: "Still Target Distance"
+      entity_category: diagnostic
     movement_signs:
       name: "Movement Confidence"
+      entity_category: diagnostic
     custom_motion_distance:
       name: "Moving Target Distance"
+      entity_category: diagnostic
     custom_spatial_static_value:
       name: "Existence Energy"
+      entity_category: diagnostic
     custom_spatial_motion_value:
       name: "Target Energy"
+      entity_category: diagnostic
     custom_motion_speed:
       name: "Target Speed"
+      entity_category: diagnostic
     custom_mode_num:
       name: "Current Custom Mode"
+      entity_category: diagnostic
 
 switch:
   - platform: seeed_mr24hpc1
     underlying_open_function:
       name: "Advanced mode"
       id: "advanced_mode"
+      entity_category: config
 
 button:
   - platform: seeed_mr24hpc1
     restart:
       name: "Module Restart"
+      entity_category: config
     custom_set_end:
       name: "Save Custom Mode Settings"
+      entity_category: config
 
 select:
   - platform: seeed_mr24hpc1
     scene_mode:
       name: "Scene"
+      entity_category: config
     unman_time:
       name: "Occupancy Off Delay (Standard Function)"
       disabled_by_default: true
+      entity_category: config
     existence_boundary:
       name: "Max Static Detection Distance"
+      entity_category: config
     motion_boundary:
       name: "Max Distance"
+      entity_category: config
 
 number:
   - platform: seeed_mr24hpc1
     sensitivity:
       name: "Sensitivity"
+      entity_category: config
     custom_mode:
       name: "Custom Mode"
+      entity_category: config
     existence_threshold:
       name: "Existence Energy Threshold"
+      entity_category: config
     motion_threshold:
       name: "Motion Energy Threshold"
+      entity_category: config
     motion_trigger:
       name: "Occupancy On Delay"
+      entity_category: config
     motion_to_rest:
       name: "Motion To Static Time"
+      entity_category: config
     custom_unman_time:
       name: "Occupancy Off Delay"
+      entity_category: config
