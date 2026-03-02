@@ -84,6 +84,13 @@ light:
     internal: False
     restore_mode: ALWAYS_OFF
     entity_category: config
+  - platform: status_led
+    name: ESP32 red LED
+    id: esp32_red_led
+    pin: GPIO1
+    internal: False
+    restore_mode: ALWAYS_OFF
+    entity_category: config
 
 number:
   - platform: template
