@@ -87,7 +87,9 @@ light:
   - platform: status_led
     name: ESP32 red LED
     id: esp32_red_led
-    pin: GPIO1
+    pin:
+      number: 1
+      inverted: true
     internal: False
     restore_mode: ALWAYS_OFF
     entity_category: config
