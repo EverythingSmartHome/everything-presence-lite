@@ -19,7 +19,7 @@ update:
   - platform: http_request
     id: update_http_request
     name: Everything Presence Lite Firmware
-    source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-manifest.json
+    source: https://Nickduino.github.io/everything-presence-lite/everything-presence-lite-ha-manifest.json
     disabled_by_default: true
 
 dashboard_import:
