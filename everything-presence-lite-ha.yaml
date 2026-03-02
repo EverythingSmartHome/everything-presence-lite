@@ -27,10 +27,10 @@ dashboard_import:
   import_full_config: false # or true
 
 packages:
-  device_base:
+  - device_base:
     url: "https://raw.githubusercontent.com/Nickduino/everything-presence-lite/main/common/everything-presence-lite-base.yaml"
     refresh: 0s
 #  device_base: github://Nickduino/everything-presence-lite/common/everything-presence-lite-base.yaml@main
 #  device_base: !include common/everything-presence-lite-base.yaml
-  ld2450_base: !include common/ld2450-base.yaml
-  bluetooth_base: !include common/bluetooth-base.yaml
+  - ld2450_base: !include common/ld2450-base.yaml
+  - bluetooth_base: !include common/bluetooth-base.yaml
