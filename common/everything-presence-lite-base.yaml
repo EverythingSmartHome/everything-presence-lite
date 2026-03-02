@@ -85,7 +85,7 @@ light:
     restore_mode: ALWAYS_OFF
     entity_category: config
   - platform: status_led
-    name: ESP32 red LED
+    name: ESP32 red LED (TX)
     id: esp32_red_led
     pin:
       number: 1
