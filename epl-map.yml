@@ -1,5 +1,5 @@
 type: custom:plotly-graph
-title: $ex "EPL Map"
+title: $ex "EPL Map" # <-- CHANGE THIS
 refresh_interval: 1
 hours_to_show: current_day
 
@@ -15,7 +15,7 @@ entities:
   # INIT / HELPERS (EDIT base)
   # ---------------------------
   - entity: ""
-    base: $ex vars.base = "egkuecheflurpresence";  # <-- CHANGE THIS
+    base: $ex vars.base = "<yoursensornamehere>";  # <-- CHANGE THIS
     sensor_prefix: $ex vars.sensor_name_prefix = "sensor." + vars.base + "_";
     number_prefix: $ex vars.number_name_prefix = "number." + vars.base + "_";
     text_prefix: $ex vars.text_name_prefix = "text." + vars.base + "_";
