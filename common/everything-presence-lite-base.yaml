@@ -213,3 +213,16 @@ select:
       - "Disabled"
       - "Enabled"
     initial_option: "Disabled"
+
+web_server:
+  version: 3
+  sorting_groups:
+    - id: zones
+      name: "Zones"
+      sorting_weight: 10
+    - id: polygon_zones
+      name: "Polygon zones"
+      sorting_weight: 20
+    - id: tuning              # cf https://docs.everythingsmart.io/s/products/doc/how-to-tune-your-epl-sensor-JGBteItQem
+      name: "Tuning"
+      sorting_weight: 30
