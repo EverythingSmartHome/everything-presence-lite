@@ -90,6 +90,9 @@ text_sensor:
     name: "mmWave Firmware"
     id: "firmware_version"
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 350
 
 button:
   - platform: template
@@ -129,6 +132,9 @@ button:
       - uart.write:
           id: uart_bus
           data: [0xFD, 0xFC, 0xFB, 0xFA, 0x02, 0x00, 0xA3, 0x00, 0x04, 0x03, 0x02, 0x01]
+    web_server:
+      sorting_group_id: controls
+      sorting_weight: 70
   - platform: template
     name: "Factory Reset mmWave Sensor"
     id: factory_reset_mmwave_sensor
@@ -146,6 +152,9 @@ button:
       - switch.turn_off: mmwave_configuration
       - delay: 2s
       - button.press: reboot_mmwave_sensor
+    web_server:
+      sorting_group_id: controls
+      sorting_weight: 80
 
 switch:
   - platform: template
@@ -192,6 +201,9 @@ switch:
       - button.press: reboot_mmwave_sensor  # Reboot after enabling Bluetooth
       - delay: 2s
       - switch.turn_off: mmwave_configuration
+    web_server:
+      sorting_group_id: controls
+      sorting_weight: 40
 
   - platform: template
     name: "Stale Target Reset"
@@ -199,6 +211,9 @@ switch:
     restore_mode: RESTORE_DEFAULT_OFF 
     optimistic: True
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 40
 
   - platform: template
     name: "Upside Down Mounting"
@@ -207,6 +222,9 @@ switch:
     optimistic: True
     entity_category: config
     icon: "mdi:rotate-180"
+    web_server:
+      sorting_group_id: configuration
+      sorting_weight: 30
 
   - platform: template
     name: "Entry Exit Enabled"
@@ -214,6 +232,9 @@ switch:
     restore_mode: RESTORE_DEFAULT_OFF
     optimistic: true
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 20
 
   - platform: template
     name: "Polygon Zones"
@@ -223,6 +244,9 @@ switch:
     entity_category: config
     icon: "mdi:vector-polygon"
     disabled_by_default: false
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 10
 
 binary_sensor:
   - platform: template
@@ -231,6 +255,9 @@ binary_sensor:
     id: occupancy
     filters:
       - delayed_off: !lambda return (id(off_delay).state * 1000);
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 10
 
   - platform: template
     name: "Zone 1 Occupancy"
@@ -238,12 +265,18 @@ binary_sensor:
     id: zone1_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_1_off_delay).state * 1000);
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 40
   - platform: template
     name: "Zone 2 Occupancy"
     device_class: occupancy
     id: zone2_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_2_off_delay).state * 1000);
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 60
     disabled_by_default: true
   - platform: template
     name: "Zone 3 Occupancy"
@@ -251,6 +284,9 @@ binary_sensor:
     id: zone3_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_3_off_delay).state * 1000);
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 80
     disabled_by_default: true
   - platform: template
     name: "Zone 4 Occupancy"
@@ -258,24 +294,39 @@ binary_sensor:
     id: zone4_occupancy
     filters:
       - delayed_off: !lambda return (id(zone_4_off_delay).state * 1000);
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 100
     disabled_by_default: true
 
   - platform: template
     name: "Target 1 Active"
     id: target1_active
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 140
   - platform: template
     name: "Target 2 Active"
     id: target2_active
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 210
   - platform: template
     name: "Target 3 Active"
     id: target3_active
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 280
   - platform: template
     name: "Assumed Present"
     id: assumed_present
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 20
 
 number:
   - platform: template
@@ -289,6 +340,9 @@ number:
     unit_of_measurement: "s"
     initial_value: 15
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 10
   - platform: template
     name: "Max Distance"
     id: distance
@@ -300,6 +354,9 @@ number:
     restore_value: True
     initial_value: 600
     entity_category: config
+    web_server:
+      sorting_group_id: configuration
+      sorting_weight: 10
   - platform: template
     name: "Installation Angle"
     id: installation_angle_ui
@@ -313,6 +370,9 @@ number:
     initial_value: 0
     icon: "mdi:angle-acute"
     entity_category: config
+    web_server:
+      sorting_group_id: configuration
+      sorting_weight: 20
 
   - platform: template
     name: "Exit Threshold Pct"
@@ -325,6 +385,9 @@ number:
     initial_value: 10
     unit_of_measurement: "%"
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 22
 
   - platform: template
     name: "Assume Present Timeout"
@@ -337,6 +400,9 @@ number:
     initial_value: 15
     unit_of_measurement: "s"
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 30
 
   - platform: template
     name: "Entry Zone 1 Begin X"
@@ -349,6 +415,9 @@ number:
     restore_value: true
     initial_value: 0
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 170
   - platform: template
     name: "Entry Zone 1 End X"
     id: entry_zone_1_end_x
@@ -360,6 +429,9 @@ number:
     restore_value: true
     initial_value: 0
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 180
   - platform: template
     name: "Entry Zone 1 Begin Y"
     id: entry_zone_1_begin_y
@@ -371,6 +443,9 @@ number:
     restore_value: true
     initial_value: 0
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 190
   - platform: template
     name: "Entry Zone 1 End Y"
     id: entry_zone_1_end_y
@@ -382,6 +457,9 @@ number:
     restore_value: true
     initial_value: 0
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 200
 
   - platform: template
     name: "Entry Zone 2 Begin X"
@@ -395,6 +473,9 @@ number:
     initial_value: 0
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 210
   - platform: template
     name: "Entry Zone 2 End X"
     id: entry_zone_2_end_x
@@ -407,6 +488,9 @@ number:
     initial_value: 0
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 220
   - platform: template
     name: "Entry Zone 2 Begin Y"
     id: entry_zone_2_begin_y
@@ -419,6 +503,9 @@ number:
     initial_value: 0
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 230
   - platform: template
     name: "Entry Zone 2 End Y"
     id: entry_zone_2_end_y
@@ -431,6 +518,9 @@ number:
     initial_value: 0
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 240
 
   - platform: template
     name: "Zone 1 Begin X"
@@ -443,6 +533,9 @@ number:
     restore_value: True
     initial_value: -4000
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 10
   - platform: template
     name: "Zone 1 End X"
     id: zone1_end_x
@@ -454,6 +547,9 @@ number:
     restore_value: True
     initial_value: 4000
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 20
   - platform: template
     name: "Zone 1 Begin Y"
     id: zone1_begin_y
@@ -465,6 +561,9 @@ number:
     restore_value: True
     initial_value: 0
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 30
   - platform: template
     name: "Zone 1 End Y"
     id: zone1_end_y
@@ -476,6 +575,9 @@ number:
     restore_value: True
     initial_value: 6000
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 40
   - platform: template
     name: "Zone 1 Occupancy Off Delay"
     id: zone_1_off_delay
@@ -487,6 +589,9 @@ number:
     unit_of_measurement: "s"
     initial_value: 15
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 11
 
   - platform: template
     name: "Zone 2 Begin X"
@@ -499,6 +604,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 50
   - platform: template
     name: "Zone 2 End X"
     id: zone2_end_x
@@ -510,6 +618,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 60
   - platform: template
     name: "Zone 2 Begin Y"
     id: zone2_begin_y
@@ -521,6 +632,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 70
   - platform: template
     name: "Zone 2 End Y"
     id: zone2_end_y
@@ -532,6 +646,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 80
   - platform: template
     name: "Zone 2 Occupancy Off Delay"
     id: zone_2_off_delay
@@ -544,6 +661,9 @@ number:
     initial_value: 15
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 12
 
   - platform: template
     name: "Zone 3 Begin X"
@@ -556,6 +676,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 90
   - platform: template
     name: "Zone 3 End X"
     id: zone3_end_x
@@ -567,6 +690,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 100
   - platform: template
     name: "Zone 3 Begin Y"
     id: zone3_begin_y
@@ -578,6 +704,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 110
   - platform: template
     name: "Zone 3 End Y"
     id: zone3_end_y
@@ -589,6 +718,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 120
   - platform: template
     name: "Zone 3 Occupancy Off Delay"
     id: zone_3_off_delay
@@ -601,6 +733,9 @@ number:
     initial_value: 15
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 13
 
   - platform: template
     name: "Zone 4 Begin X"
@@ -613,6 +748,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 130
   - platform: template
     name: "Zone 4 End X"
     id: zone4_end_x
@@ -624,6 +762,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 140
   - platform: template
     name: "Zone 4 Begin Y"
     id: zone4_begin_y
@@ -635,6 +776,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 150
   - platform: template
     name: "Zone 4 End Y"
     id: zone4_end_y
@@ -646,6 +790,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 160
   - platform: template
     name: "Zone 4 Occupancy Off Delay"
     id: zone_4_off_delay
@@ -658,6 +805,9 @@ number:
     initial_value: 15
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 14
 
   - platform: template
     name: "Occupancy Mask 1 Begin X"
@@ -669,6 +819,9 @@ number:
     optimistic: True
     restore_value: True
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 250
   - platform: template
     name: "Occupancy Mask 1 End X"
     id: occupancy_mask_1_end_x
@@ -679,6 +832,9 @@ number:
     optimistic: True
     restore_value: True
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 260
   - platform: template
     name: "Occupancy Mask 1 Begin Y"
     id: occupancy_mask_1_begin_y
@@ -689,6 +845,9 @@ number:
     optimistic: True
     restore_value: True
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 270
   - platform: template
     name: "Occupancy Mask 1 End Y"
     id: occupancy_mask_1_end_y
@@ -699,6 +858,9 @@ number:
     optimistic: True
     restore_value: True
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 280
   - platform: template
     name: "Occupancy Mask 2 Begin X"
     id: occupancy_mask_2_begin_x
@@ -710,6 +872,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 290
   - platform: template
     name: "Occupancy Mask 2 End X"
     id: occupancy_mask_2_end_x
@@ -721,6 +886,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 300
   - platform: template
     name: "Occupancy Mask 2 Begin Y"
     id: occupancy_mask_2_begin_y
@@ -732,6 +900,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 310
   - platform: template
     name: "Occupancy Mask 2 End Y"
     id: occupancy_mask_2_end_y
@@ -743,6 +914,9 @@ number:
     restore_value: True
     disabled_by_default: true
     entity_category: config
+    web_server:
+      sorting_group_id: zones
+      sorting_weight: 320
 
   - platform: template
     name: "Stale Target Reset Timeout"
@@ -755,6 +929,9 @@ number:
     restore_value: true
     initial_value: 3
     entity_category: config
+    web_server:
+      sorting_group_id: presence_logic
+      sorting_weight: 50
 
 sensor:
   - platform: template
@@ -764,6 +941,9 @@ sensor:
     accuracy_decimals: 0
     update_interval: never
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 30
   - platform: template
     name: "Target 1 X"
     id: target1_x
@@ -772,6 +952,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 190
   - platform: template
     name: "Target 1 Y"
     id: target1_y
@@ -780,6 +963,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 200
   - platform: template
     name: "Target 1 Speed"
     id: target1_speed
@@ -788,6 +974,9 @@ sensor:
     state_class: measurement
     device_class: speed
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 180
   - platform: template
     name: "Target 1 Resolution"
     id: target1_resolution
@@ -796,6 +985,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 170
   - platform: template
     name: "Target 2 X"
     id: target2_x
@@ -804,6 +996,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 260
   - platform: template
     name: "Target 2 Y"
     id: target2_y
@@ -812,6 +1007,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 270
   - platform: template
     name: "Target 2 Speed"
     id: target2_speed
@@ -820,6 +1018,9 @@ sensor:
     state_class: measurement
     device_class: speed
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 250
   - platform: template
     name: "Target 2 Resolution"
     id: target2_resolution
@@ -828,6 +1029,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 240
   - platform: template
     name: "Target 3 X"
     id: target3_x
@@ -836,6 +1040,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 330
   - platform: template
     name: "Target 3 Y"
     id: target3_y
@@ -844,6 +1051,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 340
   - platform: template
     name: "Target 3 Speed"
     id: target3_speed
@@ -852,6 +1062,9 @@ sensor:
     state_class: measurement
     device_class: speed
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 320
   - platform: template
     name: "Target 3 Resolution"
     id: target3_resolution
@@ -860,6 +1073,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 310
   - platform: template
     name: "Target 1 Angle"
     id: target1_angle
@@ -867,6 +1083,9 @@ sensor:
     unit_of_measurement: '°'
     state_class: measurement
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 150
   - platform: template
     name: "Target 2 Angle"
     id: target2_angle
@@ -874,6 +1093,9 @@ sensor:
     unit_of_measurement: '°'
     state_class: measurement
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 220
   - platform: template
     name: "Target 3 Angle"
     id: target3_angle
@@ -881,6 +1103,9 @@ sensor:
     unit_of_measurement: '°'
     state_class: measurement
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 290
   - platform: template
     name: "Target 1 Distance"
     id: target1_distance
@@ -889,6 +1114,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 160
   - platform: template
     name: "Target 2 Distance"
     id: target2_distance
@@ -897,6 +1125,9 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 230
   - platform: template
     name: "Target 3 Distance"
     id: target3_distance
@@ -905,12 +1136,18 @@ sensor:
     state_class: measurement
     device_class: distance
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 300
   - platform: template
     name: "Zone 1 Target Count"
     id: zone1_target_count
     accuracy_decimals: 0
     unit_of_measurement: " "
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 50
   - platform: template
     name: "Zone 2 Target Count"
     id: zone2_target_count
@@ -918,6 +1155,9 @@ sensor:
     disabled_by_default: true
     unit_of_measurement: " "
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 70
   - platform: template
     name: "Zone 3 Target Count"
     id: zone3_target_count
@@ -925,6 +1165,9 @@ sensor:
     disabled_by_default: true
     unit_of_measurement: " "
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 90
   - platform: template
     name: "Zone 4 Target Count"
     id: zone4_target_count
@@ -932,6 +1175,9 @@ sensor:
     disabled_by_default: true
     unit_of_measurement: " "
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 110
   - platform: template
     name: "Occupancy Mask 1 Target Count"
     id: occupancy_mask_1_target_count
@@ -939,6 +1185,9 @@ sensor:
     disabled_by_default: true
     unit_of_measurement: " "
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 120
   - platform: template
     name: "Occupancy Mask 2 Target Count"
     id: occupancy_mask_2_target_count
@@ -946,6 +1195,9 @@ sensor:
     disabled_by_default: true
     unit_of_measurement: " "
     entity_category: diagnostic
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 130
 
 select:
   - platform: template
@@ -962,6 +1214,9 @@ select:
       - Slow (0.4s)
       - Slower (0.5s)
     initial_option: Normal (0.3s)
+    web_server:
+      sorting_group_id: configuration
+      sorting_weight: 40
     on_value:
       then:
         - lambda: id(mmwave_update_interval) = (i + 1) * 100;
@@ -979,6 +1234,9 @@ select:
       - Every 10 updates
       - Every 20 updates
     initial_option: Every update
+    web_server:
+      sorting_group_id: configuration
+      sorting_weight: 60
     on_value:
       then:
         - lambda: |-
@@ -1010,6 +1268,9 @@ select:
       - Above + Distance and Angle
       - Above + Speed and Resolution
     initial_option: Above + Speed and Resolution
+    web_server:
+      sorting_group_id: configuration
+      sorting_weight: 50
     on_value:
       then:
         - lambda: |-
@@ -1068,6 +1329,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 20
   - platform: template
     name: "Polygon Zone 2"
     id: poly_zone_2
@@ -1078,6 +1342,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 30
   - platform: template
     name: "Polygon Zone 3"
     id: poly_zone_3
@@ -1088,6 +1355,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 40
   - platform: template
     name: "Polygon Zone 4"
     id: poly_zone_4
@@ -1098,6 +1368,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 50
   - platform: template
     name: "Polygon Exclusion 1"
     id: poly_exclusion_1
@@ -1108,6 +1381,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 80
   - platform: template
     name: "Polygon Exclusion 2"
     id: poly_exclusion_2
@@ -1118,6 +1394,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 90
   - platform: template
     name: "Polygon Entry 1"
     id: poly_entry_1
@@ -1128,6 +1407,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 60
   - platform: template
     name: "Polygon Entry 2"
     id: poly_entry_2
@@ -1138,6 +1420,9 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    web_server:
+      sorting_group_id: polygon_zones
+      sorting_weight: 70
 
 uart:
   id: uart_bus
