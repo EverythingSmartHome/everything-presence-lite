@@ -21,6 +21,9 @@ update:
     name: Everything Presence Lite Firmware
     source: https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha-manifest.json
     disabled_by_default: true
+    web_server:
+      sorting_group_id: occupancy_group
+      sorting_weight: 360
 
 dashboard_import:
   package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
