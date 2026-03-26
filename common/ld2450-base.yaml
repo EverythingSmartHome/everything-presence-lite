@@ -64,6 +64,38 @@ globals:
     type: float
     restore_value: False
     initial_value: '0'
+  - id: poly_zone_1_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_zone_2_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_zone_3_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_zone_4_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_exclusion_1_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_exclusion_2_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_entry_1_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
+  - id: poly_entry_2_points
+    type: std::vector<float>
+    restore_value: False
+    initial_value: 'std::vector<float>()'
 
 
 interval:
@@ -1068,6 +1100,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_zone_1_points) = points;
   - platform: template
     name: "Polygon Zone 2"
     id: poly_zone_2
@@ -1078,6 +1129,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_zone_2_points) = points;
   - platform: template
     name: "Polygon Zone 3"
     id: poly_zone_3
@@ -1088,6 +1158,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_zone_3_points) = points;
   - platform: template
     name: "Polygon Zone 4"
     id: poly_zone_4
@@ -1098,6 +1187,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_zone_4_points) = points;
   - platform: template
     name: "Polygon Exclusion 1"
     id: poly_exclusion_1
@@ -1108,6 +1216,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_exclusion_1_points) = points;
   - platform: template
     name: "Polygon Exclusion 2"
     id: poly_exclusion_2
@@ -1118,6 +1245,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_exclusion_2_points) = points;
   - platform: template
     name: "Polygon Entry 1"
     id: poly_entry_1
@@ -1128,6 +1274,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_entry_1_points) = points;
   - platform: template
     name: "Polygon Entry 2"
     id: poly_entry_2
@@ -1138,6 +1303,25 @@ text:
     disabled_by_default: false
     entity_category: config
     icon: "mdi:vector-polygon"
+    on_value:
+      then:
+        - lambda: |-
+            std::vector<float> points;
+            points.reserve(40);
+            size_t pos = 0;
+            while (pos < x.length() && points.size() < 40) {
+              int px, py;
+              int chars_read = 0;
+              if (sscanf(x.c_str() + pos, "%d:%d%n", &px, &py, &chars_read) == 2) {
+                points.push_back((float) px);
+                points.push_back((float) py);
+                pos += chars_read;
+                if (pos < x.length() && x[pos] == ';') pos++;
+              } else {
+                break;
+              }
+            }
+            id(poly_entry_2_points) = points;
 
 uart:
   id: uart_bus
@@ -1191,49 +1375,14 @@ uart:
 
           static unsigned long assumed_present_until = 0;
           static bool prev_detected[3] = {false,false,false};
-          const static int MAX_POLY_VERTICES = 20;
-
-          struct ParsedPolygon {
-            float vx[20];
-            float vy[20];
-            int count;
-          };
-
-          static ParsedPolygon poly_zones[4];
-          static ParsedPolygon poly_exclusions[2];
-          static ParsedPolygon poly_entries[2];
-          static std::string last_poly_zone_text[4];
-          static std::string last_poly_excl_text[2];
-          static std::string last_poly_entry_text[2];
-          static bool poly_initialized = false;
-
-          auto parse_polygon_text = [](const std::string& text, ParsedPolygon& poly) {
-            poly.count = 0;
-            if (text.empty()) return;
-
-            size_t pos = 0;
-            while (pos < text.length() && poly.count < 20) {
-              int x, y;
-              int chars_read;
-              if (sscanf(text.c_str() + pos, "%d:%d%n", &x, &y, &chars_read) == 2) {
-                poly.vx[poly.count] = (float)x;
-                poly.vy[poly.count] = (float)y;
-                poly.count++;
-                pos += chars_read;
-                if (pos < text.length() && text[pos] == ';') pos++;
-              } else {
-                break;
-              }
-            }
-          };
-
-          auto point_in_poly = [](float px, float py, const ParsedPolygon& poly) -> bool {
-            if (poly.count < 3) return false;
+          auto point_in_poly = [](float px, float py, const std::vector<float>& points) -> bool {
+            const size_t point_count = points.size() / 2;
+            if (point_count < 3) return false;
 
             bool inside = false;
-            for (int i = 0, j = poly.count - 1; i < poly.count; j = i++) {
-              float xi = poly.vx[i], yi = poly.vy[i];
-              float xj = poly.vx[j], yj = poly.vy[j];
+            for (size_t i = 0, j = point_count - 1; i < point_count; j = i++) {
+              float xi = points[i * 2], yi = points[i * 2 + 1];
+              float xj = points[j * 2], yj = points[j * 2 + 1];
 
               if (((yi > py) != (yj > py)) &&
                   (px < (xj - xi) * (py - yi) / (yj - yi) + xi)) {
@@ -1244,52 +1393,6 @@ uart:
           };
 
           bool polygon_mode = id(polygon_zones_enabled).state;
-          if (polygon_mode) {
-            std::string z1_text = id(poly_zone_1).state;
-            std::string z2_text = id(poly_zone_2).state;
-            std::string z3_text = id(poly_zone_3).state;
-            std::string z4_text = id(poly_zone_4).state;
-            if (!poly_initialized || z1_text != last_poly_zone_text[0]) {
-              parse_polygon_text(z1_text, poly_zones[0]);
-              last_poly_zone_text[0] = z1_text;
-            }
-            if (!poly_initialized || z2_text != last_poly_zone_text[1]) {
-              parse_polygon_text(z2_text, poly_zones[1]);
-              last_poly_zone_text[1] = z2_text;
-            }
-            if (!poly_initialized || z3_text != last_poly_zone_text[2]) {
-              parse_polygon_text(z3_text, poly_zones[2]);
-              last_poly_zone_text[2] = z3_text;
-            }
-            if (!poly_initialized || z4_text != last_poly_zone_text[3]) {
-              parse_polygon_text(z4_text, poly_zones[3]);
-              last_poly_zone_text[3] = z4_text;
-            }
-
-            std::string e1_text = id(poly_exclusion_1).state;
-            std::string e2_text = id(poly_exclusion_2).state;
-            if (!poly_initialized || e1_text != last_poly_excl_text[0]) {
-              parse_polygon_text(e1_text, poly_exclusions[0]);
-              last_poly_excl_text[0] = e1_text;
-            }
-            if (!poly_initialized || e2_text != last_poly_excl_text[1]) {
-              parse_polygon_text(e2_text, poly_exclusions[1]);
-              last_poly_excl_text[1] = e2_text;
-            }
-
-            std::string en1_text = id(poly_entry_1).state;
-            std::string en2_text = id(poly_entry_2).state;
-            if (!poly_initialized || en1_text != last_poly_entry_text[0]) {
-              parse_polygon_text(en1_text, poly_entries[0]);
-              last_poly_entry_text[0] = en1_text;
-            }
-            if (!poly_initialized || en2_text != last_poly_entry_text[1]) {
-              parse_polygon_text(en2_text, poly_entries[1]);
-              last_poly_entry_text[1] = en2_text;
-            }
-
-            poly_initialized = true;
-          }
 
           // Extracted for consistency of read values
           int zone1_count = 0;
@@ -1360,28 +1463,28 @@ uart:
                 p1_y = p1_distance * sin(angle);
               }
               if (polygon_mode) {
-                if (point_in_poly(p1_x, p1_y, poly_exclusions[0])) {
+                if (point_in_poly(p1_x, p1_y, id(poly_exclusion_1_points))) {
                   occupancy_mask_1_count++;
                   p1_detected = false;
                   target_masked = true;
-                } else if (point_in_poly(p1_x, p1_y, poly_exclusions[1])) {
+                } else if (point_in_poly(p1_x, p1_y, id(poly_exclusion_2_points))) {
                   occupancy_mask_2_count++;
                   p1_detected = false;
                   target_masked = true;
                 } else {
-                  if (point_in_poly(p1_x, p1_y, poly_zones[0])) {
+                  if (point_in_poly(p1_x, p1_y, id(poly_zone_1_points))) {
                     zone1_count++;
                     id(last_zone_hold) = 1;
                   }
-                  if (point_in_poly(p1_x, p1_y, poly_zones[1])) {
+                  if (point_in_poly(p1_x, p1_y, id(poly_zone_2_points))) {
                     zone2_count++;
                     id(last_zone_hold) = 2;
                   }
-                  if (point_in_poly(p1_x, p1_y, poly_zones[2])) {
+                  if (point_in_poly(p1_x, p1_y, id(poly_zone_3_points))) {
                     zone3_count++;
                     id(last_zone_hold) = 3;
                   }
-                  if (point_in_poly(p1_x, p1_y, poly_zones[3])) {
+                  if (point_in_poly(p1_x, p1_y, id(poly_zone_4_points))) {
                     zone4_count++;
                     id(last_zone_hold) = 4;
                   }
@@ -1532,19 +1635,19 @@ uart:
                 p2_y = p2_distance * sin(angle);
               }
               if (polygon_mode) {
-                if (point_in_poly(p2_x, p2_y, poly_exclusions[0])) {
+                if (point_in_poly(p2_x, p2_y, id(poly_exclusion_1_points))) {
                   occupancy_mask_1_count++;
                   p2_detected = false;
                   target_masked = true;
-                } else if (point_in_poly(p2_x, p2_y, poly_exclusions[1])) {
+                } else if (point_in_poly(p2_x, p2_y, id(poly_exclusion_2_points))) {
                   occupancy_mask_2_count++;
                   p2_detected = false;
                   target_masked = true;
                 } else {
-                  if (point_in_poly(p2_x, p2_y, poly_zones[0])) { zone1_count++; id(last_zone_hold) = 1; }
-                  if (point_in_poly(p2_x, p2_y, poly_zones[1])) { zone2_count++; id(last_zone_hold) = 2; }
-                  if (point_in_poly(p2_x, p2_y, poly_zones[2])) { zone3_count++; id(last_zone_hold) = 3; }
-                  if (point_in_poly(p2_x, p2_y, poly_zones[3])) { zone4_count++; id(last_zone_hold) = 4; }
+                  if (point_in_poly(p2_x, p2_y, id(poly_zone_1_points))) { zone1_count++; id(last_zone_hold) = 1; }
+                  if (point_in_poly(p2_x, p2_y, id(poly_zone_2_points))) { zone2_count++; id(last_zone_hold) = 2; }
+                  if (point_in_poly(p2_x, p2_y, id(poly_zone_3_points))) { zone3_count++; id(last_zone_hold) = 3; }
+                  if (point_in_poly(p2_x, p2_y, id(poly_zone_4_points))) { zone4_count++; id(last_zone_hold) = 4; }
                 }
               } else {
                 if ((occupancy_mask_1_begin_x_value <= p2_x && p2_x <= occupancy_mask_1_end_x_value) &&
@@ -1691,19 +1794,19 @@ uart:
                 p3_y = p3_distance * sin(angle);
               }
               if (polygon_mode) {
-                if (point_in_poly(p3_x, p3_y, poly_exclusions[0])) {
+                if (point_in_poly(p3_x, p3_y, id(poly_exclusion_1_points))) {
                   occupancy_mask_1_count++;
                   p3_detected = false;
                   target_masked = true;
-                } else if (point_in_poly(p3_x, p3_y, poly_exclusions[1])) {
+                } else if (point_in_poly(p3_x, p3_y, id(poly_exclusion_2_points))) {
                   occupancy_mask_2_count++;
                   p3_detected = false;
                   target_masked = true;
                 } else {
-                  if (point_in_poly(p3_x, p3_y, poly_zones[0])) { zone1_count++; id(last_zone_hold) = 1; }
-                  if (point_in_poly(p3_x, p3_y, poly_zones[1])) { zone2_count++; id(last_zone_hold) = 2; }
-                  if (point_in_poly(p3_x, p3_y, poly_zones[2])) { zone3_count++; id(last_zone_hold) = 3; }
-                  if (point_in_poly(p3_x, p3_y, poly_zones[3])) { zone4_count++; id(last_zone_hold) = 4; }
+                  if (point_in_poly(p3_x, p3_y, id(poly_zone_1_points))) { zone1_count++; id(last_zone_hold) = 1; }
+                  if (point_in_poly(p3_x, p3_y, id(poly_zone_2_points))) { zone2_count++; id(last_zone_hold) = 2; }
+                  if (point_in_poly(p3_x, p3_y, id(poly_zone_3_points))) { zone3_count++; id(last_zone_hold) = 3; }
+                  if (point_in_poly(p3_x, p3_y, id(poly_zone_4_points))) { zone4_count++; id(last_zone_hold) = 4; }
                 }
               } else {
                 if ((occupancy_mask_1_begin_x_value <= p3_x && p3_x <= occupancy_mask_1_end_x_value) &&
@@ -1864,18 +1967,20 @@ uart:
 
           float poly_e1_y_min = 0, poly_e1_y_max = 0, poly_e2_y_min = 0, poly_e2_y_max = 0;
           if (polygon_mode) {
-            if (poly_entries[0].count >= 3) {
-              poly_e1_y_min = poly_e1_y_max = poly_entries[0].vy[0];
-              for (int vi = 1; vi < poly_entries[0].count; vi++) {
-                if (poly_entries[0].vy[vi] < poly_e1_y_min) poly_e1_y_min = poly_entries[0].vy[vi];
-                if (poly_entries[0].vy[vi] > poly_e1_y_max) poly_e1_y_max = poly_entries[0].vy[vi];
+            if (id(poly_entry_1_points).size() >= 6) {
+              poly_e1_y_min = poly_e1_y_max = id(poly_entry_1_points)[1];
+              for (size_t vi = 1; vi < id(poly_entry_1_points).size() / 2; vi++) {
+                float y = id(poly_entry_1_points)[vi * 2 + 1];
+                if (y < poly_e1_y_min) poly_e1_y_min = y;
+                if (y > poly_e1_y_max) poly_e1_y_max = y;
               }
             }
-            if (poly_entries[1].count >= 3) {
-              poly_e2_y_min = poly_e2_y_max = poly_entries[1].vy[0];
-              for (int vi = 1; vi < poly_entries[1].count; vi++) {
-                if (poly_entries[1].vy[vi] < poly_e2_y_min) poly_e2_y_min = poly_entries[1].vy[vi];
-                if (poly_entries[1].vy[vi] > poly_e2_y_max) poly_e2_y_max = poly_entries[1].vy[vi];
+            if (id(poly_entry_2_points).size() >= 6) {
+              poly_e2_y_min = poly_e2_y_max = id(poly_entry_2_points)[1];
+              for (size_t vi = 1; vi < id(poly_entry_2_points).size() / 2; vi++) {
+                float y = id(poly_entry_2_points)[vi * 2 + 1];
+                if (y < poly_e2_y_min) poly_e2_y_min = y;
+                if (y > poly_e2_y_max) poly_e2_y_max = y;
               }
             }
           }
@@ -1899,8 +2004,8 @@ uart:
               for (int i = 0; i < 3; i++) {
                 if (prev_detected[i] && !detected_now[i]) {
                   float len_e1 = 0.0f, len_e2 = 0.0f;
-                  bool e1_valid = polygon_mode ? (poly_entries[0].count >= 3) : !(e1_x1 == e1_x2 && e1_y1 == e1_y2);
-                  bool e2_valid = polygon_mode ? (poly_entries[1].count >= 3) : !(e2_x1 == e2_x2 && e2_y1 == e2_y2);
+                  bool e1_valid = polygon_mode ? (id(poly_entry_1_points).size() >= 6) : !(e1_x1 == e1_x2 && e1_y1 == e1_y2);
+                  bool e2_valid = polygon_mode ? (id(poly_entry_2_points).size() >= 6) : !(e2_x1 == e2_x2 && e2_y1 == e2_y2);
                   if (e1_valid) {
                     uint16_t ii = head[i];
                     unsigned int steps = 0;
@@ -1912,7 +2017,7 @@ uart:
                       if (now_ms - b.t > window_ms) break;
                       float mx = 0.5f * (a.x + b.x);
                       float my = 0.5f * (a.y + b.y);
-                      bool in_e1 = polygon_mode ? point_in_poly(mx, my, poly_entries[0]) : (mx >= e1_x1 && mx <= e1_x2 && my >= e1_y1 && my <= e1_y2);
+                      bool in_e1 = polygon_mode ? point_in_poly(mx, my, id(poly_entry_1_points)) : (mx >= e1_x1 && mx <= e1_x2 && my >= e1_y1 && my <= e1_y2);
                       if (in_e1) {
                         float dx = b.x - a.x;
                         float dy = b.y - a.y;
@@ -1932,7 +2037,7 @@ uart:
                       if (now_ms - b2.t > window_ms) break;
                       float mx2 = 0.5f * (a2.x + b2.x);
                       float my2 = 0.5f * (a2.y + b2.y);
-                      bool in_e2 = polygon_mode ? point_in_poly(mx2, my2, poly_entries[1]) : (mx2 >= e2_x1 && mx2 <= e2_x2 && my2 >= e2_y1 && my2 <= e2_y2);
+                      bool in_e2 = polygon_mode ? point_in_poly(mx2, my2, id(poly_entry_2_points)) : (mx2 >= e2_x1 && mx2 <= e2_x2 && my2 >= e2_y1 && my2 <= e2_y2);
                       if (in_e2) {
                         float dx2 = b2.x - a2.x;
                         float dy2 = b2.y - a2.y;
