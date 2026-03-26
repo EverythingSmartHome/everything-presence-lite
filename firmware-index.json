@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-01-18T21:44:44.989Z",
+  "generatedAt": "2026-03-26T16:51:29.292Z",
   "product": {
     "id": "everything-presence-lite",
     "displayName": "Everything Presence Lite",
@@ -10,7 +10,7 @@
     {
       "version": "1.4.2",
       "channel": "stable",
-      "releaseDate": "2026-01-18",
+      "releaseDate": "2026-03-26",
       "releaseNotes": "",
       "minPreviousVersion": "1.0.0",
       "variants": [
@@ -280,8 +280,8 @@
   "migrations": [
     {
       "id": "rectangular-to-polygon-zones",
-      "fromVersion": "<2.0.0",
-      "toVersion": ">=2.0.0",
+      "fromVersion": "<1.5.0",
+      "toVersion": ">=1.5.0",
       "description": "Rectangular zones replaced with polygon zones",
       "backupRequired": true,
       "handler": "rectangularToPolygon"
