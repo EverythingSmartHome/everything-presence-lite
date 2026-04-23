@@ -110,4 +110,4 @@ jobs:
           folder: output
           clean: ${{ inputs.clean }}
           force: false
-          attempt-limit: 6
+          attempt-limit: 10
