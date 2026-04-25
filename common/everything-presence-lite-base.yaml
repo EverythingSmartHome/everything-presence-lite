@@ -67,18 +67,17 @@ ota:
 http_request:
 
 wifi:
+
+interval:
   # Workaround: ESPHome 2026.4.1+ correctly persists component error flags (PR #15658),
   # but http_request.update never clears its error after a failed manifest fetch,
   # leaving the status LED blinking indefinitely.
-  on_connect:
-    - repeat:
-        count: 12
-        then:
-          - delay: 5s
-          - lambda: |-
-              if (id(update_http_request).status_has_error()) {
-                id(update_http_request).status_clear_error();
-              }
+  - interval: 1min
+    then:
+      - lambda: |-
+          if (id(update_http_request).status_has_error()) {
+            id(update_http_request).status_clear_error();
+          }
 
 improv_serial:
 
