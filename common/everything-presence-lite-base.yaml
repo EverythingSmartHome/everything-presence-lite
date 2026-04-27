@@ -3,9 +3,9 @@ esphome:
   comment: Everything Presence Lite
   friendly_name: ${friendly_name}
   name_add_mac_suffix: True
-  project: 
+  project:
     name: EverythingSmartTechnology.Everything Presence Lite
-    version: "1.4.2"
+    version: "1.4.3"
   on_boot:
     priority: -100
     then:
@@ -26,6 +26,8 @@ esp32:
   board: esp32dev
   framework:
     type: esp-idf
+    advanced:
+      sram1_as_iram: true
 
 # Enable logging
 logger:
@@ -40,12 +42,25 @@ api:
       then:
         - lambda: |-
             ESP_LOGI("fw", "Setting update manifest URL: %s", url.c_str());
+            #ifdef USE_ESP32_BLE
+            if (esp32_ble::global_ble && esp32_ble::global_ble->is_active()) {
+              ESP_LOGI("fw", "Disabling BLE for firmware update");
+              esp32_ble::global_ble->disable();
+            }
+            #endif
             id(update_http_request).set_source_url(url);
+        - delay: 5s
         - component.update: update_http_request
         - delay: 1s
         - update.perform:
             id: update_http_request
             force_update: true
+        - lambda: |-
+            #ifdef USE_ESP32_BLE
+            if (esp32_ble::global_ble) {
+              esp32_ble::global_ble->enable();
+            }
+            #endif
     - action: get_build_flags
       then:
         - api.respond:
@@ -67,18 +82,6 @@ ota:
 http_request:
 
 wifi:
-  # Workaround: ESPHome 2026.4.1+ correctly persists component error flags (PR #15658),
-  # but http_request.update never clears its error after a failed manifest fetch,
-  # leaving the status LED blinking indefinitely.
-  on_connect:
-    - repeat:
-        count: 12
-        then:
-          - delay: 5s
-          - lambda: |-
-              if (id(update_http_request).status_has_error()) {
-                id(update_http_request).status_clear_error();
-              }
 
 improv_serial:
 
@@ -168,6 +171,15 @@ button:
     entity_category: diagnostic
     on_press:
       - logger.log: "Applying firmware update based on selected configuration"
+      # Disable BLE if running
+      - lambda: |-
+          #ifdef USE_ESP32_BLE
+          if (esp32_ble::global_ble && esp32_ble::global_ble->is_active()) {
+            ESP_LOGI("firmware", "Disabling BLE for firmware update");
+            esp32_ble::global_ble->disable();
+          }
+          #endif
+      - delay: 5s
       - lambda: |-
           std::string base_url = "https://everythingsmarthome.github.io/everything-presence-lite/everything-presence-lite-ha";
           std::string variant = "${device_config.sensor_variant}";
@@ -197,6 +209,14 @@ button:
       - update.perform:
           id: update_http_request
           force_update: true
+      # Re-enable BLE if it was available
+      - lambda: |-
+          #ifdef USE_ESP32_BLE
+          if (esp32_ble::global_ble) {
+            ESP_LOGI("firmware", "Re-enabling BLE after firmware update");
+            esp32_ble::global_ble->enable();
+          }
+          #endif
   - platform: factory_reset
     id: "factory_reset_button"
     internal: True
