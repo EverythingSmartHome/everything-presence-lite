@@ -1,6 +1,6 @@
 {
   "name": "Everything Presence Lite HA mr24hpc1",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "home_assistant_domain": "esphome",
   "new_install_skip_erase": false,
   "builds": [
@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "ota": {
         "path": "everything-presence-lite-ha-mr24hpc1/everything-presence-lite-esp32.ota.bin",
-        "md5": "b6907cfc5085ab86f89646672ddc12ec"
+        "md5": "562ff769b91329896e75bad06837b4be"
       },
       "parts": [
         {
