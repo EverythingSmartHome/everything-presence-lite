@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-27T16:01:09.887Z",
+  "generatedAt": "2026-05-11T22:14:04.466Z",
   "product": {
     "id": "everything-presence-lite",
     "displayName": "Everything Presence Lite",
-    "latestVersion": "1.4.4"
+    "latestVersion": "1.4.5"
   },
   "firmwares": [
     {
-      "version": "1.4.4",
+      "version": "1.4.5",
       "channel": "stable",
-      "releaseDate": "2026-04-27",
+      "releaseDate": "2026-05-11",
       "releaseNotes": "",
       "minPreviousVersion": "1.0.0",
       "variants": [
