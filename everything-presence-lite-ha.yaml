@@ -24,10 +24,11 @@ update:
     update_interval: never
 
 dashboard_import:
-  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
+  package_import_url: github://mickut/everything-presence-lite/everything-presence-lite-ha.yaml@substitute-pins-final
   import_full_config: false # or true
 
 packages:
+  pin_defaults: !include common/pin-defaults.yaml
   device_base: !include common/everything-presence-lite-base.yaml
   ld2450_base: !include common/ld2450-base.yaml
   bluetooth_base: !include common/bluetooth-base.yaml
