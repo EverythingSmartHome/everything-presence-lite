@@ -23,7 +23,7 @@ update:
     disabled_by_default: true
 
 dashboard_import:
-  package_import_url: github://mickut/everything-presence-lite/everything-presence-lite-ha-no-ble.yaml@substitute-pins-final
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-no-ble.yaml@main
   import_full_config: false # or true
 
 packages:

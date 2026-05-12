@@ -24,7 +24,7 @@ update:
     update_interval: never
 
 dashboard_import:
-  package_import_url: github://mickut/everything-presence-lite/everything-presence-lite-ha.yaml@substitute-pins-final
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
   import_full_config: false # or true
 
 packages:
