@@ -86,16 +86,16 @@ wifi:
 improv_serial:
 
 i2c:
--  id: bus_a
-   sda: 21
-   scl: 22
-   scan: true
+  - id: bus_a
+    sda: ${i2c_bus_a_sda_pin}
+    scl: ${i2c_bus_a_scl_pin}
+    scan: true
 
 light:
   - platform: status_led
     name: ESP32 LED
     id: esp32_led
-    pin: GPIO14
+    pin: ${status_led_pin}
     internal: False
     restore_mode: ALWAYS_OFF
     entity_category: config
@@ -137,21 +137,21 @@ sensor:
 binary_sensor:
   - platform: gpio
     pin:
-      number: 0
+      number: ${flash_button_pin}
       inverted: true
     id: flash_button
     internal: True
     filters:
-      - delayed_on: 50ms 
+      - delayed_on: 50ms
     on_multi_click:
       - timing:
           - ON for 0.2s to 3s
           - OFF for 0.1s to 2s
           - ON for 0.2s to 3s
           - OFF for 0.1s to 2s
-          - ON for at least 5s 
+          - ON for at least 5s
         then:
-          - repeat: 
+          - repeat:
               count: 5
               then:
                 - light.turn_on: esp32_led

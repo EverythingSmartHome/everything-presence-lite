@@ -27,6 +27,7 @@ dashboard_import:
   import_full_config: false # or true
 
 packages:
+  pin_defaults: !include common/pin-defaults.yaml
   device_base: !include common/everything-presence-lite-base.yaml
   seeed_mmwave_lite_base: !include common/seeed-mmwave-lite-base.yaml
   co2_base: !include common/modules/co2.yaml
