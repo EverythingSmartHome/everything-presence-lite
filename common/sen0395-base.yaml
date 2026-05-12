@@ -31,13 +31,13 @@ binary_sensor:
     id: mmwave
     device_class: occupancy
     pin:
-      number: GPIO19
+      number: ${sen0395_occupancy_pin}
       mode: INPUT_PULLDOWN
 
 uart:
   id: uart_bus
-  tx_pin: GPIO17
-  rx_pin: GPIO16
+  tx_pin: ${sen0395_uart_tx_pin}
+  rx_pin: ${sen0395_uart_rx_pin}
   baud_rate: 115200
   debug:
     direction: BOTH
