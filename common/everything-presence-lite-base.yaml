@@ -226,7 +226,7 @@ select:
     id: firmware_ble
     name: Bluetooth Proxy
     icon: "mdi:bluetooth"
-    entity_category: diagnostic
+    entity_category: config
     optimistic: true
     restore_value: true
     options:
@@ -238,7 +238,7 @@ select:
     id: firmware_co2
     name: CO2 Sensor
     icon: "mdi:molecule-co2"
-    entity_category: diagnostic
+    entity_category: config
     optimistic: true
     restore_value: true
     options:
