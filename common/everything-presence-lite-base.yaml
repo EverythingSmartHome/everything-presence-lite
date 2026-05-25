@@ -192,11 +192,11 @@ button:
             base_url += variant;
           }
 
-          if (id(firmware_ble).state == "Disabled") {
+          if (id(firmware_ble).current_option() == "Disabled") {
             base_url += "-no-ble";
           }
 
-          if (id(firmware_co2).state == "Enabled") {
+          if (id(firmware_co2).current_option() == "Enabled") {
             base_url += "-co2";
           }
 
