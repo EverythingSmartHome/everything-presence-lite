@@ -362,11 +362,11 @@ number:
     name: "Assume Present Timeout"
     id: assume_present_timeout_s
     min_value: 0
-    max_value: 600
+    max_value: 43200
     step: 1
     optimistic: true
     restore_value: true
-    initial_value: 15
+    initial_value: 1800
     unit_of_measurement: "s"
     entity_category: config
 
