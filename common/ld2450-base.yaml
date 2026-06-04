@@ -1489,24 +1489,6 @@ uart:
           static Sample hist[3][BUF_SZ];
           static uint16_t head[3] = {0,0,0};
 
-          float poly_e1_y_min = 0, poly_e1_y_max = 0, poly_e2_y_min = 0, poly_e2_y_max = 0;
-          if (id(poly_entry_1_points).size() >= 6) {
-            poly_e1_y_min = poly_e1_y_max = id(poly_entry_1_points)[1];
-            for (size_t vi = 1; vi < id(poly_entry_1_points).size() / 2; vi++) {
-              float y = id(poly_entry_1_points)[vi * 2 + 1];
-              if (y < poly_e1_y_min) poly_e1_y_min = y;
-              if (y > poly_e1_y_max) poly_e1_y_max = y;
-            }
-          }
-          if (id(poly_entry_2_points).size() >= 6) {
-            poly_e2_y_min = poly_e2_y_max = id(poly_entry_2_points)[1];
-            for (size_t vi = 1; vi < id(poly_entry_2_points).size() / 2; vi++) {
-              float y = id(poly_entry_2_points)[vi * 2 + 1];
-              if (y < poly_e2_y_min) poly_e2_y_min = y;
-              if (y > poly_e2_y_max) poly_e2_y_max = y;
-            }
-          }
-
           unsigned long now_ms = millis();
           if (p1_detected) { head[0] = (head[0] + 1) % BUF_SZ; hist[0][head[0]].t = now_ms; hist[0][head[0]].x = id(target1_x).state; hist[0][head[0]].y = id(target1_y).state; }
           if (p2_detected) { head[1] = (head[1] + 1) % BUF_SZ; hist[1][head[1]].t = now_ms; hist[1][head[1]].x = id(target2_x).state; hist[1][head[1]].y = id(target2_y).state; }
@@ -1525,14 +1507,24 @@ uart:
 
           if (id(entry_exit_enabled).state) {
             const unsigned long window_ms = 30000;
-            const float threshold_scale = 1.0f + (id(exit_threshold_pct).state / 100.0f);
 
             if (!any_detected_now) {
               for (int i = 0; i < 3; i++) {
                 if (prev_detected[i] && !detected_now[i]) {
-                  float len_e1 = 0.0f, len_e2 = 0.0f;
                   bool e1_valid = id(poly_entry_1_points).size() >= 6;
                   bool e2_valid = id(poly_entry_2_points).size() >= 6;
+                  bool last_in_e1 = false;
+                  bool last_in_e2 = false;
+                  bool crossed_into_e1 = false;
+                  bool crossed_into_e2 = false;
+                  bool saw_outside_e1 = false;
+                  bool saw_outside_e2 = false;
+
+                  if (hist[i][head[i]].t != 0) {
+                    if (e1_valid) last_in_e1 = point_in_poly(hist[i][head[i]].x, hist[i][head[i]].y, id(poly_entry_1_points));
+                    if (e2_valid) last_in_e2 = point_in_poly(hist[i][head[i]].x, hist[i][head[i]].y, id(poly_entry_2_points));
+                  }
+
                   if (e1_valid) {
                     uint16_t ii = head[i];
                     unsigned int steps = 0;
@@ -1542,13 +1534,14 @@ uart:
                       const Sample &b = hist[i][ii];
                       if (b.t == 0 || a.t == 0) break;
                       if (now_ms - b.t > window_ms) break;
-                      float mx = 0.5f * (a.x + b.x);
-                      float my = 0.5f * (a.y + b.y);
-                      bool in_e1 = point_in_poly(mx, my, id(poly_entry_1_points));
-                      if (in_e1) {
-                        float dx = b.x - a.x;
-                        float dy = b.y - a.y;
-                        len_e1 += sqrt(dx*dx + dy*dy);
+                      bool a_in_e1 = point_in_poly(a.x, a.y, id(poly_entry_1_points));
+                      bool b_in_e1 = point_in_poly(b.x, b.y, id(poly_entry_1_points));
+                      if (!a_in_e1 || !b_in_e1) {
+                        saw_outside_e1 = true;
+                      }
+                      if (!a_in_e1 && b_in_e1) {
+                        crossed_into_e1 = true;
+                        break;
                       }
                       ii = jj; steps++;
                     }
@@ -1562,21 +1555,20 @@ uart:
                       const Sample &b2 = hist[i][ii2];
                       if (b2.t == 0 || a2.t == 0) break;
                       if (now_ms - b2.t > window_ms) break;
-                      float mx2 = 0.5f * (a2.x + b2.x);
-                      float my2 = 0.5f * (a2.y + b2.y);
-                      bool in_e2 = point_in_poly(mx2, my2, id(poly_entry_2_points));
-                      if (in_e2) {
-                        float dx2 = b2.x - a2.x;
-                        float dy2 = b2.y - a2.y;
-                        len_e2 += sqrt(dx2*dx2 + dy2*dy2);
+                      bool a_in_e2 = point_in_poly(a2.x, a2.y, id(poly_entry_2_points));
+                      bool b_in_e2 = point_in_poly(b2.x, b2.y, id(poly_entry_2_points));
+                      if (!a_in_e2 || !b_in_e2) {
+                        saw_outside_e2 = true;
+                      }
+                      if (!a_in_e2 && b_in_e2) {
+                        crossed_into_e2 = true;
+                        break;
                       }
                       ii2 = jj2; steps2++;
                     }
                   }
-                  float door1_depth = abs(poly_e1_y_max - poly_e1_y_min);
-                  float door2_depth = abs(poly_e2_y_max - poly_e2_y_min);
-                  bool exit_e1 = door1_depth > 0 && len_e1 >= door1_depth * threshold_scale;
-                  bool exit_e2 = door2_depth > 0 && len_e2 >= door2_depth * threshold_scale;
+                  bool exit_e1 = e1_valid && last_in_e1 && (crossed_into_e1 || saw_outside_e1);
+                  bool exit_e2 = e2_valid && last_in_e2 && (crossed_into_e2 || saw_outside_e2);
                   bool valid_exit = exit_e1 || exit_e2;
                   const char *decision_zone = "None";
                   if (exit_e1 && exit_e2) {
