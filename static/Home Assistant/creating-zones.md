@@ -44,14 +44,14 @@ HA_LONG_LIVED_TOKEN=<YOUR_GENERATED_ACCESS_TOKEN>
 ```
 
 Use docker run or docker compose with the new environment file similar to the following examples.
-You may need to update the published ports if you're already running something listening on port 3000.
+The default web UI port is `42069`. If you want to keep the older `3000` mapping, set `APP_PORT=3000` and publish `3000:3000` instead.
 
 *docker run basic example:*
 ```
 docker run \
     --detach \
     --env-file ./ep-mmwave-configurator.env \
-    -p 3000:3000 \
+    -p 42069:42069 \
     --volume ./config:/config/ \
     --name everything-presence-mmwave-configurator \
     everythingsmarthome/everything-presence-mmwave-configurator:latest
@@ -63,7 +63,7 @@ docker run \
 services:
   zones:
     ports:
-      - 3000:3000
+      - 42069:42069
     image: everythingsmarthome/everything-presence-mmwave-configurator:latest
     container_name: everything-presence-mmwave-configurator
     env_file:
