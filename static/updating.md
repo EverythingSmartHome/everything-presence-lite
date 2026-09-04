@@ -180,6 +180,10 @@ After clicking the "Connect" button, if you do not see a "USB Serial" port liste
     <esp-web-install-button class="hidden"></esp-web-install-button>
 </div>
 
+### If for whatever reason the install process gets stuck in "Preparing Installation..." you can try one of the following things:
+- Use a different USB port and try again
+- Before pressing on "Connect" press AND hold the button that is located under the mmWave sensor. Now press the "Connect" button and install and release the button on the Lite once the installation jumps past the preparation
+
 ## Next Steps
 
 With the Lite fully updated and connected to WiFi, the final step is to connect it to Home Assistant.
