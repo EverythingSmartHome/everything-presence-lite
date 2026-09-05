@@ -139,6 +139,7 @@ binary_sensor:
     pin:
       number: ${flash_button_pin}
       inverted: true
+      ignore_strapping_warning: true
     id: flash_button
     internal: True
     filters:
