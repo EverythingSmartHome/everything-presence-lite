@@ -352,6 +352,19 @@ number:
     initial_value: 0
     icon: "mdi:angle-acute"
     entity_category: config
+  - platform: template
+    name: "Installation Angle Vertical"
+    id: installation_angle_y_ui
+    unit_of_measurement: "º"
+    min_value: 0
+    max_value: 45
+    step: 1
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:angle-acute"
+    entity_category: config
 
   - platform: template
     name: "Exit Threshold Pct"
@@ -1039,10 +1052,26 @@ uart:
           const static int16_t MIN_INT16_VAL = -32768;
 
           float max_distance = float(id(distance).state) * 10;
-          float installation_angle = id(installation_angle_ui).state * DEGREES_TO_RADIANS;
+          float installation_angle_x = id(installation_angle_ui).state * DEGREES_TO_RADIANS;
+          float installation_angle_y = id(installation_angle_y_ui).state * DEGREES_TO_RADIANS;
 
           static unsigned long assumed_present_until = 0;
           static bool prev_detected[3] = {false,false,false};
+
+          auto get_x_position = [](int16_t px, float angle_y, bool im) -> float {
+            if (px < 0) px += MIN_INT16_VAL;
+            else if (!im) px = -px;
+            if (angle_y == 0) return px;
+            return px * cos(angle_y);
+          };
+          auto get_y_position = [](int16_t py, float angle_y) -> float {
+            if (py < 0) py += MIN_INT16_VAL;
+            else py = -py;
+            if (angle_y == 0) return py;
+            return py * cos(angle_y);
+          };
+
+
           auto point_in_poly = [](float px, float py, const std::vector<float>& points) -> bool {
             const size_t point_count = points.size() / 2;
             if (point_count < 3) return false;
@@ -1074,29 +1103,19 @@ uart:
           bool target_masked = false;
 
           if (p1_detected) {
-            int16_t p1_x = *((int16_t *)(&bytes[4]));
-            if (p1_x < 0) p1_x += MIN_INT16_VAL;
-            else p1_x = -p1_x;
-
-            int16_t p1_y = *((int16_t *)(&bytes[6]));
-            if (p1_y < 0) p1_y += MIN_INT16_VAL;
-            else p1_y = -p1_y;
-
+            float p1_x = get_x_position(*((int16_t *)(&bytes[4])), installation_angle_y, id(inverse_mounting).state);
+            float p1_y = get_y_position(*((int16_t *)(&bytes[6])), installation_angle_y);
             float p1_distance = sqrt(p1_x * p1_x + p1_y * p1_y);
-            
-            if (id(inverse_mounting).state) {
-              p1_x = -p1_x;
-            }
             
             if (p1_distance > max_distance) {
               p1_detected = false;
             } else {
               float p1_angle;
-              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+              if (installation_angle_x != 0 || (update_entities && id(extra_entities) >= 4)) {
                 p1_angle = atan2(p1_y, p1_x);
               }
-              if (installation_angle != 0) {
-                float angle = p1_angle - installation_angle;
+              if (installation_angle_x != 0) {
+                float angle = p1_angle - installation_angle_x;
                 p1_x = p1_distance * cos(angle);
                 p1_y = p1_distance * sin(angle);
               }
@@ -1211,29 +1230,19 @@ uart:
           target_masked = false;
 
           if (p2_detected) {
-            int16_t p2_x = *((int16_t *)(&bytes[12]));
-            if (p2_x < 0) p2_x += MIN_INT16_VAL;
-            else p2_x = -p2_x;
-
-            int16_t p2_y = *((int16_t *)(&bytes[14]));
-            if (p2_y < 0) p2_y += MIN_INT16_VAL;
-            else p2_y = -p2_y;
-
+            float p2_x = get_x_position(*((int16_t *)(&bytes[12])), installation_angle_y, id(inverse_mounting).state);
+            float p2_y = get_y_position(*((int16_t *)(&bytes[14])), installation_angle_y);
             float p2_distance = sqrt(p2_x * p2_x + p2_y * p2_y);
-            
-            if (id(inverse_mounting).state) {
-              p2_x = -p2_x;
-            }
             
             if (p2_distance > max_distance) {
               p2_detected = false;
             } else {
               float p2_angle;
-              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+              if (installation_angle_x != 0 || (update_entities && id(extra_entities) >= 4)) {
                 p2_angle = atan2(p2_y, p2_x);
               }
-              if (installation_angle != 0) {
-                float angle = p2_angle - installation_angle;
+              if (installation_angle_x != 0) {
+                float angle = p2_angle - installation_angle_x;
                 p2_x = p2_distance * cos(angle);
                 p2_y = p2_distance * sin(angle);
               }
@@ -1335,29 +1344,19 @@ uart:
           target_masked = false;
 
           if (p3_detected) {
-            int16_t p3_x = *((int16_t *)(&bytes[20]));
-            if (p3_x < 0) p3_x += MIN_INT16_VAL;
-            else p3_x = -p3_x;
-
-            int16_t p3_y = *((int16_t *)(&bytes[22]));
-            if (p3_y < 0) p3_y += MIN_INT16_VAL;
-            else p3_y = -p3_y;
-
+            float p3_x = get_x_position(*((int16_t *)(&bytes[20])), installation_angle_y, id(inverse_mounting).state);
+            float p3_y = get_y_position(*((int16_t *)(&bytes[22])), installation_angle_y);
             float p3_distance = sqrt(p3_x * p3_x + p3_y * p3_y);
-            
-            if (id(inverse_mounting).state) {
-              p3_x = -p3_x;
-            }
             
             if (p3_distance > max_distance) {
               p3_detected = false;
             } else {
               float p3_angle;
-              if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
+              if (installation_angle_x != 0 || (update_entities && id(extra_entities) >= 4)) {
                 p3_angle = atan2(p3_y, p3_x);
               }
-              if (installation_angle != 0) {
-                float angle = p3_angle - installation_angle;
+              if (installation_angle_x != 0) {
+                float angle = p3_angle - installation_angle_x;
                 p3_x = p3_distance * cos(angle);
                 p3_y = p3_distance * sin(angle);
               }
