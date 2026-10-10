@@ -25,7 +25,7 @@ update:
     update_interval: ${"6h" if (update_checks | lower) == "true" else "never"}
 
 dashboard_import:
-  package_import_url: github://mickut/everything-presence-lite/everything-presence-lite-ha-no-ble.yaml@main
+  package_import_url: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-no-ble.yaml@main
   import_full_config: false # or true
 
 packages:
