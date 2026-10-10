@@ -1,3 +1,6 @@
+substitutions:
+  update_checks: true
+
 esp32_ble_tracker:
   scan_parameters:
     active: true
@@ -29,18 +32,22 @@ wifi:
     - delay: 15s
     - if:
         condition:
-          ble.enabled:
+          lambda: 'return ${update_checks | lower};'
         then:
-          - esp32_ble_tracker.stop_scan:
-          - delay: 5s
-          - ble.disable
-          - delay: 5s
-    - component.update: update_http_request
-    - delay: 10s
-    - lambda: |-
-        if (id(update_http_request).status_has_error()) {
-          id(update_http_request).status_clear_error();
-        }
+          - if:
+              condition:
+                ble.enabled:
+              then:
+                - esp32_ble_tracker.stop_scan:
+                - delay: 5s
+                - ble.disable
+                - delay: 5s
+          - component.update: update_http_request
+          - delay: 10s
+          - lambda: |-
+              if (id(update_http_request).status_has_error()) {
+                id(update_http_request).status_clear_error();
+              }
     - ble.enable
     - delay: 5s
     - esp32_ble_tracker.start_scan:
@@ -58,7 +65,9 @@ interval:
     then:
       - if:
           condition:
-            wifi.connected:
+            and:
+              - lambda: 'return ${update_checks | lower};'
+              - wifi.connected:
           then:
             - if:
                 condition:
