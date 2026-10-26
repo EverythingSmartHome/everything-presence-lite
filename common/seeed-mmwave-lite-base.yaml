@@ -10,8 +10,8 @@ external_components:
 uart:
   id: uart_bus
   baud_rate: 115200
-  rx_pin: 16
-  tx_pin: 17
+  rx_pin: ${mr24hpc1_uart_rx_pin}
+  tx_pin: ${mr24hpc1_uart_tx_pin}
   parity: NONE
   stop_bits: 1
 
