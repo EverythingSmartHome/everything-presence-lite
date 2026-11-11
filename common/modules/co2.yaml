@@ -15,22 +15,22 @@ api:
 
 i2c:
   - id: bus_b
-    sda: 26
-    scl: 27
+    sda: ${co2_i2c_sda_pin}
+    scl: ${co2_i2c_scl_pin}
     scan: true
 
 sensor:
   - platform: scd4x
     i2c_id: bus_b
     id: scd40
-    measurement_mode: low_power_periodic    
+    measurement_mode: low_power_periodic
     co2:
       name: "CO2"
       id: "co2"
       filters:
         - or:
           - delta: 5%
-          - delta: 5      
+          - delta: 5
     automatic_self_calibration: false
 
 button:
