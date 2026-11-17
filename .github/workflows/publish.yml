@@ -314,3 +314,23 @@ jobs:
           force: false
           attempt-limit: 10
           commit-message: "Publish firmware and firmware-index.json for v${{ steps.version.outputs.version }}"
+
+  # Rebuild the live GitHub Pages site from the gh-pages branch just pushed
+  deploy-github-pages:
+    needs: generate-firmware-index
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    # Must match gh-pages.yml's own permissions; a called workflow can't be granted less
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/gh-pages.yml
+
+  # Mirror the published firmware to docs.everythingsmart.io/update (HTTP)
+  deploy-firmware-host:
+    needs: generate-firmware-index
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy-firmware-host.yml
+    secrets: inherit
+    with:
+      product: everything-presence-lite
