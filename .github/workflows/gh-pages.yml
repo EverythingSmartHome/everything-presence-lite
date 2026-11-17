@@ -13,6 +13,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  # Called by publish.yml after it pushes to gh-pages. A push made with
+  # GITHUB_TOKEN does not trigger the push event above, so without this
+  # the live site only updated when this workflow was run by hand.
+  workflow_call:
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
