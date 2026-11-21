@@ -1091,7 +1091,7 @@ uart:
             if (p1_distance > max_distance) {
               p1_detected = false;
             } else {
-              float p1_angle;
+              float p1_angle = 0;
               if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
                 p1_angle = atan2(p1_y, p1_x);
               }
@@ -1143,6 +1143,7 @@ uart:
                         id(target1_resolution).publish_state(p1_resolution);
                       }
                     }
+                    [[fallthrough]];
                   case 4:
                     p1_angle = (p1_angle * RADIANS_TO_DEGREES) - 90;
 
@@ -1152,8 +1153,10 @@ uart:
                     if (id(target1_distance).state != p1_distance) {
                       id(target1_distance).publish_state(p1_distance);
                     }
+                    [[fallthrough]];
                   case 3:
                     id(target1_active).publish_state(true);
+                    [[fallthrough]];
                   case 2:
                   case 1:
                     if (id(target1_x).state != p1_x) {
@@ -1182,6 +1185,7 @@ uart:
                     id(target1_resolution).publish_state(0);
                   }
                 }
+                [[fallthrough]];
               case 4:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear) {
                   if (id(target1_distance).state != 0) {
@@ -1191,10 +1195,12 @@ uart:
                     id(target1_angle).publish_state(0);
                   }
                 }
+                [[fallthrough]];
               case 3:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear) {
                   id(target1_active).publish_state(false);
                 }
+                [[fallthrough]];
               case 2:
               case 1:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear) {
@@ -1228,7 +1234,7 @@ uart:
             if (p2_distance > max_distance) {
               p2_detected = false;
             } else {
-              float p2_angle;
+              float p2_angle = 0;
               if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
                 p2_angle = atan2(p2_y, p2_x);
               }
@@ -1268,6 +1274,7 @@ uart:
                         id(target2_resolution).publish_state(p2_resolution);
                       }
                     }
+                    [[fallthrough]];
                   case 4:
                     p2_angle = (p2_angle * RADIANS_TO_DEGREES) - 90;
 
@@ -1277,8 +1284,10 @@ uart:
                     if (id(target2_distance).state != p2_distance) {
                       id(target2_distance).publish_state(p2_distance);
                     }
+                    [[fallthrough]];
                   case 3:
                     id(target2_active).publish_state(true);
+                    [[fallthrough]];
                   case 2:
                   case 1:
                     if (id(target2_x).state != p2_x) {
@@ -1306,6 +1315,7 @@ uart:
                     id(target2_resolution).publish_state(0);
                   }
                 }
+                [[fallthrough]];
               case 4:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear2) {
                   if (id(target2_distance).state != 0) {
@@ -1315,10 +1325,12 @@ uart:
                     id(target2_angle).publish_state(0);
                   }
                 }
+                [[fallthrough]];
               case 3:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear2) {
                   id(target2_active).publish_state(false);
                 }
+                [[fallthrough]];
               case 2:
               case 1:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear2) {
@@ -1352,7 +1364,7 @@ uart:
             if (p3_distance > max_distance) {
               p3_detected = false;
             } else {
-              float p3_angle;
+              float p3_angle = 0;
               if (installation_angle != 0 || (update_entities && id(extra_entities) >= 4)) {
                 p3_angle = atan2(p3_y, p3_x);
               }
@@ -1392,6 +1404,7 @@ uart:
                         id(target3_resolution).publish_state(p3_resolution);
                       }
                     }
+                    [[fallthrough]];
                   case 4:
                     p3_angle = (p3_angle * RADIANS_TO_DEGREES) - 90;
                     
@@ -1401,8 +1414,10 @@ uart:
                     if (id(target3_distance).state != p3_distance) {
                       id(target3_distance).publish_state(p3_distance);
                     }
+                    [[fallthrough]];
                   case 3:
                     id(target3_active).publish_state(true);
+                    [[fallthrough]];
                   case 2:
                   case 1:
                     if (id(target3_x).state != p3_x) {
@@ -1430,6 +1445,7 @@ uart:
                     id(target3_resolution).publish_state(0);
                   }
                 }
+                [[fallthrough]];
               case 4:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear3) {
                   if (id(target3_distance).state != 0) {
@@ -1439,10 +1455,12 @@ uart:
                     id(target3_angle).publish_state(0);
                   }
                 }
+                [[fallthrough]];
               case 3:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear3) {
                   id(target3_active).publish_state(false);
                 }
+                [[fallthrough]];
               case 2:
               case 1:
                 if (!(assumed_present_until != 0 && millis() < assumed_present_until) && !preventClear3) {

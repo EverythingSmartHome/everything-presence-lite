@@ -1,0 +1,136 @@
+name: Deploy firmware to update host
+
+# Copies the published firmware from the caller's gh-pages branch to the
+# self-hosted update server (docs.everythingsmart.io/update/<product>/), which
+# serves it over plain HTTP for devices that cannot fit the TLS cert bundle.
+# Replaces the manual update_firmware.sh run on the server.
+#
+# Only each *-manifest.json, the .bin files it references and
+# firmware-index.json are copied (no .elf or website files). Binaries are
+# uploaded before manifests, so a device never reads a manifest that points at
+# a file that isn't there yet. Nothing on the server is deleted.
+#
+# Each release is also kept in <product>/<version>/ so it can be rolled back.
+#
+# Required secrets (pass with `secrets: inherit`):
+#   FW_DEPLOY_HOST         address of the update server
+#   FW_DEPLOY_SSH_KEY      private key for the restricted deploy user
+#   FW_DEPLOY_KNOWN_HOSTS  output of `ssh-keyscan <host>`, pins the host key
+
+on:
+  workflow_call:
+    inputs:
+      product:
+        description: Folder under /update on the server, e.g. everything-presence-lite
+        required: true
+        type: string
+      ssh_user:
+        description: Deploy user on the update server
+        required: false
+        type: string
+        default: fwdeploy
+
+jobs:
+  deploy:
+    name: Deploy ${{ inputs.product }} to update host
+    runs-on: ubuntu-latest
+    concurrency:
+      group: firmware-host-${{ inputs.product }}
+      cancel-in-progress: false
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out published firmware (gh-pages)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+          # Skip the ~25 MB .elf files and the website
+          sparse-checkout: |
+            /*.json
+            *.bin
+          sparse-checkout-cone-mode: false
+
+      - name: Read version
+        id: version
+        run: |
+          version=$(jq -r '.product.latestVersion // empty' site/firmware-index.json)
+          if [ -z "$version" ]; then
+            echo "::error::No product.latestVersion in firmware-index.json"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Deploying ${{ inputs.product }} v$version"
+
+      - name: Stage manifests and the binaries they reference
+        working-directory: site
+        run: |
+          mkdir -p ../stage
+          shopt -s nullglob
+          manifests=(*-manifest.json)
+          if [ ${#manifests[@]} -eq 0 ]; then
+            echo "::error::No *-manifest.json files on gh-pages"
+            exit 1
+          fi
+          for manifest in "${manifests[@]}"; do
+            while IFS= read -r file; do
+              case "$file" in
+                http://*|https://*|/*|*..*)
+                  echo "::error::$manifest references $file; only relative paths can be mirrored"
+                  exit 1 ;;
+              esac
+              if [ ! -f "$file" ]; then
+                echo "::error::$manifest references $file, which is missing from gh-pages"
+                exit 1
+              fi
+              mkdir -p "../stage/$(dirname "$file")"
+              cp "$file" "../stage/$file"
+            done < <(jq -r '.builds[] | (.ota.path // empty), (.parts[]?.path // empty)' "$manifest")
+            cp "$manifest" ../stage/
+          done
+          cp firmware-index.json ../stage/
+          echo "Staged ${#manifests[@]} manifests:"
+          du -sh ../stage
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.FW_DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.FW_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/fw_deploy
+          chmod 600 ~/.ssh/fw_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload (binaries first, then manifests)
+        env:
+          HOST: ${{ secrets.FW_DEPLOY_HOST }}
+          PRODUCT: ${{ inputs.product }}
+          SSH_USER: ${{ inputs.ssh_user }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          ssh_cmd="ssh -i $HOME/.ssh/fw_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
+          upload() {
+            rsync -rtp --chmod=D755,F644 --prune-empty-dirs -e "$ssh_cmd" "$@"
+          }
+          # The server's rrsync roots paths at /update, so targets are relative.
+          # Versioned snapshot first, then the live folder devices read from.
+          for target in "$PRODUCT/$VERSION/" "$PRODUCT/"; do
+            echo "Uploading to $target"
+            upload --include='*/' --include='*.bin' --exclude='*' stage/ "$SSH_USER@$HOST:$target"
+            upload --exclude='*/' --include='*.json' --exclude='*' stage/ "$SSH_USER@$HOST:$target"
+          done
+
+      - name: Check a live manifest over HTTP
+        env:
+          PRODUCT: ${{ inputs.product }}
+        run: |
+          manifest=$(cd stage && ls *-manifest.json | head -1)
+          url="http://docs.everythingsmart.io/update/$PRODUCT/$manifest"
+          live=$(curl -fsS "$url" | jq -r '.version')
+          echo "$url -> $live"
+          if [ "$live" != "$(jq -r '.version' "stage/$manifest")" ]; then
+            echo "::error::Live manifest version ($live) does not match what was uploaded"
+            exit 1
+          fi
