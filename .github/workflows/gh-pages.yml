@@ -1,9 +1,6 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+# Publishes the gh-pages branch (firmware files plus the redirect pages from
+# static/) to GitHub Pages as-is. The old Jekyll docs build was removed when
+# the documentation moved to docs.everythingsmart.io.
 name: Deploy from GH-Pages
 
 on:
@@ -35,33 +32,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@086ffb1a2090c870a3f881cc91ea83aa4243d408 # v1.146.0
-        with:
-          ruby-version: '3.2' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v3
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: cd static && bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" --destination "../_site"
-        env:
-          JEKYLL_ENV: production
-
       - name: Checkout gh-pages Branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
-          path: 'gh-pages'
+          path: _site
 
-      - name: Copy Files from gh-pages Branch
-        run: |
-          cp -r gh-pages/* _site/
-          
+      - name: Remove git metadata
+        run: rm -rf _site/.git
+
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
