@@ -1,6 +1,5 @@
-# Publishes the gh-pages branch (firmware files plus the redirect pages from
-# static/) to GitHub Pages as-is. The old Jekyll docs build was removed when
-# the documentation moved to docs.everythingsmart.io.
+# Publishes existing firmware from gh-pages plus current redirect pages from main.
+# Used by firmware publishing and by the independent static-site workflow.
 name: Deploy from GH-Pages
 
 on:
@@ -17,7 +16,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -37,6 +36,19 @@ jobs:
         with:
           ref: gh-pages
           path: _site
+
+      # Always use current main, including when a long-running firmware build
+      # started before a newer static-site change. This checkout is outside _site
+      # so source files cannot leak into the uploaded Pages artifact.
+      - name: Checkout current site pages
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site-source
+          sparse-checkout: static
+
+      - name: Overlay current site pages
+        run: cp -a site-source/static/. _site/
 
       - name: Remove git metadata
         run: rm -rf _site/.git
