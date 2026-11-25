@@ -4,13 +4,13 @@ binary_sensor:
     id: mmwave
     device_class: occupancy
     pin:
-      number: GPIO16
+      number: ${sen0609_occupancy_pin}
       mode: INPUT_PULLDOWN
 
 uart:
   id: uart_bus
-  tx_pin: GPIO18
-  rx_pin: GPIO17
+  tx_pin: ${sen0609_uart_tx_pin}
+  rx_pin: ${sen0609_uart_rx_pin}
   baud_rate: 9600
   debug:
     direction: BOTH
@@ -563,7 +563,7 @@ button:
       - uart.write: "saveConfig"
       - delay: 1s
       - switch.turn_on: mmwave_sensor
- 
+
   - platform: template
     name: "Set Sensitivity"
     id: set_sensitivity

@@ -5,7 +5,6 @@ substitutions:
   hidden_ssid: "false"
   log_level: DEBUG
 
-
   device_config:
     ethernet_enabled: false
     co2_enabled: false
@@ -28,6 +27,7 @@ dashboard_import:
   import_full_config: false # or true
 
 packages:
+  pin_defaults: !include common/pin-defaults.yaml
   device_base: !include common/everything-presence-lite-base.yaml
   ld2450_base: !include common/ld2450-base.yaml
   bluetooth_base: !include common/bluetooth-base.yaml
