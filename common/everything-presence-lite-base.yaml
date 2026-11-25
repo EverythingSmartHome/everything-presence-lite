@@ -3,6 +3,7 @@ esphome:
   comment: Everything Presence Lite
   friendly_name: ${friendly_name}
   name_add_mac_suffix: True
+  min_version: 2026.11.0
   project:
     name: EverythingSmartTechnology.Everything Presence Lite
     version: "1.5.0"
@@ -32,6 +33,7 @@ esp32:
 # Enable logging
 logger:
   level: ${log_level}
+  boot_log_level: ${ "ERROR" if log_level == "ERROR" else "WARN" }
 
 # Enable Home Assistant API
 api:
