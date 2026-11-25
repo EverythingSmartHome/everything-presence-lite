@@ -4,6 +4,6 @@ The Everything Presence Lite is a presence sensor for the smart home featuring m
 
 If you'd like to buy the Everything Presence Lite, that is located [here](https://shop.everythingsmart.io/products/everything-presence-lite)
 
-The official user guide for the Everything Presence Lite is located [here](https://docs.everythingsmart.io/s/products/doc/everything-presence-lite-epl-ZVnBzYzuX2)!
+The official user guide for the Everything Presence Lite is located [here](https://docs.everythingsmart.io/docs/products/everything-presence-lite-epl)!
 
-![Everything Presence One](static/images/everything-presence-lite-front-shot-no-cover.jpg)
+![Everything Presence Lite on its stand with the cover removed, showing the circuit board](images/everything-presence-lite-front-shot-no-cover.jpg)
