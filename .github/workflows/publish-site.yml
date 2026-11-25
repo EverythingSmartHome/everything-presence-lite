@@ -1,0 +1,21 @@
+name: Publish static site pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/**'
+      - '.github/workflows/gh-pages.yml'
+      - '.github/workflows/publish-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  # Reuse published firmware; no compile, firmware index generation or update-host
+  # deployment. gh-pages.yml serializes all Pages deployments in the pages group.
+  deploy:
+    uses: ./.github/workflows/gh-pages.yml

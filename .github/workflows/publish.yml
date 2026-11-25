@@ -8,6 +8,11 @@ on:
       - main
     paths:
       - '**.yaml'
+      - '.github/workflows/publish.yml'
+      - '.github/workflows/esphome-build.yml'
+      - '.github/workflows/deploy-firmware-host.yml'
+      - 'scripts/generate-firmware-index.js'
+      # Site pages and their deployment workflow publish independently.
 
 jobs:
   publish-everything-presence-lite-ha:
@@ -317,7 +322,7 @@ jobs:
   deploy-github-pages:
     needs: generate-firmware-index
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
-    # Must match gh-pages.yml's own permissions; a called workflow can't be granted less
+    # A called workflow cannot request more permissions than its caller.
     permissions:
       contents: write
       pages: write
